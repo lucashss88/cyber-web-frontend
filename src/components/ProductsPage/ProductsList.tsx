@@ -8,9 +8,15 @@ const ProductsList = () => {
     className=' w-86 m-auto h-auto'
     >
         <ProductsResult/>
-        <div className='bg-red-500 w-full h-auto'>
+        <div className=' w-full h-auto flex gap-3 mt-5 flex-wrap'>
           <ProductCard/>
-
+          <ProductCard/>
+          <ProductCard/>
+          <ProductCard/>
+          <ProductCard/>
+          <ProductCard/>
+          <ProductCard/>
+          <ProductCard/>
         </div>
     </div>
   )
