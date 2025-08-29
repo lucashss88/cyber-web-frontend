@@ -14,7 +14,7 @@ const FilterLine = () => {
   }
 
   return (
-    <div className=" py-11 flex justify-center items-center">
+    <div className="bg-white py-11 flex justify-center items-center">
         <div className="bg-white w-86 flex justify-around items-center" id='filter-line-container'>
             <div className="bg-white border border-d4 filter-box flex items-center justify-around min-w-41 min-h-14 px-2 rounded-md">
                 <span className='text-sm font-normal'>Filters</span>
