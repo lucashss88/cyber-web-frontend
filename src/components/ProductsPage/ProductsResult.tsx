@@ -1,8 +1,14 @@
-import React from 'react'
+import {useState} from 'react'
 
 const ProductsResult = () => {
+    const [productCount, setProductCount] = useState<number>(0);
+
   return (
-    <div>ProductsResult</div>
+    <div className='w-full text-d4 text-lg flex justify-start items-center gap-1'>
+        <p>ProductsResult :</p>
+        <span className='font-bold text-black text-xl '>{productCount}</span>
+        
+    </div>
   )
 }
 

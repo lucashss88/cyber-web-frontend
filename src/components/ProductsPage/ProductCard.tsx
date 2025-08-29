@@ -1,8 +1,11 @@
 import React from 'react'
+import ProductsResult from './ProductsResult'
 
 const ProductCard = () => {
   return (
-    <div>ProductCard</div>
+    <div>
+        <ProductsResult/>
+    </div>
   )
 }
 
