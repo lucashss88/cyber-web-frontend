@@ -5,10 +5,10 @@ import ProductsResult from './ProductsResult'
 const ProductsList = () => {
   return (
     <div
-    className=' w-86 m-auto h-auto'
+    className=' w-86 m-auto h-auto flex flex-col'
     >
         <ProductsResult/>
-        <div className=' w-full h-auto flex gap-3 mt-5 flex-wrap'>
+        <div className=' w-full h-auto flex gap-4 mt-5 flex-wrap'>
           <ProductCard/>
           <ProductCard/>
           <ProductCard/>
