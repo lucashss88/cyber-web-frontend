@@ -10,7 +10,7 @@ const ProductsList = () => {
         <ProductsResult/>
         <div className='bg-red-500 w-full h-auto'>
           <ProductCard/>
-          teste
+
         </div>
     </div>
   )
