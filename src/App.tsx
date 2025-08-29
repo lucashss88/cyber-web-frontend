@@ -1,8 +1,15 @@
 import React from 'react'
+import ProductsPage from './pages/ProductsPage'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 const App = () => {
+  
   return (
-    <div className='bg-amber-300'>App</div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/products_page' element={<ProductsPage />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
