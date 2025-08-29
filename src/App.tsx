@@ -1,9 +1,15 @@
-import React from 'react'
+import { BrowserRouter } from 'react-router-dom'; 
+import Header from './components/Header';
 
-const App = () => {
+function App() {
   return (
-    <div className='bg-amber-300'>App</div>
-  )
+    <BrowserRouter> 
+      <div>
+        <Header />
+        
+      </div>
+    </BrowserRouter> 
+  );
 }
 
-export default App
+export default App;
