@@ -12,7 +12,3 @@ body {
 @theme {
     --color-d4: #d4d4d4;
 }
-
-select option {
-    @apply text-sm font-normal text-gray-700;
-}
