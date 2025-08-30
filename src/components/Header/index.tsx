@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiMenu, FiX } from 'react-icons/fi';
-import logoCyber from '../../assets/logo.png';
-import searchIcon from '../../assets/search-icon.png';
-import heartIcon from '../../assets/heart-icon.png';
-import cartIcon from '../../assets/cart-icon.png';
-import userIcon from '../../assets/user-icon.png';
+import logoCyber from '../../assets/images/header/logo.png';
+import searchIcon from '../../assets/images/header/search-icon.png';
+import heartIcon from '../../assets/images/header/heart-icon.png';
+import cartIcon from '../../assets/images/header/cart-icon.png';
+import userIcon from '../../assets/images/header/user-icon.png';
 
 const Header = () => {
  
