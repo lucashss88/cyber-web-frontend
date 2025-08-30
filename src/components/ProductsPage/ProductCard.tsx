@@ -1,5 +1,5 @@
 import React from 'react'
-import heartIcon from '../../assets/heart-icon.png'
+import heartIcon from '../../assets/images/header/heart-icon.png'
 import phoneImage from '../../assets/images/productsPage/phone-example.png'
 
 
