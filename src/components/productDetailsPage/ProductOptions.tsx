@@ -18,10 +18,10 @@ export default function ProductOptions() {
      
       <div>
         <h3 className="font-semibold mb-2">Size</h3>
-        <div className="flex gap-2">
-          <button className="px-4 py-2 border rounded-lg">128GB</button>
-          <button className="px-4 py-2 border rounded-lg">256GB</button>
-          <button className="px-4 py-2 border rounded-lg">512GB</button>
+        <div className="grid grid-cols-4 gap-2">
+          <button className="text-gray-200 px-4 py-2 border border-gray-200 rounded-lg">128GB</button>
+          <button className="text-gray-500 px-4 py-2 border border-gray-300 rounded-lg">256GB</button>
+          <button className="text-gray-500 px-4 py-2 border border-gray-300 rounded-lg">512GB</button>
           <button className="px-4 py-2 border rounded-lg">1TB</button>
         </div>
       </div>
