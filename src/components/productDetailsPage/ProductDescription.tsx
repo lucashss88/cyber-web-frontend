@@ -4,9 +4,9 @@ export default function ProductDescription() {
   return (
     <div className="mt-6">
       <p className="text-gray-600">
-        The new iPhone 14 Pro Max has an amazing display and performance,
-        with upgraded cameras and battery life. Designed for those who want the best.
+        Enhanced capabilities thanks toan enlarged display of 6.7 inchesand work without rechargingthroughout the day.
+        Incredible photosas in weak, yesand in bright lightusing the new system with two cameras more...
       </p>
     </div>
-  );
+  ); 
 }

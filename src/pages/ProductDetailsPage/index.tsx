@@ -6,6 +6,7 @@ import ProductTitle from "../../components/productDetailsPage/ProductTitle";
 import ProductOptions from "../../components/productDetailsPage/ProductOptions";
 import ProductActions from "../../components/productDetailsPage/ProductActions";
 import ProductDescription from "../../components/productDetailsPage/ProductDescription";
+import ProductSpecs from '../../components/productDetailsPage/ProductSpecs';
 
 export default function ProductDetailsPage() {
   const { productId } = useParams<{ productId?: string }>();
@@ -14,6 +15,7 @@ export default function ProductDetailsPage() {
     { label: "Home", href: "/" },
     { label: "Shop", href: "/shop" },
     { label: "Smartphones", href: "/shop/smartphones" },
+    { label: "Apple", href: "/"},
     { label: `Product ${productId}`, href: `/products/${productId}` },
   ];
 
@@ -31,6 +33,7 @@ export default function ProductDetailsPage() {
         <div>
           <ProductTitle />
           <ProductOptions />
+          <ProductSpecs />
           <ProductActions />
           <ProductDescription />
         </div>
