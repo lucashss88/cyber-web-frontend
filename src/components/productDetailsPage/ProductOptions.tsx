@@ -13,8 +13,8 @@ type Props = {
 export default function ProductOptions({ colors, memory, selectedColor, selectedMemory, onColorSelect, onMemorySelect }: Props) {
   return (
     <div className="space-y-4 mt-4">
-      <div>
-        <h3 className="font-semibold mb-2">Select Color:</h3>
+      <div className="flex flex-row items-center justify-between md:flex-col md:items-start">
+        <h3 className="mb-0 md:mb-2 text-sm font-semibold">Select Color:</h3>
         <div className="flex gap-2">
           {colors.map(color => (
             <button 
@@ -27,8 +27,8 @@ export default function ProductOptions({ colors, memory, selectedColor, selected
         </div>
       </div>
       <div>
-        <h3 className="font-semibold mb-2">Size</h3>
-        <div className="grid grid-cols-4 gap-2">
+        <h3 className="font-semibold mb-2 hidden">Size</h3>
+        <div className="grid grid-cols-4 gap-2 text-sm">
           {memory.map(size => {
             const isSelected = selectedMemory === size;
           

@@ -13,15 +13,15 @@ export default function ProductDeliveryInfo() {
     ];
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-8">
+        <div className="grid grid-cols-3 sm:grid-cols-3 gap-4 my-8">
             {infoItems.map((item) => (
-                <div key={item.label} className="flex items-center gap-4">
+                <div key={item.label} className="flex flex-col sm:flex-row items-center sm:gap-4 gap-2">
                     <div className="bg-gray-100 p-1 rounded-lg">
                         <img src={item.icon} alt={item.alt} className="h-12 w-12" />
                     </div>
-                    <div>
-                        <p className="text-sm whitespace-nowrap text-gray-600">{item.label}</p>
-                        <p className="font-bold text-xs text-black">{item.value}</p>
+                    <div className="text-center sm:text-left">
+                        <p className="text-sm whitespace-nowrap">{item.label}</p>
+                        <p className="font-bold text-xs ">{item.value}</p>
                     </div>
                 </div>
             ))}

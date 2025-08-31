@@ -12,7 +12,7 @@ export default function ProductDetailsPage() {
   ];
 
   return (
-    <div className="p-8">
+    <div className="p-1">
       <Breadcrumb crumbs={crumbs} />
       <ProductDetailsContainer />
     </div>
