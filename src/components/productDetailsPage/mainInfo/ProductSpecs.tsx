@@ -1,12 +1,12 @@
 import React from 'react';
 
 
-import screenIcon from '../../assets/images/productDetailsPage/screen-icon.svg'
-import cpuIcon from '../../assets/images/productDetailsPage/cpu-icon.svg';
-import coresIcon from '../../assets/images/productDetailsPage/cores-icon.svg';
-import mainCameraIcon from '../../assets/images/productDetailsPage/camera-icon.svg';
-import frontCameraIcon from '../../assets/images/productDetailsPage/front-camera-icon.svg';
-import batteryIcon from '../../assets/images/productDetailsPage/battery-icon.svg';
+import screenIcon from '../../../assets/images/productDetailsPage/mainInfo/screen-icon.svg'
+import cpuIcon from '../../../assets/images/productDetailsPage/mainInfo/cpu-icon.svg';
+import coresIcon from '../../../assets/images/productDetailsPage/mainInfo/cores-icon.svg';
+import mainCameraIcon from '../../../assets/images/productDetailsPage/mainInfo/camera-icon.svg';
+import frontCameraIcon from '../../../assets/images/productDetailsPage/mainInfo/front-camera-icon.svg';
+import batteryIcon from '../../../assets/images/productDetailsPage/mainInfo/battery-icon.svg';
 
 export default function ProductSpecs() {
  

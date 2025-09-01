@@ -12,7 +12,7 @@ type BreadcrumbProps = {
 
 const Breadcrumb: React.FC<BreadcrumbProps> = ({ crumbs }) => {
   return (
-    <nav aria-label="breadcrumb" className="mb-4">
+    <nav aria-label="breadcrumb" className="mb-4 mt-4">
       <ol className="flex items-center space-x-2 text-quick-silver lg:flex hidden">
         {crumbs.map((crumb, index) => {
           const isLastItem = index === crumbs.length - 1;

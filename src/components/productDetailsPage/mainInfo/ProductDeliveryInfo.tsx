@@ -1,8 +1,8 @@
 import React from 'react';
 
-import deliveryIcon from '../../assets/images/productDetailsPage/delivery-icon.svg';
-import stockIcon from '../../assets/images/productDetailsPage/stock-icon.svg';
-import guaranteedIcon from '../../assets/images/productDetailsPage/guaranteed-icon.svg';
+import deliveryIcon from '../../../assets/images/productDetailsPage/mainInfo/delivery-icon.svg';
+import stockIcon from '../../../assets/images/productDetailsPage/mainInfo/stock-icon.svg';
+import guaranteedIcon from '../../../assets/images/productDetailsPage/mainInfo/guaranteed-icon.svg';
 
 export default function ProductDeliveryInfo() {
 

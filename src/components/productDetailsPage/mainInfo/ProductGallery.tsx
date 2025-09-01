@@ -1,11 +1,11 @@
 import React from "react";
 
 
-import thumb1 from "../../assets/images/productDetailsPage/iphone-thumb1.png";
-import thumb2 from "../../assets/images/productDetailsPage/iphone-thumb2.png";
-import thumb3 from "../../assets/images/productDetailsPage/iphone-thumb3.png";
-import thumb4 from "../../assets/images/productDetailsPage/iphone-thumb4.png";
-import bigImage from "../../assets/images/productDetailsPage/iphone-big.png";
+import thumb1 from "../../../assets/images/productDetailsPage/mainInfo/iphone-thumb1.png";
+import thumb2 from "../../../assets/images/productDetailsPage/mainInfo/iphone-thumb2.png";
+import thumb3 from "../../../assets/images/productDetailsPage/mainInfo/iphone-thumb3.png";
+import thumb4 from "../../../assets/images/productDetailsPage/mainInfo/iphone-thumb4.png";
+import bigImage from "../../../assets/images/productDetailsPage/mainInfo/iphone-big.png";
 
 export default function ProductGallery() {
   return (
