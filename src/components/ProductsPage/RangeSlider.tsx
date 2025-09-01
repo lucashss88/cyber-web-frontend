@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-
-interface RangeSliderProps {
-  min: number;
-  max: number;
-  step?: number;
-}
+import type {RangeSliderProps} from '../../types/rangeSliderProps'
 
 const RangeSlider: React.FC<RangeSliderProps> = ({ min, max, step = 1 }) => {
   const [minValue, setMinValue] = useState(min);
