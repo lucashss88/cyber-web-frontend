@@ -6,8 +6,8 @@ import RelatedProducts from '../../components/productDetailsPage/relatedProducts
 
 export default function ProductDetailsPage() {
   const crumbs = [
-    { label: "Home", href: "/homepage" },
-    { label: "Shop", href: "/products_page" },
+    { label: "Home", href: "/" },
+    { label: "Shop", href: "/shop" },
     { label: "Smartphones", href: "/shop/smartphones" },
     { label: "Apple", href: "/" },
     { label: "iPhone 14 Pro Max", href: "/" },
