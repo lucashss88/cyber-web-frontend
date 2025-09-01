@@ -2,6 +2,7 @@ import React from 'react';
 import Breadcrumb from '../../components/Breadcrumb';
 import ProductDetailsContainer from '../../components/productDetailsPage/mainInfo/ProductDetailsContainer';
 import ReviewsSection from '../../components/productDetailsPage/Reviews/ReviewsSection';
+import RelatedProducts from '../../components/productDetailsPage/relatedProducts/RelatedProducts';
 
 export default function ProductDetailsPage() {
   const crumbs = [
@@ -17,6 +18,7 @@ export default function ProductDetailsPage() {
       <Breadcrumb crumbs={crumbs} />
       <ProductDetailsContainer />
       <ReviewsSection />
+      <RelatedProducts />
     </div>
   );
 }
