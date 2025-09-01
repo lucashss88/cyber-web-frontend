@@ -3,6 +3,7 @@
 import IntroductionHome from "../components/Home/IntroductionHome";
 import ProductGrid from "../components/Home/ProductGrid"
 import BrowseByCategory from "../components/Home/BrowseByCategory";
+import ProductOverview from "../components/Home/ProductOverview";
 import { useState, useEffect } from "react";
 
 export default function HomePage() {
@@ -24,7 +25,8 @@ export default function HomePage() {
         <main className="min-h-screen">
             <IntroductionHome appDisplay={isMobile}/>
             <ProductGrid appDisplay={isMobile}/>
-            <BrowseByCategory appDisplay={isMobile}/>
+            <BrowseByCategory />
+            <ProductOverview />
         </main>
     )
 }
