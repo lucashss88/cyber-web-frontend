@@ -1,5 +1,6 @@
 import React from 'react'
 import leftArrowFilter from '../../assets/images/productsPage/leftArrowFilter.png'
+import arrowToggle from '../../assets/images/productsPage/arrowToggle.png'
 import type {MobileFilterProps} from '../../types/mobileFilterProps'
 
 const MobileFilter = ({onClose}: MobileFilterProps) => {
@@ -11,8 +12,15 @@ const MobileFilter = ({onClose}: MobileFilterProps) => {
         <h2 className='font-medium text-2xl'>Filters</h2>
       </div>
 
-      <div id='filter-elements' class>
+      <div id='filter-elements' className="bg-green-300 w-86">
+          <div className="w-full flex justify-between items-center">
+            <h3 className='font-medium text-lg'>Price</h3>
+            <img src={arrowToggle} alt="arrow-price" className='w-4'/>
 
+            <div>
+              
+            </div>
+          </div>
       </div>
     </div>
   )
