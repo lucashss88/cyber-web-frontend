@@ -9,10 +9,6 @@ import CamerasIcon from "../../assets/images/Home/CamerasIcon.png"
 import SmartWatchesIcon from "../../assets/images/Home/SmartWatchesIcon.png"
 import PhonesIcon from "../../assets/images/Home/PhonesIcon.png"
 
-type isMobile = {
-    appDisplay: boolean,
-}
-
 const categories = [
     {label: 'Phones', icon:PhonesIcon},
     {label: 'Smart Watches', icon:SmartWatchesIcon},
@@ -22,13 +18,7 @@ const categories = [
     {label: 'Gaming', icon:GamingIcon}
 ];
 
-export default function BrowseByCategory({ appDisplay }: isMobile) {
-
-    if(appDisplay) {
-        return (
-            <h1>IsMobile</h1>
-        )
-    }
+export default function BrowseByCategory() {
 
     return (    
         <div className="w-full bg-white py-10">
@@ -56,7 +46,7 @@ export default function BrowseByCategory({ appDisplay }: isMobile) {
                 <div className="flex justify-center gap-6 flex-wrap">
                     {categories.map((cat, index) => 
                         <div key={index} className="w-28 h-28 bg-gray-100 rounded-lg flex flex-col items-center justify-center hover:bg-gray-200 transition cursor-pointer">
-                            <div className="text-3xl mb-2">{cat.icon}</div>
+                            <img src={cat.icon} alt={cat.label} className="w-8 h-8 mb-2" />
                             <span className="text-sm font-medium text-center">
                                 {cat.label}
                             </span>
