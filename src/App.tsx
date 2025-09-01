@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import ProductsPage from './pages/ProductsPage';
 import ProductDetailsPage from './pages/ProductDetailsPage';
 
+
 function App() {
   return (
     <BrowserRouter>
@@ -13,13 +14,14 @@ function App() {
         <Header />
         
         <main className="flex-grow">
-          <div className="container mx-auto p-4">
+          
             <Routes>
               <Route path='/products_page' element={<ProductsPage />} />
               <Route path='/product/:productId' element={<ProductDetailsPage />} />
               
+              
             </Routes>
-          </div>
+          
         </main>
         
         
