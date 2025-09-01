@@ -14,14 +14,20 @@ const MobileFilter = ({onClose}: MobileFilterProps) => {
       </div>
 
       <div id='filter-elements' className="bg-white w-86">
-          <div className="w-full flex justify-between items-center">
+          <div className="w-full flex justify-between items-center border-b border-b-b5 mb-6">
             <h3 className='font-medium text-lg'>Price</h3>
             <img src={arrowToggle} alt="arrow-price" className='w-4'/>
 
           </div>
 
-          <div>
+          <div className="mb-6 w-full h-auto">
             <RangeSlider min={1000} max={6000} step={1} />
+          </div>
+
+          <div className="w-full flex justify-between items-center border-b border-b-b5 mb-6">
+            <h3 className='font-medium text-lg'>Brand</h3>
+            <img src={arrowToggle} alt="arrow-price" className='w-4'/>
+
           </div>
       </div>
     </div>
