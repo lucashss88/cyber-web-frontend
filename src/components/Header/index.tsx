@@ -38,7 +38,7 @@ const Header = () => {
           <div className="flex items-center gap-8">
             <nav>
               <ul className="flex items-center gap-6">
-                <li><Link to="/homepage" className="text-gray-400 hover:text-black">Home</Link></li>
+                <li><Link to="/home" className="text-gray-400 hover:text-black">Home</Link></li>
                 <li><Link to="/products_page" className="font-bold text-black">Shop</Link></li>
                 <li><a href="#" className="text-gray-400 hover:text-black">Contact Us</a></li>
                 <li><Link to="#" className="text-gray-400 hover:text-black">Blog</Link></li>
