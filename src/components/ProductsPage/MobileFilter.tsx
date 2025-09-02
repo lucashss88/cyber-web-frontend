@@ -46,28 +46,28 @@ const MobileFilter = ({ onClose, onApply }: MobileFilterProps) => {
   }, [])
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-white flex flex-col">
-      <div className="w-full max-w-[688px] mx-auto px-4 py-6 flex items-center gap-4">
+    <div className=" fixed inset-0 z-[9999] bg-white flex flex-col">
+      <div className=" w-full max-w-[688px] mx-auto px-4 py-6 flex items-center gap-4">
         <img
           src={leftArrowFilter}
           alt="left-arrow"
-          className="w-3 cursor-pointer"
+          className="w-3 cursor-pointer md:w-5"
           onClick={onClose}
         />
-        <h2 className="font-medium text-2xl">Filters</h2>
+        <h2 className="font-medium text-2xl md:text-3xl">Filters</h2>
       </div>
 
-      <div className="w-full max-w-[688px] mx-auto px-4 flex-1 overflow-y-auto">
+      <div className=" w-full max-w-[688px] mx-auto px-4 flex-1 overflow-y-auto">
         <button
           type="button"
           className="w-full flex justify-between items-center border-b border-b-b5 mb-6"
           onClick={() => setShowPrice(p => !p)}
         >
-          <h3 className="font-medium text-lg text-left">Price</h3>
+          <h3 className="font-medium text-lg text-left md:text-2xl">Price</h3>
           <img
             src={arrowToggle}
             alt="arrow-price"
-            className={`w-4 ${showPrice ? 'rotate-180' : 'rotate-0'} transition-transform duration-200`}
+            className={`w-4 ${showPrice ? 'rotate-180' : 'rotate-0'} transition-transform duration-200 md:w-6`}
           />
         </button>
 
@@ -82,35 +82,35 @@ const MobileFilter = ({ onClose, onApply }: MobileFilterProps) => {
           className="w-full flex justify-between items-center border-b border-b-b5 mb-6"
           onClick={() => setShowBrand(b => !b)}
         >
-          <h3 className="font-medium text-lg text-left">Brand</h3>
+          <h3 className="font-medium text-lg text-left md:text-2xl">Brand</h3>
           <img
             src={arrowToggle}
             alt="arrow-brand"
-            className={`w-4 ${showBrand ? 'rotate-180' : 'rotate-0'} transition-transform duration-200`}
+            className={`w-4 ${showBrand ? 'rotate-180' : 'rotate-0'} transition-transform duration-200 md:w-6`}
           />
         </button>
 
         {showBrand && (
           <>
-            <div className="bg-f5 w-full rounded-[8px] h-10 flex items-center px-4">
-              <img src={magnifier} alt="magnifier" className="w-5" />
+            <div className="bg-f5 w-full md:w-4/5 rounded-[8px] h-10 flex items-center md:m-auto px-4">
+              <img src={magnifier} alt="magnifier" className="w-5 md:w-7" />
               <input
                 type="text"
-                className="outline-none flex-1 rounded-[8px] placeholder:text-sm placeholder-65 placeholder:font-medium px-3 bg-transparent"
+                className="outline-none flex-1 rounded-[8px] placeholder:text-sm md:placeholder:text-xl placeholder-65 placeholder:font-medium px-3 bg-transparent"
                 placeholder="Search"
                 value={query}
                 onChange={e => setQuery(e.target.value)}
               />
             </div>
 
-            <div className="mt-4 max-h-60 overflow-y-auto scrollbar-custom pr-1">
+            <div className=" mt-4 max-h-60 overflow-y-auto scrollbar-custom pr-1">
               {filteredBrands.map((brand) => {
                 const checked = selectedBrands.includes(brand.name)
                 return (
                   <label key={brand.name} className="flex items-center gap-2 mb-2">
                     <input
                       type="checkbox"
-                      className="w-4 h-4"
+                      className="w-4 h-4 md:w-6 md:h-6"
                       checked={checked}
                       onChange={() => {
                         setSelectedBrands(prev =>
@@ -118,8 +118,8 @@ const MobileFilter = ({ onClose, onApply }: MobileFilterProps) => {
                         )
                       }}
                     />
-                    <span className="text-sm text-black font-medium">{brand.name}</span>
-                    <span className="text-92 text-xs">{brand.count}</span>
+                    <span className="text-sm md:text-xl text-black font-medium">{brand.name}</span>
+                    <span className="text-92 text-xs md:text-lg">{brand.count}</span>
                   </label>
                 )
               })}
@@ -128,11 +128,11 @@ const MobileFilter = ({ onClose, onApply }: MobileFilterProps) => {
         )}
       </div>
 
-      <div className="w-full max-w-[688px] mx-auto px-4 py-4 bg-white">
+      <div className="w-full max-w-[688px] mx-auto px-4 py-4 bg-white md:flex md:justify-center">
         <button
           type="button"
           onClick={handleApply}
-          className="bg-black text-white w-full py-3 px-6 rounded-[8px]"
+          className="bg-black text-white md:text-xl w-full md:w-4/5 py-3 px-6 rounded-[8px]"
         >
           Apply
         </button>

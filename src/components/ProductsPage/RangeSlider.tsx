@@ -45,26 +45,26 @@ const RangeSlider: React.FC<RangeSliderProps> = ({ min, max, step = 1, onChange}
 
 
   return (
-    <div className="w-full max-w-md mb-6">
+    <div className=" w-full max-w-md mb-6 md:m-auto">
 
-      <div className="flex items-center gap-2 mb-4 justify-between">
-        <div className="flex flex-col">
-          <label className="text-a7 text-sm">From</label>
+      <div className="flex items-center gap-2 mb-4 justify-between ">
+        <div className="flex flex-col md:items-center md:justify-center md:text-center">
+          <label className="text-a7 text-sm md:text-xl">From</label>
           <input
             type="number"
             value={minInput}
             onChange={handleMinChange}
-            className="border border-9f rounded px-2 py-1 w-24"
+            className="border border-9f rounded px-2 py-1 w-24 md:w-4/5 md:text-lg"
           />
         </div>
-        <span className="text-e7 ">—</span>
-        <div className="flex flex-col">
-          <label className="text-a7 text-sm">To</label>
+        <span className="text-e7 md:text-xl ">—</span>
+        <div className="flex flex-col  md:items-center md:justify-center md:text-center">
+          <label className="text-a7 text-sm md:text-xl">To</label>
           <input
             type="number"
             value={maxInput}
             onChange={handleMaxChange}
-            className="border border-9f rounded px-2 py-1 w-24"
+            className="border border-9f rounded px-2 py-1 w-24 md:w-4/5 md:text-lg"
           />
         </div>
       </div>
