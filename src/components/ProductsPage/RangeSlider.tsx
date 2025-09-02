@@ -1,19 +1,48 @@
 import React, { useState } from "react";
 import type {RangeSliderProps} from '../../types/rangeSliderProps'
 
-const RangeSlider: React.FC<RangeSliderProps> = ({ min, max, step = 1 }) => {
+const RangeSlider: React.FC<RangeSliderProps> = ({ min, max, step = 1, onChange}) => {
   const [minValue, setMinValue] = useState(min);
   const [maxValue, setMaxValue] = useState(max);
+  const [minInput, setMinInput] = useState(min.toString());
+  const [maxInput, setMaxInput] = useState(max.toString());
 
   const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value);
-    if (value <= maxValue) setMinValue(value);
+  const value = e.target.value;
+  setMinInput(value); // permite digitar livremente
+
+  const newMin = Number(value);
+  if (!isNaN(newMin) && newMin >= min && newMin <= maxValue) {
+    setMinValue(newMin);
+    if (onChange) onChange([newMin, maxValue]);
+  }
   };
 
   const handleMaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value);
-    if (value >= minValue) setMaxValue(value);
+    const value = e.target.value;
+    setMaxInput(value);
+
+    const newMax = Number(value);
+    if (!isNaN(newMax) && newMax <= max && newMax >= minValue) {
+      setMaxValue(newMax);
+      if (onChange) onChange([minValue, newMax]);
+    }
   };
+
+  const handleMinSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newMin = Number(e.target.value);
+    setMinValue(newMin);
+    setMinInput(newMin.toString());
+    if (onChange) onChange([newMin, maxValue]);
+  };
+
+  const handleMaxSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newMax = Number(e.target.value);
+    setMaxValue(newMax);
+    setMaxInput(newMax.toString());
+    if (onChange) onChange([minValue, newMax]);
+  };
+
 
   return (
     <div className="w-full max-w-md mb-6">
@@ -23,7 +52,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({ min, max, step = 1 }) => {
           <label className="text-a7 text-sm">From</label>
           <input
             type="number"
-            value={minValue}
+            value={minInput}
             onChange={handleMinChange}
             className="border border-9f rounded px-2 py-1 w-24"
           />
@@ -33,7 +62,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({ min, max, step = 1 }) => {
           <label className="text-a7 text-sm">To</label>
           <input
             type="number"
-            value={maxValue}
+            value={maxInput}
             onChange={handleMaxChange}
             className="border border-9f rounded px-2 py-1 w-24"
           />
@@ -60,9 +89,9 @@ const RangeSlider: React.FC<RangeSliderProps> = ({ min, max, step = 1 }) => {
           max={max}
           step={step}
           value={minValue}
-          onChange={handleMinChange}
+          onChange={handleMinSliderChange}
           className="absolute w-full appearance-none bg-transparent"
-          style={{ zIndex: minValue < maxValue ? 2 : 1 }}
+          style={{ zIndex: 2 }}
         />
 
  
@@ -72,8 +101,9 @@ const RangeSlider: React.FC<RangeSliderProps> = ({ min, max, step = 1 }) => {
           max={max}
           step={step}
           value={maxValue}
-          onChange={handleMaxChange}
+          onChange={handleMaxSliderChange}
           className="absolute w-full appearance-none bg-transparent"
+          style={{ zIndex: 1 }}
         />
       </div>
 
@@ -95,6 +125,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({ min, max, step = 1 }) => {
             background: black;
             border-radius: 50%;
             cursor: pointer;
+            margin-top: 6px;
           }
         `}
       </style>

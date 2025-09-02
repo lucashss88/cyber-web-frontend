@@ -1,81 +1,142 @@
-import {useState} from 'react'
+import { useState, useEffect } from 'react'
 import leftArrowFilter from '../../assets/images/productsPage/leftArrowFilter.png'
 import arrowToggle from '../../assets/images/productsPage/arrowToggle.png'
-import type {MobileFilterProps} from '../../types/mobileFilterProps'
-import RangeSlider from './RangeSlider'
 import magnifier from '../../assets/images/productsPage/magnifier.png'
+import type { MobileFilterProps } from '../../types/mobileFilterProps'
+import RangeSlider from './RangeSlider'
 
-const MobileFilter = ({onClose}: MobileFilterProps) => {
-  const [showPrice, setShowPrice] = useState<boolean>(true)
-  const [showBrand, setShowBrand] = useState<boolean>(true)
-  const [query, setQuery] = useState<string>('')
+const MobileFilter = ({ onClose, onApply }: MobileFilterProps) => {
+  const [showPrice, setShowPrice] = useState(true)
+  const [showBrand, setShowBrand] = useState(true)
+  const [query, setQuery] = useState('')
 
-  //example of brands
-  const brands =[
-    {name: 'Apple', count: 148},
-    {name: 'Samsung', count: 120},
-    {name: 'Motorola', count: 90},
-    {name: 'Xiaomi', count: 80},
-    {name: 'POCO', count: 50},
-    {name: 'Nokia', count: 30},
-    {name: 'Honor', count: 20},
-    {name: 'Motorola', count: 10},
-    {name: 'Realme', count: 70},
-    {name: 'Asus', count: 40},
-    {name: 'Sony', count: 25}
+  // brands example
+  const brands = [
+    { name: 'Apple', count: 148 },
+    { name: 'Samsung', count: 120 },
+    { name: 'Motorola', count: 90 },
+    { name: 'Xiaomi', count: 80 },
+    { name: 'POCO', count: 50 },
+    { name: 'Nokia', count: 30 },
+    { name: 'Honor', count: 20 },
+    { name: 'Realme', count: 70 },
+    { name: 'Asus', count: 40 },
+    { name: 'Sony', count: 25 },
   ]
 
-  const filteredBrands = brands.filter(b => b.name.toLowerCase().includes(query.toLowerCase()))
+  const filteredBrands = brands.filter(b =>
+    b.name.toLowerCase().includes(query.toLowerCase())
+  )
+
+  const [selectedBrands, setSelectedBrands] = useState<string[]>([])
+  const [priceRange, setPriceRange] = useState<[number, number]>([1000, 6000])
+
+  const handleApply = () => {
+    console.log("Apply clicked:", selectedBrands, priceRange)
+    onApply?.(selectedBrands, priceRange)
+    
+  }
+
+  useEffect(() => {
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = prev
+    }
+  }, [])
 
   return (
-    <div className='bg-white w-dvw h-dvh z-10 absolute top-0 flex flex-col items-center'>
-      <div className='w-86 bg-white flex items-center gap-4 my-8'>
-        <img src={leftArrowFilter} alt="left-arrow" className='w-3 cursor-pointer' onClick={onClose}/>
-        <h2 className='font-medium text-2xl'>Filters</h2>
+    <div className="fixed inset-0 z-[9999] bg-white flex flex-col">
+      <div className="w-full max-w-[688px] mx-auto px-4 py-6 flex items-center gap-4">
+        <img
+          src={leftArrowFilter}
+          alt="left-arrow"
+          className="w-3 cursor-pointer"
+          onClick={onClose}
+        />
+        <h2 className="font-medium text-2xl">Filters</h2>
       </div>
 
-      <div id='filter-elements' className="bg-white w-86">
-          <div className="w-full flex justify-between items-center border-b border-b-b5 mb-6" onClick={()=> setShowPrice(p => !p)}>
-            <h3 className='font-medium text-lg'>Price</h3>
-            <img 
-            src={arrowToggle} 
-            alt="arrow-price" 
-            className={`w-4 ${showPrice ? 'rotate-180' : 'rotate-0'} transition-all delay-50`}/>
+      <div className="w-full max-w-[688px] mx-auto px-4 flex-1 overflow-y-auto">
+        <button
+          type="button"
+          className="w-full flex justify-between items-center border-b border-b-b5 mb-6"
+          onClick={() => setShowPrice(p => !p)}
+        >
+          <h3 className="font-medium text-lg text-left">Price</h3>
+          <img
+            src={arrowToggle}
+            alt="arrow-price"
+            className={`w-4 ${showPrice ? 'rotate-180' : 'rotate-0'} transition-transform duration-200`}
+          />
+        </button>
 
+        {showPrice && (
+          <div className="mb-6">
+            <RangeSlider min={1000} max={6000} step={1} onChange={setPriceRange} />
           </div>
+        )}
 
-          <div className="mb-6 w-full h-auto">
-            {showPrice && <RangeSlider min={1000} max={6000} step={1} />}
-          </div>
+        <button
+          type="button"
+          className="w-full flex justify-between items-center border-b border-b-b5 mb-6"
+          onClick={() => setShowBrand(b => !b)}
+        >
+          <h3 className="font-medium text-lg text-left">Brand</h3>
+          <img
+            src={arrowToggle}
+            alt="arrow-brand"
+            className={`w-4 ${showBrand ? 'rotate-180' : 'rotate-0'} transition-transform duration-200`}
+          />
+        </button>
 
-          <div className="w-full flex justify-between items-center border-b border-b-b5 mb-6" onClick={()=> setShowBrand(b => !b)}>
-            <h3 className='font-medium text-lg'>Brand</h3>
-            <img src={arrowToggle} alt="arrow-brand" className={`w-4 ${showBrand ? 'rotate-180' : 'rotate-0'} transition-all delay-50`}/>
+        {showBrand && (
+          <>
+            <div className="bg-f5 w-full rounded-[8px] h-10 flex items-center px-4">
+              <img src={magnifier} alt="magnifier" className="w-5" />
+              <input
+                type="text"
+                className="outline-none flex-1 rounded-[8px] placeholder:text-sm placeholder-65 placeholder:font-medium px-3 bg-transparent"
+                placeholder="Search"
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+              />
+            </div>
 
-          </div>
-
-          { showBrand && (
-            <>
-              <div className='bg-f5 w-full rounded-[8px] h-10 flex items-center px-4'>
-                  <img src={magnifier} alt="magnifier" className='w-5'/>
-                  <input type="text" className='outline-none flex-1 rounded-[8px] placeholder:text-sm placeholder-65 placeholder:font-medium px-3' placeholder='Search' value={query} onChange={(e)=> setQuery(e.target.value)}/>
-              </div>
-
-              <div className='mt-4 h-60 overflow-y-scroll scrollbar-custom'>
-                {filteredBrands.map((brand)=>(
+            <div className="mt-4 max-h-60 overflow-y-auto scrollbar-custom pr-1">
+              {filteredBrands.map((brand) => {
+                const checked = selectedBrands.includes(brand.name)
+                return (
                   <label key={brand.name} className="flex items-center gap-2 mb-2">
-                    <input type="checkbox" className='w-4 h-4 gap-2 mb-2 checked:bg-black'/>
+                    <input
+                      type="checkbox"
+                      className="w-4 h-4"
+                      checked={checked}
+                      onChange={() => {
+                        setSelectedBrands(prev =>
+                          checked ? prev.filter(b => b !== brand.name) : [...prev, brand.name]
+                        )
+                      }}
+                    />
                     <span className="text-sm text-black font-medium">{brand.name}</span>
                     <span className="text-92 text-xs">{brand.count}</span>
                   </label>
-                ))}
-              </div>
-            </>
-          )}
-           
+                )
+              })}
+            </div>
+          </>
+        )}
       </div>
 
-      <button className='bg-black text-white flex items-center justify-center w-86 my-8 py-3 px-16 rounded-[8px]'>Apply</button>
+      <div className="w-full max-w-[688px] mx-auto px-4 py-4 bg-white">
+        <button
+          type="button"
+          onClick={handleApply}
+          className="bg-black text-white w-full py-3 px-6 rounded-[8px]"
+        >
+          Apply
+        </button>
+      </div>
     </div>
   )
 }
