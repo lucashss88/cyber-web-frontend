@@ -4,9 +4,9 @@ const ProductsResult = () => {
     const [productCount, setProductCount] = useState<number>(0);
 
   return (
-    <div className='w-full text-6c text-lg flex justify-start items-center gap-1'>
+    <div className='w-full text-6c text-lg md:text-2xl flex justify-start items-center gap-1'>
         <p>Products Result :</p>
-        <span className='font-bold text-black text-xl '>{productCount}</span>
+        <span className='font-bold text-black text-xl md:text-2xl'>{productCount}</span>
         
     </div>
   )
