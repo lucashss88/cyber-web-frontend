@@ -9,7 +9,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({ min, max, step = 1, onChange}
 
   const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   const value = e.target.value;
-  setMinInput(value); // permite digitar livremente
+  setMinInput(value);
 
   const newMin = Number(value);
   if (!isNaN(newMin) && newMin >= min && newMin <= maxValue) {
