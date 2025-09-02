@@ -31,8 +31,9 @@ const MobileFilter = ({onClose}: MobileFilterProps) => {
 
           </div>
 
-          <div className='bg-f5 w-full rounded-[8px] h-10 '>
-            <img src={magnifier} alt="magnifier" />
+          <div className='bg-f5 w-full rounded-[8px] h-10 flex items-center px-4'>
+            <img src={magnifier} alt="magnifier" className='w-5'/>
+            <input type="text" className='outline-none flex-1 rounded-[8px] placeholder:text-sm placeholder-65 placeholder:font-medium px-3' placeholder='Search' />
           </div>
       </div>
     </div>
