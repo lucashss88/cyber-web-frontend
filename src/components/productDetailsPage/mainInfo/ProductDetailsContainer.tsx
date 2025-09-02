@@ -1,5 +1,7 @@
 
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import ProductGallery from './ProductGallery';
 import ProductTitle from './ProductTitle';
@@ -9,33 +11,105 @@ import ProductActions from './ProductActions';
 import ProductDescription from './ProductDescription';
 import ProductDeliveryInfo from './ProductDeliveryInfo';
 
-const fakeProductData = {
-    name: 'Apple iPhone 14 Pro Max', price: 1399, originalPrice: 1499,
-    colors: [{name: 'black', hex: '#000'}, {name: 'purple', hex: '#A020F0'}, {name: 'red', hex: '#FF0000'}, {name: 'yellow', hex: '#FFD700'}, {name: 'gray', hex: '#D3D3D3'}],
-    memory: ["128GB", "256GB", "512GB", "1TB"],
-};
+
+interface ProductData {
+  id: number;
+  name: string;
+  description: string;
+  brand: string;
+  price: string;
+  discounted_price: string | null;
+  stock: number;
+  url_image: string;
+  colors: { name: string; hex_code: string }[];
+  storage_options: { size: string }[];
+  smartphone_spec: {
+    screen_size: string;
+    cpu: string;
+    total_cores: string;
+    main_camera: string;
+    front_camera: string;
+    battery: string;
+  } | null;
+}
 
 const ProductDetailsContainer = () => {
+  const { productId } = useParams<{ productId: string }>();
+
+  const [product, setProduct] = useState<ProductData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedMemory, setSelectedMemory] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!productId) return;
+
+    const fetchProductDetails = async () => {
+      try {
+        const response = await fetch(`http://localhost:3001/api/products/${productId}`);
+        if (!response.ok) {
+          
+          const errorText = await response.text();
+          throw new Error(`Falha ao buscar os dados do produto: ${errorText}`);
+        }
+        const data = await response.json();
+        setProduct(data.data);
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProductDetails();
+  }, [productId]);
+
+  if (isLoading) {
+    return <div className="text-center mt-32">Carregando produto...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center mt-32 text-red-500">Erro: {error}</div>;
+  }
+
+  if (!product) {
+    return <div className="text-center mt-32">Produto não encontrado.</div>;
+  }
+
   const isSelectionComplete = !!selectedColor && !!selectedMemory;
+
+  
+  const memoryOptions = product.storage_options?.map(option => option.size) ?? [];
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-32">
       <ProductGallery />
       <div className="flex flex-col">
-        <ProductTitle />
-        <ProductOptions
-          colors={fakeProductData.colors} memory={fakeProductData.memory}
-          selectedColor={selectedColor} selectedMemory={selectedMemory}
-          onColorSelect={setSelectedColor} onMemorySelect={setSelectedMemory}
+        <ProductTitle 
+          name={product.name}
+          price={parseFloat(product.price)}
+          originalPrice={product.discounted_price ? parseFloat(product.price) : null}
+          discountedPrice={product.discounted_price ? parseFloat(product.discounted_price) : parseFloat(product.price)}
         />
-        <ProductSpecs />
-        <ProductDescription />
+        <ProductOptions
+         
+          colors={product.colors ?? []}
+          memory={memoryOptions}
+          selectedColor={selectedColor}
+          selectedMemory={selectedMemory}
+          onColorSelect={setSelectedColor}
+          onMemorySelect={setSelectedMemory}
+        />
+        {product.smartphone_spec && <ProductSpecs specs={product.smartphone_spec} />}
+        
+        <ProductDescription description={product.description} />
+        
         <div className="flex-grow" />
         <ProductActions
           isDisabled={!isSelectionComplete}
-          onAddToCart={() => alert('Added to cart!')} 
+          onAddToCart={() => alert('Added to cart!')}
           onAddToWishlist={() => alert('Added to wishlist!')}
         />
         <ProductDeliveryInfo />

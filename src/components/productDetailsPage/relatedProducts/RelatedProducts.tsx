@@ -1,31 +1,88 @@
 
-import React from 'react';
-import ProductCard from '../../productDetailsPage/relatedProducts/ProductCard'; 
 
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import ProductCard from './ProductCard'; 
 
-import iphone1 from '../../../assets/images/productDetailsPage/relatedProducts/iphone-1.png';
-import headphone from '../../../assets/images/productDetailsPage/relatedProducts/headphone.png';
-import smartwatch from '../../../assets/images/productDetailsPage/relatedProducts/smartwatch.png';
-import iphone2 from '../../../assets/images/productDetailsPage/relatedProducts/iphone-2.png';
-
-
-
-const fakeRelatedProducts = [
-  { id: 1, imageUrl: iphone1, name: 'Apple iPhone 14 Pro 512GB Gold (MQ233)', price: 1437 },
-  { id: 2, imageUrl: headphone, name: 'AirPods Max Silver Starlight Aluminium', price: 549 },
-  { id: 3, imageUrl: smartwatch, name: 'Apple Watch Series 9 GPS 41mm Starlight Aluminium', price: 399 },
-  { id: 4, imageUrl: iphone2, name: 'Apple iPhone 14 Pro 1TB Gold (MQ2V3)', price: 1499 },
-];
-
+type RelatedProduct = {
+  id: number;
+  name: string;
+  price: string;
+  url_image: string;
+};
 
 const RelatedProducts = () => {
+  const { productId } = useParams<{ productId: string }>();
+
+  const [relatedProducts, setRelatedProducts] = useState<RelatedProduct[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+
+  useEffect(() => {
+   
+    if (!productId) return;
+
+    const fetchBrandAndRelatedProducts = async () => {
+      try {
+        setIsLoading(true);
+
+        
+        const productResponse = await fetch(`http://localhost:3001/api/products/${productId}`);
+        if (!productResponse.ok) {
+          throw new Error('Falha ao buscar o produto principal para obter a marca.');
+        }
+        const productData = await productResponse.json();
+        const brand = productData.data.brand;
+
+        
+        if (brand) {
+         
+          const relatedResponse = await fetch(`http://localhost:3001/api/products/related/${brand}`);
+          if (!relatedResponse.ok) {
+            throw new Error('Falha ao buscar os produtos relacionados.');
+          }
+          const relatedData = await relatedResponse.json();
+          
+          
+          const currentProductIdNumber = parseInt(productId, 10);
+          const filteredProducts = relatedData.data.filter((product: RelatedProduct) => product.id !== currentProductIdNumber);
+          setRelatedProducts(filteredProducts);
+        }
+
+      } catch (error) {
+        console.error("Erro na seção de produtos relacionados:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchBrandAndRelatedProducts();
+  }, [productId]); 
+
+  if (isLoading) {
+    return <div className="my-12 mt-42 mb-16">Carregando produtos relacionados...</div>;
+  }
+
+  
+  if (relatedProducts.length === 0) {
+    return null; 
+  }
+
   return (
     <div className="my-12 mt-42 mb-16">
       <h2 className="text-3xl font-bold mb-6">Related Products</h2>
-
       <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {fakeRelatedProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
+        {relatedProducts.map((product) => (
+         
+          <ProductCard 
+            key={product.id} 
+            product={{
+              id: product.id,
+              imageUrl: product.url_image,
+              name: product.name,
+              price: parseFloat(product.price)
+            }} 
+          />
         ))}
       </div>
     </div>
