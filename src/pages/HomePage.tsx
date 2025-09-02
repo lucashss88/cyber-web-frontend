@@ -4,6 +4,7 @@ import IntroductionHome from "../components/Home/IntroductionHome";
 import ProductGrid from "../components/Home/ProductGrid"
 import BrowseByCategory from "../components/Home/BrowseByCategory";
 import ProductOverview from "../components/Home/ProductOverview";
+import ProductClassification from "../components/Home/ProductClassification";
 import { useState, useEffect } from "react";
 
 export default function HomePage() {
@@ -27,6 +28,7 @@ export default function HomePage() {
             <ProductGrid appDisplay={isMobile}/>
             <BrowseByCategory />
             <ProductOverview />
+            <ProductClassification appDisplay={isMobile}/>
         </main>
     )
 }
