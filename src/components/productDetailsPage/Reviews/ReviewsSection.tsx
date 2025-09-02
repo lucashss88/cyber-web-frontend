@@ -1,58 +1,116 @@
-// src/components/Reviews   { avatar: ronaldAvatar, name: 'Ronald Richards', rating: 5, date: '24 January, 2023', text: 'This phone has 1T storage and is durable. Plus all the new iPhones have a C port! Apple is phasing out the current ones! (All about the Benjamin's) So if you want a phone that's going to last grab an iPhone 14 pro max and get several cords and plugs.' },{ avatar: graceAvatar, name: 'Grace Carey', rating: 4, date: '24 January, 2023', text: 'I was a bit nervous to be buying a secondhand phone from Amazon, but I couldn't be happier with my purchase!! I have a pre-paid data plan so I was worried that this phone wouldn't connect with my data plan, since the new phones don't have the physical Sim tray anymore, but couldn't have been easier! I bought an Unlocked black iPhone 14 Pro Max in excellent condition and everything is PERFECT. It was super easy to set up and the phone works and looks great. It truly was in excellent condition. Highly recommend!!!🖤' },ReviewsSection.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReviewCard from './ReviewCard';
 import ReviewsSummary from './ReviewsSummary';
 
-// Import das imagens dos usuários
-import graceAvatar from '../../../assets/images/productDetailsPage/reviews/user-1.png';
-import ronaldAvatar from '../../../assets/images/productDetailsPage/reviews/user-2.png';
-import darcyAvatar from '../../../assets/images/productDetailsPage/reviews/user-3.png';
-import johnAvatar from '../../../assets/images/productDetailsPage/reviews/user-1.png';
-import janeAvatar from '../../../assets/images/productDetailsPage/reviews/user-2.png';
 
-
-const fakeSummaryData = {
-  average: 4.8, totalReviews: 123,
-  distribution: [
-    { label: "Excellent", count: 100, total: 123 },
-    { label: "Good", count: 11, total: 123 },
-    { label: "Average", count: 3, total: 123 },
-    { label: "Below Average", count: 8, total: 123 },
-    { label: "Poor", count: 1, total: 123 },
-  ]
+type SummaryData = {
+  average: number;
+  totalReviews: number;
+  distribution: { label: string, count: number, total: number }[];
 };
 
-const allFakeReviews = [
-  { avatar: graceAvatar, name: 'Grace Carey', rating: 4, date: '24 January, 2023', text: 'I was a bit nervous to be buying a secondhand phone from Amazon, but I couldn’t be happier with my purchase!! I have a pre-paid data plan so I was worried that this phone wouldn’t connect with my data plan, since the new phones don’t have the physical Sim tray anymore, but couldn’t have been easier! I bought an Unlocked black iPhone 14 Pro Max in excellent condition and everything is PERFECT. It was super easy to set up and the phone works and looks great. It truly was in excellent condition. Highly recommend!!!🖤' },
-  { avatar: ronaldAvatar, name: 'Ronald Richards', rating: 5, date: '24 January, 2023', text: 'This phone has 1T storage and is durable. Plus all the new iPhones have a C port! Apple is phasing out the current ones! (All about the Benjamin’s) So if you want a phone that’s going to last grab an iPhone 14 pro max and get several cords and plugs.' },
-  { avatar: darcyAvatar, name: 'Darcy King', rating: 4, date: '24 January, 2023', text: 'I might be the only one to say this but the camera is a little funky. Hoping it will change with a software update: otherwise, love this phone! Came in great condition' },
-  { avatar: johnAvatar, name: 'Jane Smith', rating: 3, date: '23 January, 2023', text: 'It\'s an okay phone, does the job but the battery life could be better.' },
-  { avatar: janeAvatar, name: 'John Doe', rating: 5, date: '22 January, 2023', text: 'Absolutely love it! The best iPhone I have ever owned, camera is fantastic.' },
-];
+
+type ApiReview = {
+  id: number;
+  name_user: string;
+  url_image_user: string;
+  message: string;
+  rating: number;
+  created_at: string;
+};
 
 
-const ReviewsSection = () => {
-  
-  const [visibleReviews, setVisibleReviews] = useState(3);
+const ReviewsSection = ({ productId }: { productId: number }) => {
+
+  const [summary, setSummary] = useState<SummaryData | null>(null);
+  const [allReviews, setAllReviews] = useState<ApiReview[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+ 
+  const [visibleReviewsCount, setVisibleReviewsCount] = useState(3);
+
+  useEffect(() => {
+    if (!productId) return;
+
+    const fetchReviews = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch(`http://localhost:3001/api/products/reviews/${productId}`);
+        if (!response.ok) {
+          throw new Error('Falha ao buscar as avaliações.');
+        }
+        const apiData = await response.json();
+
+        
+        const summaryFromApi = apiData.summary;
+        const formattedSummary: SummaryData = {
+          average: parseFloat(summaryFromApi.media),
+          totalReviews: summaryFromApi.reviews,
+          distribution: [
+            { label: "Excellent", count: summaryFromApi.excellent, total: summaryFromApi.reviews },
+            { label: "Good", count: summaryFromApi.good, total: summaryFromApi.reviews },
+            { label: "Average", count: summaryFromApi.avarage, total: summaryFromApi.reviews },
+            { label: "Below Average", count: summaryFromApi.bellow_average, total: summaryFromApi.reviews },
+            { label: "Poor", count: summaryFromApi.poor, total: summaryFromApi.reviews },
+          ]
+        };
+        setSummary(formattedSummary);
+
+        
+        setAllReviews(apiData.data);
+
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchReviews();
+  }, [productId]);
 
   const handleViewMore = () => {
-    
-    setVisibleReviews(allFakeReviews.length);
+    setVisibleReviewsCount(allReviews.length);
   };
+
+  if (isLoading) {
+    return <div className="my-12">Carregando avaliações...</div>;
+  }
+
+  if (error) {
+    return <div className="my-12 text-red-500">Erro ao carregar avaliações.</div>;
+  }
+
+ 
+  if (!summary || allReviews.length === 0) {
+    return <div className="my-12">Nenhuma avaliação encontrada para este produto.</div>;
+  }
 
   return (
     <div className="my-12">
       <h2 className="text-3xl font-bold mb-6 mt-30">Reviews</h2>
-      <ReviewsSummary summary={fakeSummaryData} />
+      
+      <ReviewsSummary summary={summary} />
       
       <div className="space-y-6 mt-8">
-        {allFakeReviews.slice(0, visibleReviews).map((review, index) => (
-          <ReviewCard key={index} review={review} />
+       
+        {allReviews.slice(0, visibleReviewsCount).map((review) => (
+          
+          <ReviewCard 
+            key={review.id} 
+            review={{
+              avatar: review.url_image_user,
+              name: review.name_user,
+              rating: review.rating,
+              date: review.created_at,
+              text: review.message
+            }} 
+          />
         ))}
       </div>
 
-      
-      {visibleReviews < allFakeReviews.length && (
+      {visibleReviewsCount < allReviews.length && (
         <div className="text-center mt-8">
           <button onClick={handleViewMore} className="py-2 px-5 border border-gray-300 rounded-lg hover:bg-gray-100">
             View More

@@ -30,13 +30,13 @@ export default function ProductSpecs({ specs }: Props) {
   ];
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-4 my-8 rounded-lg">
+    <div className="grid grid-cols-2 md:grid-cols-3 items-start gap-4 my-8 rounded-lg">
       {specList.map((spec) => (
         <div key={spec.label} className="bg-gray-100 p-4 rounded-lg flex items-center gap-3">
           <img src={spec.iconSrc} alt={`${spec.label} icon`} className="h-7 w-7 flex-shrink-0" />
-          <div className="text-left">
-            <p className="text-xs text-gray-500 whitespace-nowrap">{spec.label}</p>
-            <p className="font-semibold text-sm whitespace-nowrap">{spec.value}</p>
+          <div className="text-left flex-1">
+            <p className="text-xs text-gray-500">{spec.label}</p>
+            <p className="font-semibold text-sm">{spec.value}</p>
           </div>
         </div>
       ))}

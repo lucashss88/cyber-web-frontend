@@ -1,5 +1,8 @@
+
+
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+
 import ProductGallery from './ProductGallery';
 import ProductTitle from './ProductTitle';
 import ProductOptions from './ProductOptions';
@@ -7,6 +10,7 @@ import ProductSpecs from './ProductSpecs';
 import ProductActions from './ProductActions';
 import ProductDescription from './ProductDescription';
 import ProductDeliveryInfo from './ProductDeliveryInfo';
+
 
 interface ProductData {
   id: number;
@@ -17,9 +21,9 @@ interface ProductData {
   discounted_price: string | null;
   stock: number;
   url_image: string;
-  colors: { name: string; hex: string }[];
-  storageOptions: { size: string }[];
-  smartphoneSpec: {
+  colors: { name: string; hex_code: string }[];
+  storage_options: { size: string }[];
+  smartphone_spec: {
     screen_size: string;
     cpu: string;
     total_cores: string;
@@ -33,7 +37,7 @@ const ProductDetailsContainer = () => {
   const { productId } = useParams<{ productId: string }>();
 
   const [product, setProduct] = useState<ProductData | null>(null);
-  const [isLoading, setIsLoading] = useState(true); 
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
@@ -45,23 +49,22 @@ const ProductDetailsContainer = () => {
     const fetchProductDetails = async () => {
       try {
         const response = await fetch(`http://localhost:3001/api/products/${productId}`);
-        
         if (!response.ok) {
-          throw new Error('Falha ao buscar os dados do produto.');
+          
+          const errorText = await response.text();
+          throw new Error(`Falha ao buscar os dados do produto: ${errorText}`);
         }
-
         const data = await response.json();
-        setProduct(data.data); 
-
+        setProduct(data.data);
       } catch (err: any) {
         setError(err.message);
       } finally {
-        setIsLoading(false); 
+        setIsLoading(false);
       }
     };
 
     fetchProductDetails();
-  }, [productId]); 
+  }, [productId]);
 
   if (isLoading) {
     return <div className="text-center mt-32">Carregando produto...</div>;
@@ -77,7 +80,8 @@ const ProductDetailsContainer = () => {
 
   const isSelectionComplete = !!selectedColor && !!selectedMemory;
 
-  const memoryOptions = product.storageOptions.map(option => option.size);
+  
+  const memoryOptions = product.storage_options?.map(option => option.size) ?? [];
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-32">
@@ -86,18 +90,19 @@ const ProductDetailsContainer = () => {
         <ProductTitle 
           name={product.name}
           price={parseFloat(product.price)}
-          originalPrice={product.discounted_price ? parseFloat(product.price) : null} 
+          originalPrice={product.discounted_price ? parseFloat(product.price) : null}
           discountedPrice={product.discounted_price ? parseFloat(product.discounted_price) : parseFloat(product.price)}
         />
         <ProductOptions
-          colors={product.colors}
-          memory={memoryOptions} 
+         
+          colors={product.colors ?? []}
+          memory={memoryOptions}
           selectedColor={selectedColor}
           selectedMemory={selectedMemory}
           onColorSelect={setSelectedColor}
           onMemorySelect={setSelectedMemory}
         />
-        {product.smartphoneSpec && <ProductSpecs specs={product.smartphoneSpec} />}
+        {product.smartphone_spec && <ProductSpecs specs={product.smartphone_spec} />}
         
         <ProductDescription description={product.description} />
         

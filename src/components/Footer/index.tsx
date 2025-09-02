@@ -71,7 +71,7 @@ const Footer = () => {
         </div>
 
       </div>
-      {/* Ícones de redes sociais no final do footer para mobile */}
+      
       <div className="flex md:hidden items-center justify-center space-x-8 mt-8">
         <a href={socialLinks.x_twitter} target="_blank" rel="noopener noreferrer" className="hover:opacity-75">
           <img src={xIcon} alt="Ícone do X" className="w-4 h-4" />

@@ -1,17 +1,15 @@
-
 import React from 'react';
-import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa'; 
+import { FaStar, FaRegStar } from 'react-icons/fa'; 
 
 type Props = {
   review: {
     avatar: string;
     name: string;
     rating: number;
-    date: string;
+    date: string; 
     text: string;
   }
 };
-
 
 const StarRating = ({ rating }: { rating: number }) => {
   const stars = [];
@@ -25,6 +23,16 @@ const StarRating = ({ rating }: { rating: number }) => {
   return <div className="flex">{stars}</div>;
 };
 
+
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('pt-BR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
+};
+
 const ReviewCard: React.FC<Props> = ({ review }) => {
   return (
     <div className="bg-gray98 p-6 rounded-lg">
@@ -34,7 +42,8 @@ const ReviewCard: React.FC<Props> = ({ review }) => {
           <p className="font-bold">{review.name}</p>
           <StarRating rating={review.rating} />
         </div>
-        <p className="text-sm font-medium text-gray-300">{review.date}</p>
+     
+        <p className="text-sm font-medium text-gray-300">{formatDate(review.date)}</p>
       </div>
       <p className="font-medium text-dark-gray">{review.text}</p>
     </div>
