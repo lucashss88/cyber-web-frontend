@@ -79,7 +79,7 @@ export default function MobileProductCarousel({categories}: Props) {
     const cat = categories[currentIndex];
     return (
         <section 
-            className="w-full mx-auto rounded-md p-6 select-one"
+            className="w-full mx-auto p-6 select-one"
             style={{
                 color: cat.colorText,
                 backgroundColor: cat.colorBg
@@ -95,11 +95,11 @@ export default function MobileProductCarousel({categories}: Props) {
             <img
                 src={cat.imgSrc}
                 alt={cat.title}
-                className="w-full rounded-md mb-4"
+                className="w-full h-auto max-h-60 object-contain mb-4"
             />
             <h2 className="text-2xl font-semibold mb-2">{cat.title}</h2>
             <p className="mb-4">{cat.description}</p>
-            <ShopNowButton colorBg="transparent" colorLine={cat.colorLineButton} colorText={cat.colorTextButton} />
+            <ShopNowButton colorBg="transparent" colorLine={cat.colorLineButton} colorText={cat.colorTextButton} className='!flex justify-center mb-5' />
             <div className="flex justify-center space-x-2">
                 {categories.map((_, dotIndex) => (
                     <span
