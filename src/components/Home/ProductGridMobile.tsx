@@ -83,7 +83,7 @@ export default function ProductGrid() {
                         The new 15‑inch MacBook Air makes room for more of what you love with a spacious Liquid Retina display.
                     </p>
                     <button 
-                        className="mt-6 px-[33vw] py-[0.7rem] border font-medium rounded w-fit mx-auto md:mx-0 active:bg-black active:text-white active:border-white"
+                        className="mt-6 px-[30vw] py-[0.7rem] border font-medium rounded w-fit mx-auto md:mx-0 active:bg-black active:text-white active:border-white"
                     >
                         Shop now
                     </button>
