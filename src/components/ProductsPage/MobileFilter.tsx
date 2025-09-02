@@ -3,6 +3,7 @@ import leftArrowFilter from '../../assets/images/productsPage/leftArrowFilter.pn
 import arrowToggle from '../../assets/images/productsPage/arrowToggle.png'
 import type {MobileFilterProps} from '../../types/mobileFilterProps'
 import RangeSlider from './RangeSlider'
+import magnifier from '../../assets/images/productsPage/magnifier.png'
 
 const MobileFilter = ({onClose}: MobileFilterProps) => {
 
@@ -28,6 +29,10 @@ const MobileFilter = ({onClose}: MobileFilterProps) => {
             <h3 className='font-medium text-lg'>Brand</h3>
             <img src={arrowToggle} alt="arrow-price" className='w-4'/>
 
+          </div>
+
+          <div className='bg-f5 w-full rounded-[8px] h-10 '>
+            <img src={magnifier} alt="magnifier" />
           </div>
       </div>
     </div>
