@@ -6,8 +6,9 @@ import BrowseByCategory from "../components/Home/BrowseByCategory";
 import ProductOverview from "../components/Home/ProductOverview";
 import ProductClassification from "../components/Home/ProductClassification";
 import DiscountedProducts from "../components/Home/DiscountedProducts";
-
+import SummerSaleBanner from "../components/Home/SummerSaleBanner";
 import { useState, useEffect } from "react";
+
 
 export default function HomePage() {
     const [isMobile,setIsMobile] = useState(false);
@@ -32,6 +33,7 @@ export default function HomePage() {
             <ProductOverview />
             <ProductClassification appDisplay={isMobile}/>
             <DiscountedProducts />
+            <SummerSaleBanner appDisplay={isMobile}/>
         </main>
     )
 }
