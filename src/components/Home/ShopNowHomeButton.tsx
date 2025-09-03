@@ -1,16 +1,18 @@
 'use client'
+
 import {useState} from 'react'
 
 type shopNowButtonProp = {
-    colorBg: string;
-    colorLine: string;
-    colorText: string;
+    colorBg: string,
+    colorLine: string,
+    colorText: string,
+    className?: string,
 };
 
-export default function shopNowButton({ colorBg, colorLine, colorText }: shopNowButtonProp) {
+export default function shopNowButton({ colorBg, colorLine, colorText, className}: shopNowButtonProp) {
 
     const [isHouvered, setIsHovered] = useState(false);
-    const [isActive, setIsAcvtive] = useState(false);
+    const [isActive, setIsActive] = useState(false);
 
     const houverStyles = {
         backgroundColor: '#000000',
@@ -26,17 +28,16 @@ export default function shopNowButton({ colorBg, colorLine, colorText }: shopNow
 
     return (
         <button 
-            className="mt-6 px-[3.5rem] py-[1rem] border font-medium rounded w-fit mx-auto md:mx-0 cursor-pointer"
+            className={`mt-6 px-[3.5rem] py-[1rem] border font-medium rounded w-fit mx-auto md:mx-0 cursor-pointer transition-all ease-in-out duration-300 ${className ?? ''}`}
             style={{
                 backgroundColor: isActive ? activeStyles.backgroundColor : (isHouvered ? houverStyles.backgroundColor : colorBg),
                 borderColor: isActive ? activeStyles.borderColor : (isHouvered ? houverStyles.borderColor : colorLine),
                 color: isActive ? activeStyles.color : (isHouvered ? houverStyles.color : colorText),
-                transition: 'all 0.3s ease',
             }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            onMouseUp={() => setIsAcvtive(true)}
-            onMouseUpCapture={() => setIsAcvtive(false)}
+            onMouseUp={() => setIsActive(true)}
+            onMouseUpCapture={() => setIsActive(false)}
         >
             Shop now
         </button>

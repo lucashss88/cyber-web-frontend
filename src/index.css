@@ -14,7 +14,31 @@ body {
     --color-d4: #d4d4d4;
     --color-6c: #6c6c6c;
     --color-f6: #f6f6f6;
+    --color-a7: #a7a7a7;
+    --color-e7: #e7e7e7;
+    --color-9f: #9f9f9f;
+    --color-b5: #b5b5b5;
+    --color-f5: #f5f5f5;
+    --color-65: #656565;
+    --color-92: #929292;
+    --color-d9: #d9d9d9;
+    --color-5d: #5d5d5d;
     --color-quick-silver: #a4a4a4;
     --color-gray98: #fafafa;
     --color-dark-gray: #7e7e7e;
+}
+
+.scrollbar-custom::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+    background: var(--color-d9);
+    border-radius: 8px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb{
+    background-color: var(--color-5d);
+    border-radius: 4px;
+    border: 2px solid var(--color-d9);
 }
