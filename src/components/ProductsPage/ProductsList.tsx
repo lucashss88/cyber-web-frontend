@@ -8,10 +8,10 @@ const ProductsList = () => {
 
   return (
     <div
-    className=' w-19/20 m-auto h-auto flex flex-col items-center'
+    className=' w-19/20 lg:w-full m-auto h-auto flex flex-col items-center'
     >
         <ProductsResult/>
-        <div className='w-full h-auto flex justify-center gap-4 mt-5 flex-wrap bg-yellow-100 lg:w-15/20 lg:grid lg:grid-cols-3 lg:gap-5 lg:justify-items-center'>
+        <div className='w-full h-auto flex justify-center gap-4 mt-5 flex-wrap  lg:w-full lg:grid lg:grid-cols-3 lg:gap-4 lg:justify-items-center'>
           <ProductCard/>
           <ProductCard/>
           <ProductCard/>

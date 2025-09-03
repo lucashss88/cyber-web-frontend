@@ -5,7 +5,8 @@ const ProductsResult = () => {
 
   return (
     <div className='w-full text-6c text-lg md:text-2xl flex justify-start items-center gap-1'>
-        <p>Products Result :</p>
+        <p className='lg:hidden'>Products Result :</p>
+        <p className='hidden lg:block'>Selected Products: </p>
         <span className='font-bold text-black text-xl md:text-2xl'>{productCount}</span>
         
     </div>

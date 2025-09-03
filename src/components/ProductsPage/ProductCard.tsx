@@ -12,7 +12,7 @@ const ProductCard = () => {
         <div className='w-26 lg:w-28'>
             <img src={phoneImage} alt="phone-example-image" />
         </div>
-        <div className='w-35 text-center flex flex-col gap-4 bg-red-50 lg:w-45 items-center'>
+        <div className='w-35 text-center flex flex-col gap-4 lg:w-45 items-center'>
             <div>
                 <p className='font-bold text-black text-center line-clamp-2'>Apple iPhone 14 Pro 512GB Gold &#40;MQ233&#41;</p>
             </div>

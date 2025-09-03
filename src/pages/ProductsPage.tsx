@@ -22,7 +22,7 @@ const ProductsPage = () => {
 
   return (
     <div className=''>
-      <div className="bg-red-200 lg:w-19/20 lg:mx-auto lg:px-40">
+      <div className=" lg:w-19/20 lg:mx-auto lg:px-40 lg:py-10">
         <Breadcrumb
           crumbs={[
             { label: "Home", href: "/" },
@@ -32,8 +32,8 @@ const ProductsPage = () => {
         />
       </div>
 
-      <div className=' lg:flex lg:w-17/22 lg:m-auto lg:relative'>
-        <div className="bg-purple-300 hidden lg:flex lg:flex-col lg:flex-1 ">
+      <div className=' lg:flex lg:w-17/22 lg:m-auto lg:relative lg:gap-4'>
+        <div className=" hidden lg:flex lg:flex-col lg:flex-1 ">
           <BrandsFilter
             brands={brands}
             selectedBrands={selectedBrands}

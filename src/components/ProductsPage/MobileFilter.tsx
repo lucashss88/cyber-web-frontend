@@ -3,11 +3,10 @@ import leftArrowFilter from "../../assets/images/productsPage/leftArrowFilter.pn
 import arrowToggle from "../../assets/images/productsPage/arrowToggle.png"
 import type { MobileFilterProps } from "../../types/mobileFilterProps"
 import RangeSlider from "./RangeSlider"
-import BrandFilter from "./BrandsFilter"
+import BrandsFilter from "./BrandsFilter"
 
 const MobileFilter = ({ onClose, onApply }: MobileFilterProps) => {
   const [showPrice, setShowPrice] = useState(true)
-  const [showBrand, setShowBrand] = useState(true)
 
   const brands = [
     { name: "Apple", count: 148 },
@@ -40,7 +39,6 @@ const MobileFilter = ({ onClose, onApply }: MobileFilterProps) => {
 
   return (
     <div className="fixed inset-0 z-[9999] bg-white flex flex-col">
-      {/* header */}
       <div className="w-full max-w-[688px] mx-auto px-4 py-6 flex items-center gap-4">
         <img
           src={leftArrowFilter}
@@ -51,9 +49,7 @@ const MobileFilter = ({ onClose, onApply }: MobileFilterProps) => {
         <h2 className="font-medium text-2xl md:text-3xl">Filters</h2>
       </div>
 
-      {/* body */}
       <div className="w-full max-w-[688px] mx-auto px-4 flex-1 overflow-y-auto">
-        {/* price filter */}
         <button
           type="button"
           className="w-full flex justify-between items-center border-b border-b-b5 mb-6"
@@ -80,32 +76,13 @@ const MobileFilter = ({ onClose, onApply }: MobileFilterProps) => {
           </div>
         )}
 
-        {/* brand filter */}
-        <button
-          type="button"
-          className="w-full flex justify-between items-center border-b border-b-b5 mb-6"
-          onClick={() => setShowBrand((b) => !b)}
-        >
-          <h3 className="font-medium text-lg text-left md:text-2xl">Brand</h3>
-          <img
-            src={arrowToggle}
-            alt="arrow-brand"
-            className={`w-4 ${
-              showBrand ? "rotate-180" : "rotate-0"
-            } transition-transform duration-200 md:w-6`}
-          />
-        </button>
-
-        {showBrand && (
-          <BrandFilter
-            brands={brands}
-            selectedBrands={selectedBrands}
-            onChange={setSelectedBrands}
-          />
-        )}
+        <BrandsFilter
+          brands={brands}
+          selectedBrands={selectedBrands}
+          onChange={setSelectedBrands}
+        />
       </div>
 
-      {/* footer */}
       <div className="w-full max-w-[688px] mx-auto px-4 py-4 bg-white md:flex md:justify-center">
         <button
           type="button"
