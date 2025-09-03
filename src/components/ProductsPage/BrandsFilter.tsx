@@ -20,7 +20,7 @@ const BrandsFilter = ({ brands, selectedBrands, onChange }: BrandFilterProps) =>
   )
 
   return (
-    <div>
+    <div className="">
       
       <div className="bg-f5 w-full md:w-4/5 rounded-[8px] h-10 flex items-center md:m-auto px-4">
         <img src={magnifier} alt="magnifier" className="w-5 md:w-7" />
