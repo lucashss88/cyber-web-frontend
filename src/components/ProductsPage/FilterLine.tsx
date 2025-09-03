@@ -18,7 +18,6 @@ const FilterLine = () => {
         className="bg-white w-19/20 flex justify-around items-center"
         id="filter-line-container"
       >
-        {/* Botão de abrir filtros */}
         <div
           className="bg-white border border-d4 filter-box flex items-center justify-around min-w-41 min-h-14 md:min-w-50 md:min-h-17 px-2 rounded-md cursor-pointer"
           onClick={toggleMobileFilter}
@@ -27,7 +26,6 @@ const FilterLine = () => {
           <img src={filterIcon} alt="filter-icon" className="w-6 md:w-8" />
         </div>
 
-        {/* Ordenação por preço */}
         <ByPrice order={order} setOrder={setOrder} />
       </div>
 
