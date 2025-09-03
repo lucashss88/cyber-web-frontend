@@ -19,10 +19,10 @@ const Pagination: React.FC<PaginationProps> = ({
   }
 
   return (
-    <div className="flex items-center gap-2 my-11">
+    <div className=" w-68 md:w-8/11 flex items-center justify-center gap-2 my-11 m-auto">
 
       <button
-        className="px-3 py-1 rounded disabled:opacity-40"
+        className="px-3 py-1 rounded disabled:opacity-40 md:text-3xl"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
       >
@@ -31,14 +31,14 @@ const Pagination: React.FC<PaginationProps> = ({
 
       {pages.map((page, index) =>
         page === "..." ? (
-          <span key={`ellipsis-${index}`} className="px-3 py-1">
+          <span key={`ellipsis-${index}`} className="px-3 py-1 md:text-3xl">
             ...
           </span>
         ) : (
           <button
             key={`page-${page}-${index}`}
             onClick={() => onPageChange(page as number)}
-            className={`px-3 py-1 rounded ${
+            className={`px-3 py-1 rounded md:text-xl ${
               currentPage === page
                 ? "bg-black text-white"
                 : "hover:bg-gray-200"
@@ -50,7 +50,7 @@ const Pagination: React.FC<PaginationProps> = ({
       )}
 
       <button
-        className="px-3 py-1 rounded disabled:opacity-40"
+        className="px-3 py-1 rounded disabled:opacity-40 md:text-3xl"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
       >
