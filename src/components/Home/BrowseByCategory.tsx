@@ -9,16 +9,41 @@ import CamerasIcon from "../../assets/images/Home/CamerasIcon.png"
 import SmartWatchesIcon from "../../assets/images/Home/SmartWatchesIcon.png"
 import PhonesIcon from "../../assets/images/Home/PhonesIcon.png"
 
-const categories = [
-    {label: 'Phones', icon:PhonesIcon},
-    {label: 'Smart Watches', icon:SmartWatchesIcon},
-    {label: 'Cameras', icon:CamerasIcon},
-    {label: 'Headphones', icon:HeadphonesIcon},
-    {label: 'Computers', icon:ComputersIcon},
-    {label: 'Gaming', icon:GamingIcon}
-];
+import { useEffect, useState } from "react"
+
+const iconMap: Record<string,string> = {
+    "Phones": PhonesIcon,
+    "Smart Watches": SmartWatchesIcon,
+    "Cameras": CamerasIcon,
+    "Headphones": HeadphonesIcon,
+    "Computers": ComputersIcon,
+    "Gaming": GamingIcon
+};
 
 export default function BrowseByCategory() {
+
+    const [categories, setCategories] = useState<{label:string, icon:string}[]>([])
+
+    useEffect(() => {
+        async function fetchCategories() {
+            try {
+                const response = await fetch('http://localhost:3001/api/categories');
+                const json = await response.json();
+                const categoryNames: string[] = json.data;
+
+                const categoriesAPIWithIcons = categoryNames.map(name => ({
+                    label: name,
+                    icon: iconMap[name] || ""
+                }));
+
+                setCategories(categoriesAPIWithIcons);
+            } catch (e) {
+                console.error("Erro ao buscar categorias: ", e);
+            }
+        }
+
+        fetchCategories();
+    }, [])
 
     return (    
         <div className="w-full bg-white py-10">
