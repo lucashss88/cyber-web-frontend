@@ -26,7 +26,7 @@ const Header = () => {
          
           <div className="relative max-w-lg">
           
-            <img src={searchIcon} alt="Ícone de Busca" className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5" />
+            <img src={searchIcon} alt="Ícone de Busca." className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5" />
             <input
               type="text"
               placeholder="Search"
@@ -38,7 +38,7 @@ const Header = () => {
           <div className="flex items-center gap-8">
             <nav>
               <ul className="flex items-center gap-6">
-                <li><Link to="/homepage" className="text-gray-400 hover:text-black">Home</Link></li>
+                <li><Link to="/home" className="text-gray-400 hover:text-black">Home</Link></li>
                 <li><Link to="/products_page" className="font-bold text-black">Shop</Link></li>
                 <li><a href="#" className="text-gray-400 hover:text-black">Contact Us</a></li>
                 <li><Link to="#" className="text-gray-400 hover:text-black">Blog</Link></li>
@@ -73,7 +73,7 @@ const Header = () => {
               <li><Link to="/home" className="text-gray-700">Home</Link></li>
               <li><Link to="/products_page" className="text-gray-700">Shop</Link></li>
               <li><a href="#" className="text-gray-700">Contact Us</a></li>
-              <li><Link to="/blog" className="text-gray-700">Blog</Link></li>
+              <li><Link to="#" className="text-gray-700">Blog</Link></li>
             </ul>
            </nav>
         </div>
@@ -82,4 +82,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Header; 
