@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -85,7 +83,7 @@ const ProductDetailsContainer = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-32">
-      <ProductGallery />
+      <ProductGallery imageUrl={product.url_image} />
       <div className="flex flex-col">
         <ProductTitle 
           name={product.name}
