@@ -71,9 +71,9 @@ const Header = () => {
            <nav>
             <ul className="flex flex-col items-start gap-4 pt-4">
               <li><Link to="/home" className="text-gray-700">Home</Link></li>
-              <li><Link to="/products_detail" className="text-gray-700">Shop</Link></li>
-              <li><a href="/" className="text-gray-700">Contact Us</a></li>
-              <li><Link to="/" className="text-gray-700">Blog</Link></li>
+              <li><Link to="/products_page" className="text-gray-700">Shop</Link></li>
+              <li><a href="#" className="text-gray-700">Contact Us</a></li>
+              <li><Link to="#" className="text-gray-700">Blog</Link></li>
             </ul>
            </nav>
         </div>

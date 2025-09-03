@@ -31,12 +31,12 @@ const Pagination: React.FC<PaginationProps> = ({
 
       {pages.map((page, index) =>
         page === "..." ? (
-          <span key={index} className="px-3 py-1">
+          <span key={`ellipsis-${index}`} className="px-3 py-1">
             ...
           </span>
         ) : (
           <button
-            key={page}
+            key={`page-${page}-${index}`}
             onClick={() => onPageChange(page as number)}
             className={`px-3 py-1 rounded ${
               currentPage === page
