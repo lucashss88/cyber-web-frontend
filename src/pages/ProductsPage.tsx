@@ -21,8 +21,8 @@ const ProductsPage = () => {
   const [selectedBrands, setSelectedBrands] = useState<string[]>([])
 
   return (
-    <div className='bg-green-400'>
-      <div className="w-19/20 mx-auto px-40">
+    <div className=''>
+      <div className="bg-red-200 lg:w-19/20 lg:mx-auto lg:px-40">
         <Breadcrumb
           crumbs={[
             { label: "Home", href: "/" },
@@ -32,8 +32,8 @@ const ProductsPage = () => {
         />
       </div>
 
-      <div className='flex bg-red-300 w-19/20 mx-auto px-40'>
-        <div className=" my-6 hidden lg:flex">
+      <div className=' lg:flex lg:bg-yellow-300 lg:w-17/22 lg:m-auto lg:relative lg:gap-20'>
+        <div className="bg-purple-300 hidden lg:flex lg:flex-col lg:flex-1 ">
           <BrandsFilter
             brands={brands}
             selectedBrands={selectedBrands}
@@ -41,7 +41,7 @@ const ProductsPage = () => {
           />
         </div>
         <FilterLine />
-        <div className='bg-blue-400 '>
+        <div className=' lg:flex-5'>
           <ProductsList />
         </div>
       </div>
