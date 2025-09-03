@@ -26,7 +26,7 @@ const Header = () => {
          
           <div className="relative max-w-lg">
           
-            <img src={searchIcon} alt="Ícone de Busca" className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5" />
+            <img src={searchIcon} alt="Ícone de Busca." className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5" />
             <input
               type="text"
               placeholder="Search"
@@ -70,10 +70,10 @@ const Header = () => {
         <div className="lg:hidden bg-white px-4 pb-4 border-t border-gray-200">
            <nav>
             <ul className="flex flex-col items-start gap-4 pt-4">
-              <li><Link to="/" className="text-gray-700">Home</Link></li>
-              <li><Link to="/shop" className="text-gray-700">Shop</Link></li>
-              <li><a href="#" className="text-gray-700">Contact Us</a></li>
-              <li><Link to="/blog" className="text-gray-700">Blog</Link></li>
+              <li><Link to="/home" className="text-gray-700">Home</Link></li>
+              <li><Link to="/products_detail" className="text-gray-700">Shop</Link></li>
+              <li><a href="/" className="text-gray-700">Contact Us</a></li>
+              <li><Link to="/" className="text-gray-700">Blog</Link></li>
             </ul>
            </nav>
         </div>
@@ -82,4 +82,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Header; 
