@@ -26,7 +26,7 @@ const FilterLine = () => {
         className="bg-white border border-d4 filter-box flex items-center justify-around min-w-41 min-h-14 md:min-w-50 md:min-h-17 px-2 rounded-md cursor-pointer"
         onClick={toggleMobileFilter}
       >
-        <span className="text-sm font-normal md:text-xl">Filters</span>
+        <span className="text-sm font-normal md:text-2xl">Filters</span>
         <img src={filterIcon} alt="filter-icon" className="w-6 md:w-8" />
       </div>
 
