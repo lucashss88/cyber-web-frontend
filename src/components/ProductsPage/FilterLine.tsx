@@ -20,7 +20,7 @@ const FilterLine = () => {
   }
 
   return (
-  <div className="bg-white py-11 flex justify-center items-center relative">
+  <div className="bg-white py-11 flex justify-center items-center relative lg:hidden">
     <div className="bg-white w-19/20 flex justify-around items-center" id="filter-line-container">
       <div
         className="bg-white border border-d4 filter-box flex items-center justify-around min-w-41 min-h-14 md:min-w-50 md:min-h-17 px-2 rounded-md cursor-pointer"
