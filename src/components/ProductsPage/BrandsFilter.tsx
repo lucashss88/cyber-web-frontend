@@ -51,7 +51,7 @@ const BrandsFilter = ({ brands, selectedBrands, onChange }: BrandFilterProps) =>
             />
           </div>
 
-          <div className="mt-4 max-h-60 lg:max-h-70 overflow-y-auto scrollbar-custom pr-1">
+          <div className="mt-4 max-h-60 lg:max-h-70 overflow-y-auto scrollbar-custom pr-1 lg:overflow-y-visible">
             {filteredBrands.map((brand) => {
               const checked = selectedBrands.includes(brand.name)
               return (
