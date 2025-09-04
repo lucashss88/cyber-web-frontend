@@ -1,9 +1,10 @@
-
 import React from 'react';
 import { FaRegHeart } from 'react-icons/fa'; 
+import {useNavigate} from "react-router-dom";
 
 type Props = {
-  product: {
+    product: {
+    id: number;
     imageUrl: string;
     name: string;
     price: number;
@@ -11,6 +12,10 @@ type Props = {
 };
 
 const ProductCard: React.FC<Props> = ({ product }) => {
+  const navigate = useNavigate();
+  const handleProduct = async (id: number) => {
+    navigate(`/product/${id}`);
+  }
   return (
     <div className="bg-gray-50 p-4 rounded-lg flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-300">
       <div className="w-full flex justify-end">
@@ -25,7 +30,7 @@ const ProductCard: React.FC<Props> = ({ product }) => {
         <p className="font-bold text-black line-clamp-2 h-12">{product.name}</p>
         <div className='mt-4'>
           <span className="block font-bold text-2xl">${product.price}</span>
-          <button className="mt-4 text-white text-sm w-full py-3 bg-black rounded-lg hover:bg-gray-800 transition-colors">
+          <button onClick={() => handleProduct(product.id)} className="mt-4 text-white text-sm w-full py-3 bg-black rounded-lg hover:bg-gray-800 transition-colors">
             Buy Now
           </button>
         </div>
