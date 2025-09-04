@@ -80,9 +80,20 @@ const ProductDetailsContainer = () => {
       { label: product.name },
     ];
   };
-
-  const isSelectionComplete = !!selectedColor && !!selectedMemory;
+  
   const memoryOptions = product.storage_options?.map(option => option.size) ?? [];
+  const hasMemoryOptions = memoryOptions.length > 0;
+
+let isSelectionComplete = false; 
+
+if (hasMemoryOptions) {
+  
+  isSelectionComplete = !!selectedColor && !!selectedMemory;
+} else {
+  
+  isSelectionComplete = !!selectedColor;
+}
+  
 
   return (
     <>
