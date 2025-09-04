@@ -58,7 +58,7 @@ export default function ProductClassification({ appDisplay }: isMobile) {
     }
 
     return (    
-        <section className="flex flex-col md:flex-row items-center justify-between px-4 sm:px-20 py-10 sm:py-0 ">
+        <section className="flex flex-col md:flex-row items-center justify-center px-4 sm:px-20 py-10 sm:py-0 ">
             {categories.map((cat, index) => 
                 <div key={index}>
                     <ProductClassificatonCard 
