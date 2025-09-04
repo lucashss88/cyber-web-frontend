@@ -8,7 +8,7 @@ interface ProductCardProps {
 
 const ProductCard = ({ name, price, imageUrl }: ProductCardProps) => {
   return (
-    <div className="w-41 h-88 py-5 rounded-[9px] flex flex-col items-center justify-around lg:w-56 lg:min-h-88">
+    <div className="bg-f6 w-41 h-88 py-5 rounded-[9px] flex flex-col items-center justify-around lg:w-56 lg:min-h-88">
       <div className="w-35 flex justify-end">
         <img src={heartIcon} alt="heart-icon" className="opacity-30 w-8" />
       </div>
