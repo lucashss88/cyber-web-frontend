@@ -1,69 +1,107 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 🖥️ CYBER WEB FRONTEND
 
-Currently, two official plugins are available:
+## Description
+**CYBER WEB FRONTEND** is the user interface of the Cyber Web project.  
+It provides the client-side experience for browsing, filtering, and purchasing products, fully integrated with the [Cyber Web Backend](https://github.com/lucashss88/cyber-web-backend.git).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## Main Features
+- Product listing with pagination and sorting  
+- Filters by price, brand, category, and tags  
+- Responsive and modern design with Tailwind CSS  
+- Integration with the Cyber Web API  
+- Interactive product cards and shopping actions  
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Tech Stack
+- **React (Vite)** – Fast frontend framework  
+- **TypeScript** – Static typing and safety  
+- **Tailwind CSS** – Utility-first CSS framework  
+- **PostCSS & Autoprefixer** – CSS processing (pre-configured)  
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Getting Started
+
+Follow the steps below to run the project locally:
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/danielacvmelo/cyber-web-frontend.git
+cd cyber-web-frontend
+````
+
+### 2. Install dependencies
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 3. Configure environment variables
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Create a `.env` file in the root of the project and add the backend API URL:
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Example:
+```env
+VITE_API_URL=http://localhost:3000
 ```
+
+> ⚠️ Make sure the [Cyber Web Backend](https://github.com/lucashss88/cyber-web-backend.git) is running locally or update the URL above with the deployed API.
+
+### 4. Start the development server
+
+```bash
+npm run dev
+```
+
+The app will be available at:
+
+```
+http://localhost:5173
+```
+
+---
+
+## Build and Preview
+
+Generate an optimized production build:
+
+```bash
+npm run build
+```
+
+Preview the production build locally:
+
+```bash
+npm run preview
+```
+
+---
+
+## Development Notes
+
+* **Tailwind CSS Extension (VS Code):**
+  Optional, but recommended. It provides class name autocompletion and syntax highlighting.
+* **PostCSS:**
+  Already included and configured in the project. No extra installation needed by the user.
+
+---
+
+## Frontend & Backend
+
+* **Backend:** [Cyber Web Backend](https://github.com/lucashss88/cyber-web-backend.git)
+* **Frontend:** [Cyber Web Frontend](https://github.com/danielacvmelo/cyber-web-frontend.git)
+
+---
+
+## Authors
+
+* @lucashss88
+* @danielacvmelo
+* @edgarneto12
+* @VitorBeckenkamp
+* @Sandro-A-Moraes
+
