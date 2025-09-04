@@ -5,7 +5,7 @@ import phoneImage from '../../assets/images/productsPage/phone-example.png'
 
 const ProductCard = () => {
   return (
-    <div className='bg-f6 w-41 h-88 py-5 rounded-[9px] flex flex-col items-center justify-around lg:w-56'>
+    <div className='bg-f6 w-41 h-88 py-5 rounded-[9px] flex flex-col items-center justify-around lg:w-45 xl:w-66 xl:h-108'>
         <div className=' w-35 flex justify-end'>
             <img src={heartIcon} alt="heart-icon" className='opacity-30 w-8'/>
         </div>

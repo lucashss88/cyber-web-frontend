@@ -32,7 +32,7 @@ const ProductsPage = () => {
         />
       </div>
 
-      <div className=' lg:flex lg:w-17/22 lg:m-auto lg:relative lg:gap-4'>
+      <div className=' lg:flex lg:w-17/22 lg:m-auto lg:relative lg:gap-8 xl:gap-35'>
         <div className=" hidden lg:flex lg:flex-col lg:flex-1 ">
           <BrandsFilter
             brands={brands}

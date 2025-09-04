@@ -17,7 +17,7 @@ const ProductsList = () => {
         <ByPrice order={order} setOrder={setOrder} />
       </div>
 
-      <div className="w-full h-auto flex justify-center gap-4 mt-5 flex-wrap  lg:w-full lg:grid lg:grid-cols-3 lg:gap-4 lg:justify-items-center">
+      <div className="w-full h-auto flex justify-center gap-4 mt-5 flex-wrap  lg:w-full lg:grid lg:grid-cols-3 lg:gap-15 xl:gap-x-65 2xl:gap-x-10 xl:gap-y-5 lg:justify-items-center">
 
         <ProductCard />
         <ProductCard />
