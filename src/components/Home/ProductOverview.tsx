@@ -18,6 +18,7 @@ type ApiProduct = {
 };
 
 type ProductCardProps = {
+    id: number
     imageUrl: string,
     name: string,
     price: number,
@@ -39,6 +40,7 @@ export default function ProductOverview() {
                 const json = await response.json();
 
                 const mappedProducts: ProductCardProps[] = (json.data || []).map((item: ApiProduct) => ({
+                    id: item.id,
                     imageUrl: item.url_image,
                     name: item.name,
                     price: parseFloat(item.price),
