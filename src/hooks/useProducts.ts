@@ -10,6 +10,7 @@ interface Product {
 
 interface UseProductsResult {
   products: Product[]
+  totalProducts: number
   totalPages: number
   loading: boolean
   error: string | null
@@ -21,6 +22,7 @@ export function useProducts(page: number, order: SortOption): UseProductsResult 
   const [totalPages, setTotalPages] = useState(1)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [totalProducts, setTotalProducts] = useState<number>(0)
 
   useEffect(() => {
     async function fetchProducts() {
@@ -33,6 +35,7 @@ export function useProducts(page: number, order: SortOption): UseProductsResult 
 
         setProducts(data.data)
         setTotalPages(data.metadata.total_pages)
+        setTotalProducts(data.metadata.total_items)
       } catch (e) {
         setError("Error fetching products")
         console.error("Error fetching products: ", e)
@@ -44,5 +47,5 @@ export function useProducts(page: number, order: SortOption): UseProductsResult 
     fetchProducts()
   }, [url, page, order])
 
-  return { products, totalPages, loading, error }
+  return { products, totalPages, loading, error, totalProducts }
 }
