@@ -15,7 +15,7 @@ const ByPrice: React.FC<ByPriceProps> = ({ order, setOrder }) => {
   }
 
   return (
-    <div className="bg-white border border-d4 filter-box flex items-center justify-around min-w-41 min-h-14 md:min-w-50 md:min-h-17 px-2 rounded-md relative">
+    <div className="bg-white border border-d4 filter-box flex items-center justify-around min-w-41 min-h-14 md:min-w-50 md:min-h-17 px-2 rounded-md relative lg:min-h-10">
       <select
         className="flex-1 text-xs md:text-sm bg-transparent outline-none appearance-none font-normal text-gray-700"
         name="byPrice"
