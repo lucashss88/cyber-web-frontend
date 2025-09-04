@@ -9,16 +9,57 @@ import CamerasIcon from "../../assets/images/Home/CamerasIcon.png"
 import SmartWatchesIcon from "../../assets/images/Home/SmartWatchesIcon.png"
 import PhonesIcon from "../../assets/images/Home/PhonesIcon.png"
 
-const categories = [
-    {label: 'Phones', icon:PhonesIcon},
-    {label: 'Smart Watches', icon:SmartWatchesIcon},
-    {label: 'Cameras', icon:CamerasIcon},
-    {label: 'Headphones', icon:HeadphonesIcon},
-    {label: 'Computers', icon:ComputersIcon},
-    {label: 'Gaming', icon:GamingIcon}
-];
+import { useEffect, useState } from "react"
+
+const iconMap: Record<string,string> = {
+    "Phones": PhonesIcon,
+    "Smart Watches": SmartWatchesIcon,
+    "Cameras": CamerasIcon,
+    "Headphones": HeadphonesIcon,
+    "Computers": ComputersIcon,
+    "Gaming": GamingIcon
+};
 
 export default function BrowseByCategory() {
+
+    const [categories, setCategories] = useState<{label:string, icon:string}[]>([])
+
+    useEffect(() => {
+        async function fetchCategories() {
+            try {
+                const response = await fetch('http://localhost:3001/api/categories');
+                const json = await response.json();
+                const categoryNames: string[] = json.data;
+
+                const categoriesAPIWithIcons = categoryNames.map(name => ({
+                    label: name,
+                    icon: iconMap[name] || ""
+                }));
+
+                setCategories(categoriesAPIWithIcons);
+            } catch (e) {
+                console.error("Erro ao buscar categorias: ", e);
+            }
+        }
+
+        fetchCategories();
+    }, [])
+
+    const handleProductsCateg = async (category: string) => {
+        try {
+            const response = await fetch(`http://localhost:3001/api/products/category/${category}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const json = await response.json();
+            const products = json.data;
+            console.log(products);
+        } catch (e) {
+            console.error("Erro ao buscar produto: ", e);
+        }
+    }
 
     return (    
         <div className="w-full bg-white py-10">
@@ -45,7 +86,7 @@ export default function BrowseByCategory() {
 
                 <div className="flex justify-center gap-6 flex-wrap">
                     {categories.map((cat, index) => 
-                        <div key={index} className="w-28 h-28 bg-[#FAFAFA] rounded-lg flex flex-col items-center justify-center hover:bg-gray-200 transition cursor-pointer">
+                        <div key={index} onClick={() => handleProductsCateg(cat.label)} className="w-28 h-28 bg-[#FAFAFA] rounded-lg flex flex-col items-center justify-center hover:bg-gray-200 transition cursor-pointer">
                             <img src={cat.icon} alt={cat.label} className="w-8 h-8 mb-2" />
                             <span className="text-sm font-medium text-center">
                                 {cat.label}

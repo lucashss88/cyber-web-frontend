@@ -22,7 +22,7 @@ export default function ProductDetailsPage() {
 
   return (
     <div className="container mx-auto p-4">
-      <Breadcrumb crumbs={crumbs} />
+      
 
 
       {productId ? (
