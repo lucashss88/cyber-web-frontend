@@ -11,7 +11,7 @@ const ByPrice: React.FC<ByPriceProps> = ({ order, setOrder }) => {
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value as SortOption
     setOrder(value)
-    console.log("Selected order:", value) //for debugging
+    console.log("Selected order:", value)
   }
 
   return (

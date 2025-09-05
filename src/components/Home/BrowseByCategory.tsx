@@ -50,6 +50,7 @@ export default function BrowseByCategory() {
     const handleProductsCateg = async (categoryName: string) => {
         try {
             navigate(`/products_page/${encodeURIComponent(categoryName)}`);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         } catch (e) {
             console.error("Erro ao buscar produto: ", e);
         }

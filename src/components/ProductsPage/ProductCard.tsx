@@ -12,7 +12,9 @@ const ProductCard = ({ id, name, price, imageUrl }: ProductCardProps) => {
   const navigate = useNavigate();
   const handleProduct = async (id: number) => {
     navigate(`/product/${id}`);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
   }
 
   return (

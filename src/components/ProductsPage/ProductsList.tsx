@@ -1,31 +1,26 @@
-import { useState } from 'react'
-import ProductCard from './ProductCard'
-import ProductsResult from './ProductsResult'
+import ProductCard from '../productDetailsPage/relatedProducts/ProductCard';
 import Pagination from './Pagination'
-import ByPrice from './ByPrice'
-import type { SortOption } from '../../types/byPrice'
-import { useProducts } from '../../hooks/useProducts'
 
-interface ProductsListProps {
-  categoryName?: string;
-  selectedBrands: string[];
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  url_image: string;
 }
 
-const ProductsList = ({categoryName, selectedBrands}: ProductsListProps) => {
-  const [page, setPage] = useState(1)
-  const [order, setOrder] = useState<SortOption>("highToLow")
+interface ProductsListProps {
+  products: Product[];
+  totalPages: number;
+  loading: boolean;
+  error: string | null;
+  currentPage: number;
+  onPageChange: (page: number) => void;
+}
 
-  const { products, totalPages, totalProducts, loading, error } = useProducts(page, order, categoryName, selectedBrands)
+const ProductsList = ({products, totalPages, loading, error, currentPage, onPageChange}: ProductsListProps) => {
 
   return (
     <div className="w-19/20 lg:w-full m-auto h-auto flex flex-col items-center">
-      <div className="self-start lg:flex lg:w-full lg:justify-between">
-        <ProductsResult totalProducts={totalProducts} />
-        <div className="hidden lg:block">
-          <ByPrice order={order} setOrder={setOrder} />
-        </div>
-      </div>
-
       {loading && <p>Loading...</p>}
       {error && <p className="text-red-500">{error}</p>}
 
@@ -33,15 +28,17 @@ const ProductsList = ({categoryName, selectedBrands}: ProductsListProps) => {
         {products.map((product) => (
           <ProductCard
             key={product.id}
-            id={product.id}
-            name={product.name}
-            price={product.price}
-            imageUrl={product.url_image}
+            product={{
+              id: product.id,
+              name: product.name,
+              price: product.price,
+              imageUrl: product.url_image
+            }}
           />
         ))}
       </div>
 
-      <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
+      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />
     </div>
   )
 }

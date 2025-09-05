@@ -4,8 +4,16 @@ import ByPrice from "./ByPrice"
 import type { SortOption } from "../../types/byPrice"
 import MobileFilter from "./MobileFilter"
 
-const FilterLine = () => {
-  const [order, setOrder] = useState<SortOption>("highToLow")
+interface FilterLineProps {
+  categoryName?: string;
+  selectedBrands: string[];
+  onFiltersApply: (brands: string[]) => void;
+  order: SortOption;
+  setOrder: (order: SortOption) => void;
+}
+
+const FilterLine = ({ categoryName, selectedBrands, onFiltersApply, order, setOrder }: FilterLineProps) => {
+
   const [showMobileFilter, setShowMobileFilter] = useState(false)
 
   const toggleMobileFilter = () => {
@@ -32,8 +40,11 @@ const FilterLine = () => {
       {showMobileFilter && (
         <MobileFilter
           onClose={toggleMobileFilter}
-          onApply={(brands, range) => {
-            console.log("Applied filters:", brands, range)
+          categoryName={categoryName}
+          initialSelectedBrands={selectedBrands}
+          onApply={(brands) => {
+            onFiltersApply(brands);
+            toggleMobileFilter();
           }}
         />
       )}
