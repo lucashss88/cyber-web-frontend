@@ -5,14 +5,27 @@ import Breadcrumb from '../components/Breadcrumb'
 import BrandsFilter from '../components/ProductsPage/BrandsFilter'
 import { useBrands } from '../hooks/useBrands'
 import {useParams} from "react-router-dom";
+import type {SortOption} from "../types/byPrice.ts";
+import {useProducts} from "../hooks/useProducts.ts";
+import ProductsResult from "../components/ProductsPage/ProductsResult.tsx";
+import ByPrice from "../components/ProductsPage/ByPrice.tsx";
 
 const ProductsPage = () => {
   const [selectedBrands, setSelectedBrands] = useState<string[]>([])
   const { categoryName } = useParams<{ categoryName: string }>();
   const {brands} = useBrands(categoryName)
+  const [order, setOrder] = useState<SortOption>("highToLow");
+  const [page, setPage] = useState(1);
+  const { products, totalPages, totalProducts, loading, error } = useProducts(
+    page,
+    order,
+    categoryName,
+    selectedBrands
+  );
 
   useEffect(() => {
     setSelectedBrands([]);
+    setPage(1)
   }, [categoryName]);
 
   return (
@@ -35,11 +48,25 @@ const ProductsPage = () => {
             onChange={setSelectedBrands}
           />
         </div>
-        <FilterLine />
+        <FilterLine
+          categoryName={categoryName}
+          selectedBrands={selectedBrands}
+          onFiltersApply={setSelectedBrands}
+          order={order}
+          setOrder={setOrder}
+        />
         <div className=' lg:flex-5'>
+          <div className="hidden lg:flex lg:w-full lg:justify-between mb-4">
+            <ProductsResult totalProducts={totalProducts} />
+            <ByPrice order={order} setOrder={setOrder} />
+          </div>
           <ProductsList
-            categoryName={categoryName}
-            selectedBrands={selectedBrands}
+            products={products}
+            totalPages={totalPages}
+            loading={loading}
+            error={error}
+            currentPage={page}
+            onPageChange={setPage}
           />
         </div>
       </div>
