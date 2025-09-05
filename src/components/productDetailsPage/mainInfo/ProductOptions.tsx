@@ -14,9 +14,9 @@ export default function ProductOptions({ colors, memory, selectedColor, selected
   console.log(colors)
   return (
     <div className="space-y-4 mt-4">
-      <div className="flex flex-row items-center justify-between md:flex-col md:items-start">
-        <h3 className="mb-0 md:mb-2 text-sm font-semibold">Select Color:</h3>
-        <div className="flex gap-2">
+      <div className="flex flex-row items-center gap-4">
+        <h3 className="mb-0 text-sm font-semibold">Select Color:</h3>
+        <div className="flex gap-2 items-center">
           {colors.map(color => (
             <button
               key={color.name}
@@ -34,16 +34,12 @@ export default function ProductOptions({ colors, memory, selectedColor, selected
             const isSelected = selectedMemory === size;
 
             const getButtonClasses = () => {
-
               if (isSelected) {
                 return 'text-black border border-black';
               }
-
               if (size === '128GB') {
-              
                 return 'text-gray-300 border border-gray-300 hover:border-black';
               }
-
               return 'text-gray-500 border border-gray-300';
             };
 

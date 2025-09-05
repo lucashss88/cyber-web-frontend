@@ -13,7 +13,7 @@ const ProductGallery = ({ imageUrl }: { imageUrl: string }) => {
   }, [imageUrl]);
 
   return (
-    <div className="flex flex-col items-center w-full">
+    <div className="flex flex-col items-center w-full sm:mt-38">
       <div className="flex flex-col-reverse items-center w-full sm:flex-row sm:gap-8 sm:items-center">
        
         <div className="flex flex-row gap-10 mt-8 sm:mt-0 sm:flex-col sm:gap-4 sm:items-center">

@@ -9,12 +9,12 @@ type Props = {
 
 export default function ProductTitle({ name, price, originalPrice, discountedPrice }: Props) {
   return (
-    <div className="mb-4">
+    <div className="mb-4 mt-4 sm:mt-20">
  
-      <h1 className="text-2xl font-bold">{name}</h1>
+      <h1 className="text-5xl font-bold">{name}</h1>
       <div className="flex items-center gap-4 mt-2">
-        <span className="text-2xl font-semibold">${discountedPrice}</span>
-        {originalPrice && <span className="text-gray-500 line-through">${originalPrice}</span>}
+        <span className="mt-5 text-4xl font-medium">${discountedPrice}</span>
+        {originalPrice && <span className="mt-5 text-2xl text-gray-400 line-through">${originalPrice}</span>}
       </div>
     </div>
   );
