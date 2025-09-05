@@ -4,31 +4,37 @@ import ProductsList from '../components/ProductsPage/ProductsList'
 import Breadcrumb from '../components/Breadcrumb'
 import BrandsFilter from '../components/ProductsPage/BrandsFilter'
 import { useBrands } from '../hooks/useBrands'
-import {useParams} from "react-router-dom";
+import {useParams, useSearchParams} from "react-router-dom";
 import type {SortOption} from "../types/byPrice.ts";
 import {useProducts} from "../hooks/useProducts.ts";
 import ProductsResult from "../components/ProductsPage/ProductsResult.tsx";
 import ByPrice from "../components/ProductsPage/ByPrice.tsx";
 
 const ProductsPage = () => {
-  const [selectedBrands, setSelectedBrands] = useState<string[]>([])
   const { categoryName } = useParams<{ categoryName: string }>();
+  const [searchParams] = useSearchParams();
+  const initialBrands = searchParams.get('brands')?.split(',') || [];
   const {brands} = useBrands(categoryName)
+  const [selectedBrands, setSelectedBrands] = useState<string[]>(initialBrands)
   const [order, setOrder] = useState<SortOption>("highToLow");
   const [page, setPage] = useState(1);
   const { products, totalPages, totalProducts, loading, error } = useProducts(
     page,
     order,
     categoryName,
-    selectedBrands
+    selectedBrands,
   );
 
   useEffect(() => {
     setSelectedBrands([]);
-    setPage(1)
+    setPage(1);
   }, [categoryName]);
 
-  // Scroll para o topo ao montar a página
+  useEffect(() => {
+    const brandsFromURL = searchParams.get('brands')?.split(',') || [];
+    setSelectedBrands(brandsFromURL);
+  }, [searchParams]);
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
