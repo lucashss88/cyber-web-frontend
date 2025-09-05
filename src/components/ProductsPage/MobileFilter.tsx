@@ -4,22 +4,12 @@ import arrowToggle from "../../assets/images/productsPage/arrowToggle.png"
 import type { MobileFilterProps } from "../../types/mobileFilterProps"
 import RangeSlider from "./RangeSlider"
 import BrandsFilter from "./BrandsFilter"
+import { useBrands } from "../../hooks/useBrands"
 
 const MobileFilter = ({ onClose, onApply }: MobileFilterProps) => {
   const [showPrice, setShowPrice] = useState(true)
+  const {brands} = useBrands()
 
-  const brands = [
-    { name: "Apple", count: 148 },
-    { name: "Samsung", count: 120 },
-    { name: "Motorola", count: 90 },
-    { name: "Xiaomi", count: 80 },
-    { name: "POCO", count: 50 },
-    { name: "Nokia", count: 30 },
-    { name: "Honor", count: 20 },
-    { name: "Realme", count: 70 },
-    { name: "Asus", count: 40 },
-    { name: "Sony", count: 25 },
-  ]
 
   const [selectedBrands, setSelectedBrands] = useState<string[]>([])
   const [priceRange, setPriceRange] = useState<[number, number]>([1000, 6000])
