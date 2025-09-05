@@ -135,4 +135,4 @@ const ReviewsSection = ({ productId }: { productId: number }) => {
   );
 };
 
-export default ReviewsSection;
+export default ReviewsSection; 
