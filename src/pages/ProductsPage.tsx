@@ -15,6 +15,11 @@ const ProductsPage = () => {
     setSelectedBrands([]);
   }, [categoryName]);
 
+  // Scroll para o topo ao montar a página
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   return (
     <div className=''>
       <div className="hidden lg:block lg:w-19/20 lg:mx-auto lg:px-40 lg:py-10">
