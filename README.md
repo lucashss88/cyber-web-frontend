@@ -99,9 +99,9 @@ npm run preview
 
 ## Authors
 
-* @lucashss88
-* @danielacvmelo
-* @edgarneto12
-* @VitorBeckenkamp
-* @Sandro-A-Moraes
+* [@lucashss88]((https://github.com/lucashss88))
+* [@danielacvmelo](https://github.com/danielacvmelo)
+* [@edgarneto12](https://github.com/edgarneto12)
+* [@VitorBeckenkamp](https://github.com/VitorBeckenkamp)
+* [@Sandro-A-Moraes](https://github.com/Sandro-A-Moraes)
 
