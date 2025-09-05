@@ -9,7 +9,7 @@ export function useBrands() {
     useEffect(() => {
         async function fetchBrands() {
             try {
-                const response = await fetch(`${url}/api/brands`);
+                const response = await fetch(`http://localhost:3001/api/brands`);
 
                 if (!response.ok) {
                     throw new Error(`O servidor respondeu com o status:${response.status}`);
