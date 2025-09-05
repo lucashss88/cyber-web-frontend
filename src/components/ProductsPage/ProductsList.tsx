@@ -6,16 +6,21 @@ import ByPrice from './ByPrice'
 import type { SortOption } from '../../types/byPrice'
 import { useProducts } from '../../hooks/useProducts'
 
-const ProductsList = () => {
+interface ProductsListProps {
+  categoryName?: string;
+  selectedBrands: string[];
+}
+
+const ProductsList = ({categoryName, selectedBrands}: ProductsListProps) => {
   const [page, setPage] = useState(1)
   const [order, setOrder] = useState<SortOption>("highToLow")
 
-  const { products, totalPages, loading, error } = useProducts(page, order)
+  const { products, totalPages, totalProducts, loading, error } = useProducts(page, order, categoryName, selectedBrands)
 
   return (
     <div className="w-19/20 lg:w-full m-auto h-auto flex flex-col items-center">
       <div className="self-start lg:flex lg:w-full lg:justify-between">
-        <ProductsResult order={order} page={page} />
+        <ProductsResult totalProducts={totalProducts} />
         <div className="hidden lg:block">
           <ByPrice order={order} setOrder={setOrder} />
         </div>
@@ -28,6 +33,7 @@ const ProductsList = () => {
         {products.map((product) => (
           <ProductCard
             key={product.id}
+            id={product.id}
             name={product.name}
             price={product.price}
             imageUrl={product.url_image}

@@ -1,16 +1,8 @@
-import type { SortOption } from '../../types/byPrice'
-import { useProducts } from '../../hooks/useProducts'
-
 interface ProductsResultProps {
-  order: SortOption
-  page: number
+  totalProducts: number;
 }
 
-const ProductsResult = ({order, page}: ProductsResultProps) => {
-  
-  const { totalProducts } = useProducts(page, order)
-  
-
+const ProductsResult = ({totalProducts}: ProductsResultProps) => {
   return (
     <div className='w-full text-6c text-lg md:text-2xl flex justify-start items-center gap-1'>
         <p className='lg:hidden'>Products Result :</p>

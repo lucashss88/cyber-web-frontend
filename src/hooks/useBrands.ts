@@ -2,14 +2,20 @@ import { useEffect, useState } from "react";
 import type { Brand } from "../types/brands";
 
 
-export function useBrands() {
+export function useBrands(categoryName?: string) {
     const url = import.meta.env.VITE_API_URL;
     const [brands, setBrands] = useState<Brand[]>([])
 
     useEffect(() => {
         async function fetchBrands() {
             try {
-                const response = await fetch(`http://localhost:3001/api/brands`);
+                const endpoint = categoryName
+                  ? `http://localhost:3001/api/brands/${encodeURIComponent(categoryName)}`
+                  : `http://localhost:3001/api/brands`;
+
+                const response = await fetch(endpoint);
+
+                
 
                 if (!response.ok) {
                     throw new Error(`O servidor respondeu com o status:${response.status}`);
@@ -23,7 +29,7 @@ export function useBrands() {
         }
 
         fetchBrands();
-    }, [url]);
+    }, [url, categoryName]);
 
 
     return {brands};

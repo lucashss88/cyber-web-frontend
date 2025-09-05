@@ -1,12 +1,19 @@
 import heartIcon from '../../assets/images/header/heart-icon.png'
+import {useNavigate} from "react-router-dom";
 
 interface ProductCardProps {
+  id: number
   name: string
   price: number
   imageUrl: string
 }
 
-const ProductCard = ({ name, price, imageUrl }: ProductCardProps) => {
+const ProductCard = ({ id, name, price, imageUrl }: ProductCardProps) => {
+  const navigate = useNavigate();
+  const handleProduct = async (id: number) => {
+    navigate(`/product/${id}`);
+  }
+
   return (
     <div className="bg-f6 w-41 h-88 py-5 rounded-[9px] flex flex-col items-center justify-around lg:w-45 xl:w-66 xl:h-108">
       <div className="w-35 flex justify-end">
@@ -23,7 +30,7 @@ const ProductCard = ({ name, price, imageUrl }: ProductCardProps) => {
         </div>
         <span className="block font-bold text-2xl lg:mt-3">${price}</span>
 
-        <button className="text-white text-sm w-35 h-12 bg-black rounded-[8px]">
+        <button onClick={() => handleProduct(id)} className="text-white text-sm w-35 h-12 bg-black rounded-[8px]">
           Buy Now
         </button>
       </div>
