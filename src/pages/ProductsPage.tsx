@@ -3,20 +3,10 @@ import FilterLine from '../components/ProductsPage/FilterLine'
 import ProductsList from '../components/ProductsPage/ProductsList'
 import Breadcrumb from '../components/Breadcrumb'
 import BrandsFilter from '../components/ProductsPage/BrandsFilter'
+import { useBrands } from '../hooks/useBrands'
 
 const ProductsPage = () => {
-  const brands = [
-    { name: "Apple", count: 148 },
-    { name: "Samsung", count: 120 },
-    { name: "Motorola", count: 90 },
-    { name: "Xiaomi", count: 80 },
-    { name: "POCO", count: 50 },
-    { name: "Nokia", count: 30 },
-    { name: "Honor", count: 20 },
-    { name: "Realme", count: 70 },
-    { name: "Asus", count: 40 },
-    { name: "Sony", count: 25 },
-  ]
+  const {brands} = useBrands()
 
   const [selectedBrands, setSelectedBrands] = useState<string[]>([])
 

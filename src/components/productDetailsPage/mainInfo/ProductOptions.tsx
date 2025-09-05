@@ -14,7 +14,7 @@ export default function ProductOptions({ colors, memory, selectedColor, selected
   console.log(colors)
   return (
     <div className="space-y-4 mt-4">
-      <div className="flex flex-row items-center justify-between md:flex-col md:items-start">
+      <div className="flex flex-row items-center justify-between md:flex-start md:items-start">
         <h3 className="mb-0 md:mb-2 text-sm font-semibold">Select Color:</h3>
         <div className="flex gap-2">
           {colors.map(color => (

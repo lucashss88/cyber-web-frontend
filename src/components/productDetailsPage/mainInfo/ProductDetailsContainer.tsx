@@ -48,6 +48,7 @@ const ProductDetailsContainer = () => {
         }
         const data = await response.json();
         setProduct(data.data);
+        window.scrollTo({top: 0, behavior: "smooth"});
       } catch (err: any) {
         setError(err.message);
       } finally {
