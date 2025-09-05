@@ -30,6 +30,11 @@ const ProductsPage = () => {
     setPage(1);
   }, [categoryName]);
 
+  // Sempre que selectedBrands mudar, volta para página 1
+  useEffect(() => {
+    setPage(1);
+  }, [selectedBrands]);
+
   useEffect(() => {
     const brandsFromURL = searchParams.get('brands')?.split(',') || [];
     setSelectedBrands(brandsFromURL);
