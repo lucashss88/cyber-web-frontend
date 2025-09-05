@@ -23,7 +23,7 @@ const BrandsFilter = ({ brands, selectedBrands, onChange }: BrandFilterProps) =>
   )
 
   return (
-    <div className="lg:h-full ">
+    <div className="lg:h-full">
       <div className=" lg:w-69">
         <button
           type="button"
@@ -52,7 +52,7 @@ const BrandsFilter = ({ brands, selectedBrands, onChange }: BrandFilterProps) =>
             />
           </div>
 
-          <div className="mt-4 max-h-60 lg:max-h-70 overflow-y-auto scrollbar-custom pr-1 lg:overflow-y-visible">
+          <div className="mt-4 max-h-60 lg:max-h-70 overflow-y-auto scrollbar-custom pr-1 lg:overflow-y-scroll">
             {filteredBrands.map((brand) => {
               const checked = selectedBrands.includes(brand.brand)
               return (
