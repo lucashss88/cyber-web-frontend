@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ReviewCard from './ReviewCard';
 import ReviewsSummary from './ReviewsSummary';
+import { FaChevronDown } from 'react-icons/fa';
+import { FaChevronUp } from 'react-icons/fa';
 
 
 type SummaryData = {
@@ -74,6 +76,10 @@ const ReviewsSection = ({ productId }: { productId: number }) => {
     setVisibleReviewsCount(allReviews.length);
   };
 
+  const handleViewLess = () => {
+    setVisibleReviewsCount(3);
+  };
+
   if (isLoading) {
     return <div className="my-12">Carregando avaliações...</div>;
   }
@@ -111,9 +117,17 @@ const ReviewsSection = ({ productId }: { productId: number }) => {
       </div>
 
       {visibleReviewsCount < allReviews.length && (
-        <div className="text-center mt-8">
-          <button onClick={handleViewMore} className="py-2 px-5 border border-gray-300 rounded-lg hover:bg-gray-100">
-            View More
+        <div className="flex justify-center mt-8">
+          <button onClick={handleViewMore} className="py-2 px-5 border border-gray-300 rounded-lg hover:bg-gray-100 flex items-center gap-2 w-fit">
+            View More <FaChevronDown />
+          </button>
+        </div>
+      )}
+
+      {visibleReviewsCount === allReviews.length && allReviews.length > 3 && (
+        <div className="flex justify-center mt-4">
+          <button onClick={handleViewLess} className="py-2 px-5 border border-gray-300 rounded-lg hover:bg-gray-100 flex items-center gap-2 w-fit">
+            View Less <FaChevronUp />
           </button>
         </div>
       )}
@@ -121,4 +135,4 @@ const ReviewsSection = ({ productId }: { productId: number }) => {
   );
 };
 
-export default ReviewsSection;
+export default ReviewsSection; 
