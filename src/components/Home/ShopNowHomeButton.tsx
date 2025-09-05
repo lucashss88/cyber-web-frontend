@@ -1,6 +1,7 @@
 'use client'
 
 import {useState} from 'react'
+import {useNavigate} from "react-router-dom";
 
 type shopNowButtonProp = {
     colorBg: string,
@@ -13,6 +14,15 @@ export default function shopNowButton({ colorBg, colorLine, colorText, className
 
     const [isHouvered, setIsHovered] = useState(false);
     const [isActive, setIsActive] = useState(false);
+    const navigate = useNavigate();
+
+    const handleProductsCateg = async () => {
+        try {
+            navigate(`/products_page`);
+        } catch (e) {
+            console.error("Erro ao navegar para pagina de produtos: ", e);
+        }
+    }
 
     const houverStyles = {
         backgroundColor: '#000000',
@@ -38,6 +48,7 @@ export default function shopNowButton({ colorBg, colorLine, colorText, className
             onMouseLeave={() => setIsHovered(false)}
             onMouseUp={() => setIsActive(true)}
             onMouseUpCapture={() => setIsActive(false)}
+            onClick={() => handleProductsCateg()}
         >
             Shop now
         </button>
