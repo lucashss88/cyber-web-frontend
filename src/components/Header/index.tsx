@@ -22,7 +22,7 @@ const Header = () => {
           <img src={logoCyber} alt="Logo da Cyber" className="w-[66px] h-[23px]" />
         </Link>
         
-        <div className="hidden lg:flex items-center flex-grow justify-end gap-8">
+        <div className="hidden lg:flex items-center flex-grow justify-evenly gap-8">
           <div className="relative max-w-lg">
             <img src={searchIcon} alt="Ícone de Busca." className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5" />
             <input
@@ -34,7 +34,7 @@ const Header = () => {
 
           <div className="flex items-center gap-8">
             <nav>
-              {/* Alteração 3 (Desktop) */}
+            
               <ul className="flex items-center gap-6">
                 <li><Link to="/home" className={location.pathname === '/home' ? 'font-bold text-black' : 'text-gray-400 hover:text-black'}>Home</Link></li>
                 <li><Link to="/products_page" className={location.pathname.startsWith('/products_page') ? 'font-bold text-black' : 'text-gray-400 hover:text-black'}>Shop</Link></li>
@@ -61,7 +61,7 @@ const Header = () => {
       {isMenuOpen && (
         <div className="lg:hidden bg-white px-4 pb-4 border-t border-gray-200">
           <nav>
-            {/* Alteração 3 (Mobile) */}
+            
             <ul className="flex flex-col items-start gap-4 pt-4">
               <li><Link to="/home" onClick={closeMenu} className={location.pathname === '/home' ? 'font-bold text-gray-900' : 'text-gray-700'}>Home</Link></li>
               <li><Link to="/products_page" onClick={closeMenu} className={location.pathname.startsWith('/products_page') ? 'font-bold text-gray-900' : 'text-gray-700'}>Shop</Link></li>

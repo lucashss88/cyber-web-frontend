@@ -35,7 +35,6 @@ export function useProducts(
      setError(null)
      try {
         const backendOrder = order === 'highToLow' ? 'desc' : 'asc';
-
        const params = new URLSearchParams({
          page: page.toString(),
          order: backendOrder,
@@ -60,6 +59,7 @@ export function useProducts(
        setTotalPages(data.metadata.total_pages);
        setTotalProducts(data.metadata.total_items);
        setProducts(data.data);
+
       } catch (e) {
           setError("Error fetching products")
           console.error("Error fetching products: ", e)

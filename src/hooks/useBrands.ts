@@ -15,6 +15,8 @@ export function useBrands(categoryName?: string) {
 
                 const response = await fetch(endpoint);
 
+                
+
                 if (!response.ok) {
                     throw new Error(`O servidor respondeu com o status:${response.status}`);
                 }
