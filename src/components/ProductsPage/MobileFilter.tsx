@@ -1,22 +1,26 @@
 import { useState, useEffect } from "react"
 import leftArrowFilter from "../../assets/images/productsPage/leftArrowFilter.png"
 import arrowToggle from "../../assets/images/productsPage/arrowToggle.png"
-import type { MobileFilterProps } from "../../types/mobileFilterProps"
 import RangeSlider from "./RangeSlider"
 import BrandsFilter from "./BrandsFilter"
 import { useBrands } from "../../hooks/useBrands"
 
-const MobileFilter = ({ onClose, onApply }: MobileFilterProps) => {
+interface MobileFilterProps {
+  onClose: () => void;
+  onApply: (brands: string[]) => void;
+  categoryName?: string;
+  initialSelectedBrands: string[];
+}
+
+const MobileFilter = ({ onClose, onApply, categoryName, initialSelectedBrands }: MobileFilterProps) => {
   const [showPrice, setShowPrice] = useState(true)
-  const {brands} = useBrands()
-
-
-  const [selectedBrands, setSelectedBrands] = useState<string[]>([])
+  const {brands} = useBrands(categoryName)
+  const [localSelectedBrands, setLocalSelectedBrands] = useState<string[]>(initialSelectedBrands);
   const [priceRange, setPriceRange] = useState<[number, number]>([1000, 6000])
 
   const handleApply = () => {
-    console.log("Apply clicked:", selectedBrands, priceRange)
-    onApply?.(selectedBrands, priceRange)
+    console.log("Apply clicked:", localSelectedBrands, priceRange)
+    onApply(localSelectedBrands)
   }
 
   useEffect(() => {
@@ -68,8 +72,8 @@ const MobileFilter = ({ onClose, onApply }: MobileFilterProps) => {
 
         <BrandsFilter
           brands={brands}
-          selectedBrands={selectedBrands}
-          onChange={setSelectedBrands}
+          selectedBrands={localSelectedBrands}
+          onChange={setLocalSelectedBrands}
         />
       </div>
 

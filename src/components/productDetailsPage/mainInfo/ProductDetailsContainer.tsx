@@ -77,8 +77,8 @@ const ProductDetailsContainer = () => {
     return [
       { label: "Home", href: "/home" },
       { label: "Shop", href: "/products_page" },
-      { label: categoryName, href: `/products_page/category/${categoryName.toLowerCase()}` },
-      { label: product.brand, href: `/products_page/brand/${product.brand.toLowerCase()}` },
+      { label: categoryName, href: `/products_page/${categoryName}` },
+      { label: product.brand, href: `/products_page/${product.brand}
       { label: product.name },
     ];
   };
