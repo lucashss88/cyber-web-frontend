@@ -13,7 +13,7 @@ type Props = {
 
 const Breadcrumb: React.FC<Props> = ({ crumbs }) => {
   return (
-    <nav aria-label="breadcrumb" className="my-6">
+    <nav aria-label="breadcrumb" className="my-6 hidden md:block">
       <ol className="flex items-center text-sm text-gray-500 space-x-2 flex-wrap">
         {crumbs.map((crumb, index) => (
           <li key={index} className="flex items-center">

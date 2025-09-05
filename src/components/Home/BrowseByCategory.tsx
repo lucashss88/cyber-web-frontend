@@ -10,6 +10,7 @@ import SmartWatchesIcon from "../../assets/images/Home/SmartWatchesIcon.png"
 import PhonesIcon from "../../assets/images/Home/PhonesIcon.png"
 
 import { useEffect, useState } from "react"
+import {useNavigate} from "react-router-dom";
 
 const iconMap: Record<string,string> = {
     "Phones": PhonesIcon,
@@ -23,6 +24,7 @@ const iconMap: Record<string,string> = {
 export default function BrowseByCategory() {
 
     const [categories, setCategories] = useState<{label:string, icon:string}[]>([])
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function fetchCategories() {
@@ -45,17 +47,9 @@ export default function BrowseByCategory() {
         fetchCategories();
     }, [])
 
-    const handleProductsCateg = async (category: string) => {
+    const handleProductsCateg = async (categoryName: string) => {
         try {
-            const response = await fetch(`http://localhost:3001/api/products/category/${category}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-            const json = await response.json();
-            const products = json.data;
-            console.log(products);
+            navigate(`/products_page/${encodeURIComponent(categoryName)}`);
         } catch (e) {
             console.error("Erro ao buscar produto: ", e);
         }
