@@ -9,7 +9,7 @@ import ProductSpecs from './ProductSpecs';
 import ProductActions from './ProductActions';
 import ProductDescription from './ProductDescription';
 import ProductDeliveryInfo from './ProductDeliveryInfo';
-
+import NotificationToast from './NotificationToast';
 
 interface ProductData {
   id: number;
@@ -36,6 +36,9 @@ const ProductDetailsContainer = () => {
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedMemory, setSelectedMemory] = useState<string | null>(null);
 
+  
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
   useEffect(() => {
     if (!productId) return;
     const fetchProductDetails = async () => {
@@ -48,7 +51,6 @@ const ProductDetailsContainer = () => {
         }
         const data = await response.json();
         setProduct(data.data);
-        window.scrollTo({top: 0, behavior: "smooth"});
       } catch (err: any) {
         setError(err.message);
       } finally {
@@ -71,30 +73,25 @@ const ProductDetailsContainer = () => {
   }
 
   const generateCrumbs = () => {
-
     const categoryName = product.category?.name || 'Categoria';
     return [
       { label: "Home", href: "/home" },
       { label: "Shop", href: "/products_page" },
-      { label: categoryName, href: `/products_page/${categoryName}` },
-      { label: product.brand, href: `/products_page}` },
+      { label: categoryName, href: `/products_page/category/${categoryName.toLowerCase()}` },
+      { label: product.brand, href: `/products_page/brand/${product.brand.toLowerCase()}` },
       { label: product.name },
     ];
   };
-  
+
   const memoryOptions = product.storage_options?.map(option => option.size) ?? [];
   const hasMemoryOptions = memoryOptions.length > 0;
 
-let isSelectionComplete = false; 
-
-if (hasMemoryOptions) {
-  
-  isSelectionComplete = !!selectedColor && !!selectedMemory;
-} else {
-  
-  isSelectionComplete = !!selectedColor;
-}
-  
+  let isSelectionComplete = false; 
+  if (hasMemoryOptions) {
+    isSelectionComplete = !!selectedColor && !!selectedMemory;
+  } else {
+    isSelectionComplete = !!selectedColor;
+  }
 
   return (
     <>
@@ -121,12 +118,20 @@ if (hasMemoryOptions) {
           <div className="flex-grow" />
           <ProductActions
             isDisabled={!isSelectionComplete}
-            onAddToCart={() => alert('Added to cart!')}
-            onAddToWishlist={() => alert('Added to wishlist!')}
+            onAddToCart={() => setToastMessage('Added to Cart!')}
+            onAddToWishlist={() => setToastMessage('Added to Wishlist!')}
           />
           <ProductDeliveryInfo />
         </div>
       </div>
+
+     
+      {toastMessage && (
+        <NotificationToast 
+          message={toastMessage} 
+          onClose={() => setToastMessage(null)} 
+        />
+      )}
     </>
   );
 };
