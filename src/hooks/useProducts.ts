@@ -29,8 +29,8 @@ export function useProducts(page: number, order: SortOption): UseProductsResult 
      setError(null)     
      try {
         const backendOrder = order === 'highToLow' ? 'desc' : 'asc';
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/products?page=${page}&order=${backendOrder}`);
-
+        const response = await fetch(`http://localhost:3001/api/products?page=${page}&order=${backendOrder}`);
+        
         if (!response.ok) {
          throw new Error(`O servidor respondeu com o status:${response.status}`);
         }
