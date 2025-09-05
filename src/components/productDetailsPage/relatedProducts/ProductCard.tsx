@@ -15,6 +15,7 @@ const ProductCard: React.FC<Props> = ({ product }) => {
   const navigate = useNavigate();
   const handleProduct = async (id: number) => {
     navigate(`/product/${id}`);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   return (
     <div className="bg-gray-50 p-4 rounded-lg flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-300">
