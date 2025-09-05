@@ -1,11 +1,8 @@
 import { useState } from "react"
 import magnifier from "../../assets/images/productsPage/magnifier.png"
 import arrowToggle from "../../assets/images/productsPage/arrowToggle.png"
+import type { Brand } from "../../types/brands"
 
-interface Brand {
-  name: string
-  count: number
-}
 
 interface BrandFilterProps {
   brands: Brand[]
@@ -18,7 +15,7 @@ const BrandsFilter = ({ brands, selectedBrands, onChange }: BrandFilterProps) =>
   const [showBrands, setShowBrands] = useState(true)
 
   const filteredBrands = brands.filter((b) =>
-    b.name.toLowerCase().includes(query.toLowerCase())
+    b.brand.toLowerCase().includes(query.toLowerCase())
   )
 
   return (
@@ -53,10 +50,10 @@ const BrandsFilter = ({ brands, selectedBrands, onChange }: BrandFilterProps) =>
 
           <div className="mt-4 max-h-60 lg:max-h-70 overflow-y-auto scrollbar-custom pr-1 lg:overflow-y-visible">
             {filteredBrands.map((brand) => {
-              const checked = selectedBrands.includes(brand.name)
+              const checked = selectedBrands.includes(brand.brand)
               return (
                 <label
-                  key={brand.name}
+                  key={brand.id}
                   className="flex items-center gap-2 mb-2"
                 >
                   <input
@@ -66,15 +63,15 @@ const BrandsFilter = ({ brands, selectedBrands, onChange }: BrandFilterProps) =>
                     onChange={() => {
                       onChange(
                         checked
-                          ? selectedBrands.filter((b) => b !== brand.name)
-                          : [...selectedBrands, brand.name]
+                          ? selectedBrands.filter((b) => b !== brand.brand)
+                          : [...selectedBrands, brand.brand]
                       )
                     }}
                   />
                   <span className="text-sm md:text-xl text-black font-medium">
-                    {brand.name}
+                    {brand.brand}
                   </span>
-                  <span className="text-92 text-xs md:text-lg">{brand.count}</span>
+                  <span className="text-92 text-xs md:text-lg">{brand.total}</span>
                 </label>
               )
             })}

@@ -49,4 +49,5 @@ export function useProducts(page: number, order: SortOption): UseProductsResult 
     fetchProducts()
  }, [url, page, order])  
  
-return { products, totalPages, loading, error, totalProducts } }
+  return { products, totalPages, loading, error, totalProducts } 
+}
