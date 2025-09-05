@@ -19,6 +19,7 @@ export default function shopNowButton({ colorBg, colorLine, colorText, className
     const handleProductsCateg = async () => {
         try {
             navigate(`/products_page`);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         } catch (e) {
             console.error("Erro ao navegar para pagina de produtos: ", e);
         }
