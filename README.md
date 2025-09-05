@@ -99,7 +99,7 @@ npm run preview
 
 ## Authors
 
-* [@lucashss88]((https://github.com/lucashss88))
+* [@lucashss88](https://github.com/lucashss88)
 * [@danielacvmelo](https://github.com/danielacvmelo)
 * [@edgarneto12](https://github.com/edgarneto12)
 * [@VitorBeckenkamp](https://github.com/VitorBeckenkamp)
