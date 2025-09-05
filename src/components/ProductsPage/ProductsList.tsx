@@ -1,4 +1,4 @@
-import ProductCard from './ProductCard'
+import ProductCard from '../productDetailsPage/relatedProducts/ProductCard';
 import Pagination from './Pagination'
 
 interface Product {
@@ -28,10 +28,12 @@ const ProductsList = ({products, totalPages, loading, error, currentPage, onPage
         {products.map((product) => (
           <ProductCard
             key={product.id}
-            id={product.id}
-            name={product.name}
-            price={product.price}
-            imageUrl={product.url_image}
+            product={{
+              id: product.id,
+              name: product.name,
+              price: product.price,
+              imageUrl: product.url_image
+            }}
           />
         ))}
       </div>
