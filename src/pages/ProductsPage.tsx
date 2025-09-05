@@ -1,14 +1,19 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import FilterLine from '../components/ProductsPage/FilterLine'
 import ProductsList from '../components/ProductsPage/ProductsList'
 import Breadcrumb from '../components/Breadcrumb'
 import BrandsFilter from '../components/ProductsPage/BrandsFilter'
 import { useBrands } from '../hooks/useBrands'
+import {useParams} from "react-router-dom";
 
 const ProductsPage = () => {
-  const {brands} = useBrands()
-
   const [selectedBrands, setSelectedBrands] = useState<string[]>([])
+  const { categoryName } = useParams<{ categoryName: string }>();
+  const {brands} = useBrands(categoryName)
+
+  useEffect(() => {
+    setSelectedBrands([]);
+  }, [categoryName]);
 
   return (
     <div className=''>
@@ -17,7 +22,7 @@ const ProductsPage = () => {
           crumbs={[
             { label: "Home", href: "/home" },
             { label: "Catalog", href: "/" },
-            { label: "Smartphones", href: "/products_page" },
+            { label: categoryName || 'All Products', href: `/products_page/${categoryName || ''}` },
           ]}
         />
       </div>
@@ -32,7 +37,10 @@ const ProductsPage = () => {
         </div>
         <FilterLine />
         <div className=' lg:flex-5'>
-          <ProductsList />
+          <ProductsList
+            categoryName={categoryName}
+            selectedBrands={selectedBrands}
+          />
         </div>
       </div>
     </div>

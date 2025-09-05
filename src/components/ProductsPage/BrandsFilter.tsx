@@ -1,4 +1,4 @@
-import { useState } from "react"
+import {useEffect, useState} from "react"
 import magnifier from "../../assets/images/productsPage/magnifier.png"
 import arrowToggle from "../../assets/images/productsPage/arrowToggle.png"
 import type { Brand } from "../../types/brands"
@@ -13,6 +13,10 @@ interface BrandFilterProps {
 const BrandsFilter = ({ brands, selectedBrands, onChange }: BrandFilterProps) => {
   const [query, setQuery] = useState("")
   const [showBrands, setShowBrands] = useState(true)
+
+  useEffect(() => {
+    console.log(selectedBrands)
+  }, [selectedBrands]);
 
   const filteredBrands = brands.filter((b) =>
     b.brand.toLowerCase().includes(query.toLowerCase())
