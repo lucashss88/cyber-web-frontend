@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom'; 
 import { FiMenu, FiX } from 'react-icons/fi';
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
 import logoCyber from '../../assets/images/header/logo.svg';
 import searchIcon from '../../assets/images/header/search-icon.png';
 import heartIcon from '../../assets/images/header/heart-icon.png';
@@ -46,7 +47,14 @@ const Header = () => {
             <div className="flex items-center gap-4">
               <button className="hover:opacity-75"><img src={heartIcon} alt="Ícone de Favoritos" className="w-8 h-8" /></button>
               <button className="hover:opacity-75"><img src={cartIcon} alt="Ícone do Carrinho" className="w-8 h-8" /></button>
-              <button className="hover:opacity-75"><img src={userIcon} alt="Ícone de Usuário" className="w-8 h-8" /></button>
+              <SignedOut>
+                <SignInButton mode="modal">
+                  <button className="hover:opacity-75"><img src={userIcon} alt="Ícone de Usuário" className="w-8 h-8" /></button>
+                </SignInButton>
+              </SignedOut>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
             </div>
           </div>
         </div>

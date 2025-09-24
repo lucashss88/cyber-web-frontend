@@ -5,6 +5,8 @@ import Footer from './components/Footer';
 import ProductsPage from './pages/ProductsPage';
 import ProductDetailsPage from './pages/ProductDetailsPage';
 import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import SignUpPage from './pages/SignUpPage';
  
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
               <Route path='/products_page/:categoryName' element={<ProductsPage />} />
               <Route path='/product/:productId' element={<ProductDetailsPage />} />
               <Route path='/home' element={<HomePage />} />
+              <Route path='/login' element={<LoginPage />} />
+              <Route path='/signup' element={<SignUpPage />} />
               <Route path='*' element={<HomePage />} />
             </Routes>
         </main>
