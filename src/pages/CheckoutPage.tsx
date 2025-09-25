@@ -57,13 +57,13 @@ const CheckoutPage = () => {
             </div>
           ))}
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 py-13">
           {steps[stepIndex].content}
-          </div>
           <div className="flex items-center w-full justify-between">
             <button className="bg-white border-2 border-black-500 text-black px-13 py-4 rounded-lg w-40" onClick={() => handlePreviousStep()}>Back</button>
             <button className="bg-black text-white px-13 py-4 rounded-lg w-40" onClick={() => handleNextStep()}>Next</button>
           </div>
+        </div>
       </div>
     </div>
   );
