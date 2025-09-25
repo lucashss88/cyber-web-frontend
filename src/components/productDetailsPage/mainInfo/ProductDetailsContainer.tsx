@@ -26,6 +26,15 @@ interface ProductData {
   smartphone_spec: { /* ... */ } | null;
 }
 
+interface ProductCart {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  url_image: string;
+  code: string;
+}
+
 const ProductDetailsContainer = () => {
   const { productId } = useParams<{ productId: string }>();
 
@@ -51,8 +60,8 @@ const ProductDetailsContainer = () => {
         }
         const data = await response.json();
         setProduct(data.data);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err) {
+        setError((err as Error).message);
       } finally {
         setIsLoading(false);
       }
@@ -95,6 +104,28 @@ const ProductDetailsContainer = () => {
     isSelectionComplete = !!selectedColor;
   }
 
+  function handleAddToCart(product: ProductData): void {
+    if (!product) return;
+    const productCart: ProductCart = {
+      id: product.id,
+      name: product.name,
+      price: parseFloat(product.price),
+      quantity: 1,
+      url_image: product.url_image,
+      code: product.id.toString(),
+    };
+    setToastMessage('Produto adicionado ao carrinho!');
+    const cart = localStorage.getItem('shoppingCart');
+    let cartProducts = [];
+    if (cart) {
+      const parsed = JSON.parse(cart);
+      cartProducts = Array.isArray(parsed) ? parsed : [parsed];
+    }
+    cartProducts.push(productCart);
+    localStorage.setItem('shoppingCart', JSON.stringify(cartProducts));
+    console.log('Produto adicionado ao carrinho:', productCart);
+  }
+
   return (
     <>
       <Breadcrumb crumbs={generateCrumbs()} />
@@ -120,7 +151,7 @@ const ProductDetailsContainer = () => {
           <div className="flex-grow" />
           <ProductActions
             isDisabled={!isSelectionComplete}
-            onAddToCart={() => setToastMessage('Added to Cart!')}
+            onAddToCart={() => handleAddToCart(product)}
             onAddToWishlist={() => setToastMessage('Added to Wishlist!')}
           />
           <ProductDeliveryInfo />

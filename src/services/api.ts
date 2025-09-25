@@ -1,10 +1,10 @@
-export const makeAuthenticatedRequest = async (url: string, token: string, options: RequestInit = {}) => {
+export const makeAuthenticatedRequest = async (url: string, token: string, method: string, body?: BodyInit) => {
   return fetch(url, {
-    ...options,
     headers: {
-      ...options.headers,
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
-    }
+    }, 
+    method: method,
+    body: body
   })
 }
