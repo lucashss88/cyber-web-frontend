@@ -7,6 +7,8 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import ShoppingCartPage from './pages/ShoppingCartPage';
+import CheckoutPage from './pages/CheckoutPage';
+import { ShoppingCartProvider } from './contexts/ShoppingCartContext';
  
 function App() {
   return (
@@ -22,6 +24,11 @@ function App() {
               <Route path='/login' element={<LoginPage />} />
               <Route path='/signup' element={<SignUpPage />} />
               <Route path='/shopping_cart' element={<ShoppingCartPage />} />
+              <Route path='/checkout' element={
+                <ShoppingCartProvider>
+                  <CheckoutPage />
+                </ShoppingCartProvider>
+              }/>
               <Route path='*' element={<HomePage />} />
             </Routes>
         </main>
