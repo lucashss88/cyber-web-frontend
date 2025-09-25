@@ -65,22 +65,24 @@ const ShoppingCartPage = () => {
     };
 
     return (
-      <div className="container my-5 md:mx-40 md:my-30 p-4 md:flex md:flex-row flex flex-col gap-3">
+      <div className="my-5 md:my-0 md:pl-35 md:pr-55 md:py-30 p-4 md:p-0 md:flex md:flex-row flex flex-col gap-3 md:gap-0 md:justify-between">
         <div>
           <h1 className="text-2xl font-bold mb-10">Shopping Cart</h1>
           {products.map((product, index) => (
-            <div key={index} className="flex items-center justify-between mb-4 py-5 w-full border-b-d4 border-b-1">
+            <div key={index} className="flex items-center justify-between mb-4 py-5 w-full md:w-md border-b-d4 border-b-1">
               <div className="flex items-center">
                 <img src={product.url_image} alt={product.name} className="w-20 h-20 object-contain mr-4" />
-                <div className="flex flex-col w-full gap-1">
-                  <p className="text-lg font-semibold">{product.name}</p>
-                  <p className="text-gray-600">#{product.code}</p>
-                  <div className="flex flex-row justify-between w-60 gap-3">
+                <div className="flex flex-col md:flex-row w-full gap-1 md:justify-normal">
+                  <div>
+                    <p className="text-lg font-semibold">{product.name}</p>
+                    <p className="text-gray-600">#{product.code}</p>
+                  </div>
+                  <div className="flex flex-row justify-between w-60 gap-3 md:items-center md:ml-5">
                     <button className="text-black hover:text-5d" onClick={() => handleQuantityMinus(product.id)}><FiMinus></FiMinus></button>
                     <p className="text-gray-600">{product.quantity}</p>
                     <button className=" text-black hover:text-5d" onClick={() => handleQuantityPlus(product.id)}><FiPlus></FiPlus></button>
                     <p className="text-lg font-semibold">${product.price}</p>
-                    <button className=" text-black hover:text-5d" onClick={() => handleRemoveFromCart(product.id)}><FiX></FiX></button>
+                    <button className=" text-dark-gray hover:text-5d text-2xl" onClick={() => handleRemoveFromCart(product.id)}><FiX></FiX></button>
                   </div>
                 </div>
               </div>
