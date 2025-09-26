@@ -2,16 +2,7 @@ import { useState } from "react";
 import { FiX } from "react-icons/fi";
 import Edit from "../../assets/images/checkout/Subtract.svg";
 import Add from "../../assets/images/checkout/Add New Line.svg";
-
-interface Address {
-  id: number;
-  country: string;
-  city: string;
-  streetAddress: string;
-  postalCode: string;
-  number: string;
-  tag: string;
-}
+import type { Address } from "../../types/address";
 
 const AddressCheckoutPage = () => {
   const [selectedAddress, setSelectedAddress] = useState<number | null>(null);
