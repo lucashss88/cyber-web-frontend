@@ -95,7 +95,7 @@ const CheckoutPage = () => {
           {steps[stepIndex].content}
           <div className="flex items-center w-full justify-between md:flex md:justify-end md:gap-5">
             <button className="bg-white border-2 border-black-500 text-black px-13 py-4 rounded-lg w-45" onClick={() => handlePreviousStep()}>Back</button>
-            <button className="bg-black text-white px-13 py-4 rounded-lg w-45" onClick={() => handleNextStep()}>Next</button>
+            <button className="bg-black text-white px-13 py-4 rounded-lg w-45" onClick={() => handleNextStep()}>{stepIndex === 2 ? "Pay" : "Next"}</button>
           </div>
         </div>
       </div>
