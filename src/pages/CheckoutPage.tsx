@@ -8,11 +8,11 @@ import PaymentCheckoutPage from "../components/Checkout/PaymentCheckoutPage"
 
 const CheckoutPage = () => {
   const [stepIndex, setStepIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
+      setIsMobile(window.innerWidth < 768);
     };
 
     window.addEventListener('resize', handleResize);
@@ -57,7 +57,7 @@ const CheckoutPage = () => {
       <div className="md:w-full">
         <div className="flex flex-row gap-10 md:pl-1 md:pr-20">
           {isMobile ? (
-            <div>
+            <div className="w-full flex flex-row justify-between">
               {steps.slice(stepIndex, stepIndex + 2).map((step, index) => (
                 <div key={stepIndex + index} className="flex flex-col gap-1 justify-between py-4 m-auto">
                   <div className="flex items-center gap-2">
