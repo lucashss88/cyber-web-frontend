@@ -10,12 +10,12 @@ interface OrderDataContextType {
     total: number,
     paymentMethod: string,
     shippingMethod: string | null,
-    setProducts: (products: CartItem) => void,
-    setShoppingCart: (shoppingCart: ShoppingCart) => void,
-    setAddress: (address: Address) => void,
-    setTotal: (total: number) => void,
-    setPaymentMethod: (paymentMethod: string) => void,
-    setShippingMethod: (shippingMethod: string) => void
+    SetProducts: (products: CartItem) => void,
+    SetShoppingCart: (shoppingCart: ShoppingCart) => void,
+    SetAddress: (address: Address) => void,
+    SetTotal: (total: number) => void,
+    SetPaymentMethod: (paymentMethod: string) => void,
+    SetShippingMethod: (shippingMethod: string) => void
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -29,6 +29,30 @@ export function OrderDataProvider({ children }: { children: ReactNode }) {
     const [paymentMethod, setPaymentMethod] = useState<string>('');
     const [shippingMethod, setShippingMethod] = useState<string | null>(null);
 
+    const SetProducts = (products: CartItem) => {
+        setProducts(products);
+    }
+
+    const SetShoppingCart = (shoppingCart: ShoppingCart) => {
+        setShoppingCart(shoppingCart);
+    }
+
+    const SetAddress = (address: Address) => {
+        setAddress(address);
+    }
+
+    const SetTotal = (total: number) => {
+        setTotal(total);
+    }
+
+    const SetPaymentMethod = (paymentMethod: string) => {
+        setPaymentMethod(paymentMethod);
+    }
+
+    const SetShippingMethod = (shippingMethod: string) => {
+        setShippingMethod(shippingMethod);
+    }
+
     return (
         <OrderDataContext.Provider value={{
             products,
@@ -37,12 +61,12 @@ export function OrderDataProvider({ children }: { children: ReactNode }) {
             total,
             paymentMethod,
             shippingMethod,
-            setProducts,
-            setShoppingCart,
-            setAddress,
-            setTotal,
-            setPaymentMethod,
-            setShippingMethod
+            SetProducts,
+            SetShoppingCart,
+            SetAddress,
+            SetTotal,
+            SetPaymentMethod,
+            SetShippingMethod
         }}>
             {children}
         </OrderDataContext.Provider>

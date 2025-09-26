@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiX } from "react-icons/fi";
 import Edit from "../../assets/images/checkout/Subtract.svg";
 import Add from "../../assets/images/checkout/Add New Line.svg";
 import AddressForm from "./AddressForm";
 import type { Address } from "../../types/address";
+import { useOrderData } from "../../hooks/useOrderData";
 
 const AddressCheckoutPage = () => {
   const [selectedAddress, setSelectedAddress] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingAddress, setEditingAddress] = useState<Address | undefined>(undefined);
+  const { SetAddress } = useOrderData();
   const [addresses, setAddresses] = useState<Address[]>([
     {
       id: 1,
@@ -38,6 +40,16 @@ const AddressCheckoutPage = () => {
       tag: "office"
     },
   ]);
+
+  useEffect(() => {
+    if (selectedAddress !== null) {
+      const address = addresses.find(addr => addr.id === selectedAddress);
+      if (address) {
+        SetAddress(address);
+        console.log("Selected address:", address);
+      }
+    }
+  }, [selectedAddress])
 
   const handleDeleteAddress = (id: number) => {
     setAddresses(addresses.filter(addr => addr.id !== id));
