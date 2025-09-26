@@ -8,6 +8,7 @@ import PaymentCheckoutPage from "../components/Checkout/PaymentCheckoutPage"
 
 const CheckoutPage = () => {
   const [stepIndex, setStepIndex] = useState(0);
+  const [actualStep, setActualStep] = useState(stepIndex + 1)
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
@@ -43,12 +44,14 @@ const CheckoutPage = () => {
   const handleNextStep = () => {
     if (stepIndex < steps.length - 1) {
       setStepIndex(stepIndex + 1);
+      setActualStep(actualStep + 1)
     }
   }
 
   const handlePreviousStep = () => {
     if (stepIndex > 0) {
       setStepIndex(stepIndex - 1);
+      setActualStep(actualStep - 1)
     }
   }
 
@@ -59,7 +62,9 @@ const CheckoutPage = () => {
           {isMobile ? (
             <div className="w-full flex flex-row justify-between">
               {steps.slice(stepIndex, stepIndex + 2).map((step, index) => (
-                <div key={stepIndex + index} className="flex flex-col gap-1 justify-between py-4 m-auto">
+                <div key={stepIndex + index} className={`flex flex-col gap-1 justify-between py-4 m-auto ${
+                  stepIndex + index === stepIndex ? 'opacity-100' : 'opacity-50'
+                }`}>
                   <div className="flex items-center gap-2">
                     <img src={step.icon} alt={step.title} className="w-7 h-7" />
                     <div className="flex flex-col">
@@ -72,7 +77,9 @@ const CheckoutPage = () => {
             </div>
           ) : (
             steps.map((step, index) => (
-              <div key={stepIndex + index} className="flex flex-col gap-1 justify-between py-4 m-auto">
+              <div key={stepIndex + index} className={`flex flex-col gap-1 justify-between py-4 m-auto ${
+                  actualStep === index + 1 ? 'opacity-100' : 'opacity-50'
+                }`}>
                 <div className="flex items-center gap-2">
                   <img src={step.icon} alt={step.title} className="w-7 h-7" />
                   <div className="flex flex-col">
@@ -87,8 +94,8 @@ const CheckoutPage = () => {
         <div className="flex flex-col gap-2 py-13 md:pl-35 md:pr-55 md:mt-12">
           {steps[stepIndex].content}
           <div className="flex items-center w-full justify-between md:flex md:justify-end md:gap-5">
-            <button className="bg-white border-2 border-black-500 text-black px-13 py-4 rounded-lg w-40" onClick={() => handlePreviousStep()}>Back</button>
-            <button className="bg-black text-white px-13 py-4 rounded-lg w-40" onClick={() => handleNextStep()}>Next</button>
+            <button className="bg-white border-2 border-black-500 text-black px-13 py-4 rounded-lg w-45" onClick={() => handlePreviousStep()}>Back</button>
+            <button className="bg-black text-white px-13 py-4 rounded-lg w-45" onClick={() => handleNextStep()}>Next</button>
           </div>
         </div>
       </div>
