@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useState } from 'react'
 import type { ReactNode } from 'react'
 import type { ShoppingCart, CartItem, Product } from '../types/cart'
 import { makeAuthenticatedRequest } from '../services/api'
@@ -15,7 +15,8 @@ interface ShoppingCartContextType {
   clearError: () => void
 }
 
-const ShoppingCartContext = createContext<ShoppingCartContextType | undefined>(undefined)
+// eslint-disable-next-line react-refresh/only-export-components
+export const ShoppingCartContext = createContext<ShoppingCartContextType | undefined>(undefined)
 
 export function ShoppingCartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<ShoppingCart | null>(null)
@@ -39,6 +40,8 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
       
       const data = await response.json()
       setTotalValue(data.valor_total)
+      setCart(data)
+      setItems(data.items)
     } catch (error){
       setError('Erro ao adicionar produtos ao carrinho: ' + error)
     } finally {
@@ -46,17 +49,20 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const finalizeCart = async (status: string) => {
+  const finalizeCart = async (status: string, shoppingCartId: number = cart!.id) => {
     setLoading(true)
     setError(null)
     try {
       const token = await getAuthToken()
       if (!token) throw new Error('Token não encontrado')
-      return await makeAuthenticatedRequest('', token, 'PATCH', status)
+      await makeAuthenticatedRequest(`http://localhost:3001/api/shopping_carts/${shoppingCartId}`, token, 'PATCH', status)
     } catch (error){
       setError('Erro ao finalizar o carrinho: ' + error)
     } finally {
       setLoading(false)
+      setCart(null)
+      setItems([])
+      setTotalValue(0)
     }
   }
 
@@ -80,10 +86,3 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
   )
 }
 
-export function useShoppingCart() {
-  const context = useContext(ShoppingCartContext)
-  if (!context) {
-    throw new Error('useShoppingCart must be used within ShoppingCartProvider')
-  }
-  return context
-}

@@ -73,11 +73,11 @@ const ShoppingCartPage = () => {
 
     return (
       <>
-        <div className="my-5 md:my-0 md:pl-35 md:pr-55 md:py-30 p-4 md:p-0 md:flex md:flex-row flex flex-col gap-3 md:gap-0 md:justify-between md:m-auto">
-          <div>
+        <div className="my-5 md:my-0 md:px-20 md:py-10 lg:pl-47 lg:pr-67 lg:py-30 p-4 md:p-0 md:flex md:flex-row flex flex-col gap-5 md:gap-4 lg:gap-10 md:justify-between md:m-auto">
+          <div className="md:w-1/2 lg:w-5/5">
             <h1 className="text-2xl font-bold mb-10">Shopping Cart</h1>
             {products.map((product, index) => (
-              <div key={index} className="flex items-center justify-between mb-4 py-5 w-full md:w-md border-b-d4 border-b-1">
+              <div key={index} className="flex items-center justify-between mb-4 py-5 border-b-d4 border-b-1">
                 <div className="flex items-center">
                   <img src={product.url_image} alt={product.name} className="w-20 h-20 object-contain mr-4" />
                   <div className="flex flex-col md:flex-row w-full gap-1 md:justify-normal">
@@ -98,7 +98,7 @@ const ShoppingCartPage = () => {
             ))}
             {products.length === 0 && <p>Your cart is empty.</p>}
           </div>
-          <div className="py-10 px-2 mb-5">
+          <div className="py-10 px-2 mb-5 lg:py-12 lg:px-12 lg:mb-0 border-1 border-zinc-300 rounded-xl w-full md:w-4/5">
             <h1 className="text-2xl font-bold mb-5">Order Summary</h1>
             <div className="flex flex-col gap-6 mb-2">
               <div>
