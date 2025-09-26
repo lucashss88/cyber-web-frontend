@@ -1,8 +1,17 @@
-import { createContext, useState } from 'react'
+import { createContext, useState, useEffect, useMemo } from 'react'
 import type { ReactNode } from 'react'
 import type { ShoppingCart, CartItem, Product } from '../types/cart'
 import { makeAuthenticatedRequest } from '../services/api'
 import { useAuth } from '../hooks/useAuth'
+
+export type LocalProduct = {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  url_image: string;
+  code: string;
+}
 
 interface ShoppingCartContextType {
   cart: ShoppingCart | null
@@ -10,9 +19,19 @@ interface ShoppingCartContextType {
   loading: boolean
   error: string | null
   totalValue: number
+  localProducts: LocalProduct[]
+  subTotalPrice: number
+  totalPrice: number
+  estimatedTax: number
+  estimatedShipping: number
   addProducts: (products: Product[]) => Promise<void>
   finalizeCart: (status: string) => Promise<void>
   clearError: () => void
+  handleRemoveFromCart: (productId: string) => void
+  handleQuantityPlus: (productId: string) => void
+  handleQuantityMinus: (productId: string) => void
+  setToastMessage: (message: string | null) => void
+  toastMessage: string | null
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -24,10 +43,63 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [totalValue, setTotalValue] = useState(0)
+  const [localProducts, setLocalProducts] = useState<LocalProduct[]>([])
+  const [toastMessage, setToastMessage] = useState<string | null>(null)
   const { getAuthToken } = useAuth()
+  
+  const estimatedTax = 50
+  const estimatedShipping = 29
 
-  if (getAuthToken() === null) {
-    throw new Error('Token não encontrado')
+  useEffect(() => {
+    const storedCart = localStorage.getItem('shoppingCart')
+    if (storedCart) {
+      const parsed = JSON.parse(storedCart)
+      setLocalProducts(Array.isArray(parsed) ? parsed : [parsed])
+    }
+  }, [])
+
+  const subTotalPrice = useMemo(() => {
+    return localProducts.reduce((total: number, product: LocalProduct) => total + (product.price * product.quantity), 0)
+  }, [localProducts])
+
+  const totalPrice = useMemo(() => {
+    return subTotalPrice + estimatedTax + estimatedShipping
+  }, [subTotalPrice])
+
+  const handleRemoveFromCart = (productId: string) => {
+    const updatedCart = localProducts.filter(product => product.id !== productId)
+    setLocalProducts(updatedCart)
+    localStorage.setItem('shoppingCart', JSON.stringify(updatedCart))
+    setToastMessage('Produto removido do carrinho!')
+  }
+
+  const handleQuantityPlus = (productId: string) => {
+    const updatedCart = localProducts.map(product => {
+      if (product.id === productId) {
+        return { ...product, quantity: product.quantity + 1 }
+      }
+      return product
+    })
+    setLocalProducts(updatedCart)
+    localStorage.setItem('shoppingCart', JSON.stringify(updatedCart))
+    setToastMessage('Quantidade atualizada!')
+  }
+
+  const handleQuantityMinus = (productId: string) => {
+    const product = localProducts.find(p => p.id === productId)
+    if (product && product.quantity === 1) {
+      handleRemoveFromCart(productId)
+      return
+    }
+    const updatedCart = localProducts.map(product => {
+      if (product.id === productId) {
+        return { ...product, quantity: product.quantity - 1 }
+      }
+      return product
+    })
+    setLocalProducts(updatedCart)
+    localStorage.setItem('shoppingCart', JSON.stringify(updatedCart))
+    setToastMessage('Quantidade atualizada!')
   }
   
   const addProducts = async (products: Product[]) => {
@@ -77,9 +149,19 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
       loading,
       error,
       totalValue,
+      localProducts,
+      subTotalPrice,
+      totalPrice,
+      estimatedTax,
+      estimatedShipping,
       addProducts,
       finalizeCart,
-      clearError
+      clearError,
+      handleRemoveFromCart,
+      handleQuantityPlus,
+      handleQuantityMinus,
+      setToastMessage,
+      toastMessage
     }}>
       {children}
     </ShoppingCartContext.Provider>

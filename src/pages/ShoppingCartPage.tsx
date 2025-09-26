@@ -1,82 +1,28 @@
-import {useEffect, useState, useMemo} from 'react'
 import { FiX, FiPlus, FiMinus } from 'react-icons/fi'
-import NotificationToast from '../components/productDetailsPage/mainInfo/NotificationToast';
-
-type Product = {
-    id: string;
-    name: string;
-    price: number;
-    quantity: number;
-    url_image: string;
-    code: string;
-}
+import NotificationToast from '../components/productDetailsPage/mainInfo/NotificationToast'
+import { useShoppingCart } from '../hooks/useShoppingCart'
 
 const ShoppingCartPage = () => {
-    const [products, setProducts] = useState<Product[]>([]);
-    const estimatedTax = 50;
-    const estimatedShipping = 29;
-    const [toastMessage, setToastMessage] = useState<string | null>(null);
-
-    useEffect(() => {
-        const storedCart = localStorage.getItem('shoppingCart');
-        if (storedCart) {
-            const parsed = JSON.parse(storedCart);
-            setProducts(Array.isArray(parsed) ? parsed : [parsed]);
-        }
-
-        console.log("Produtos no carrinho:", storedCart);
-    }, []);
-
-    const subTotalPrice = useMemo(() => {
-        return products.reduce((total: number, product: Product) => total + (product.price * product.quantity), 0);
-    }, [products]);
-
-    const totalPrice = useMemo(() => {
-        return subTotalPrice + estimatedTax + estimatedShipping;
-    }, [subTotalPrice]);
-
-    const handleRemoveFromCart = (productId: string) => {
-        const updatedCart = products.filter(product => product.id !== productId);
-        setProducts(updatedCart);
-        localStorage.setItem('shoppingCart', JSON.stringify(updatedCart));
-        setToastMessage('Produto removido do carrinho!');
-    };
-
-    const handleQuantityPlus = (productId: string) => {
-        const updatedCart = products.map(product => {
-            if (product.id === productId) {
-                return { ...product, quantity: product.quantity + 1 };
-            }
-            return product;
-        });
-        setProducts(updatedCart);
-        localStorage.setItem('shoppingCart', JSON.stringify(updatedCart));
-        setToastMessage('Quantidade atualizada!');
-    };
-
-    const handleQuantityMinus = (productId: string) => {
-        const product = products.find(p => p.id === productId);
-        if (product && product.quantity === 1) {
-            handleRemoveFromCart(productId);
-            return;
-        }
-        const updatedCart = products.map(product => {
-            if (product.id === productId) {
-                return { ...product, quantity: product.quantity - 1 };
-            }
-            return product;
-        });
-        setProducts(updatedCart);
-        localStorage.setItem('shoppingCart', JSON.stringify(updatedCart));
-        setToastMessage('Quantidade atualizada!');
-    };
+    const {
+        localProducts,
+        subTotalPrice,
+        totalPrice,
+        handleRemoveFromCart,
+        handleQuantityPlus,
+        handleQuantityMinus,
+        toastMessage,
+        setToastMessage
+    } = useShoppingCart()
+    
+    const estimatedTax = 50
+    const estimatedShipping = 29
 
     return (
       <>
         <div className="my-5 md:my-0 md:px-20 md:py-10 lg:pl-47 lg:pr-67 lg:py-30 p-4 md:p-0 md:flex md:flex-row flex flex-col gap-5 md:gap-4 lg:gap-10 md:justify-between md:m-auto">
           <div className="md:w-1/2 lg:w-5/5">
             <h1 className="text-2xl font-bold mb-10">Shopping Cart</h1>
-            {products.map((product, index) => (
+            {localProducts.map((product, index) => (
               <div key={index} className="flex items-center justify-between mb-4 py-5 border-b-d4 border-b-1">
                 <div className="flex items-center">
                   <img src={product.url_image} alt={product.name} className="w-20 h-20 object-contain mr-4" />
@@ -96,9 +42,9 @@ const ShoppingCartPage = () => {
                 </div>
               </div>
             ))}
-            {products.length === 0 && <p>Your cart is empty.</p>}
+            {localProducts.length === 0 && <p>Your cart is empty.</p>}
           </div>
-          <div className="py-10 px-2 mb-5 lg:py-12 lg:px-12 lg:mb-0 border-1 border-zinc-300 rounded-xl w-full md:w-4/5">
+          <div className="py-10 px-4 mb-5 lg:py-12 lg:px-12 lg:mb-0 border-1 border-zinc-300 rounded-xl w-full md:w-4/5">
             <h1 className="text-2xl font-bold mb-5">Order Summary</h1>
             <div className="flex flex-col gap-6 mb-2">
               <div>
