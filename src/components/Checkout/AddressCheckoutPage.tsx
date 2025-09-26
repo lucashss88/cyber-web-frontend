@@ -52,7 +52,7 @@ const AddressCheckoutPage = () => {
                   name="address" 
                   checked={selectedAddress === addr.id}
                   onChange={() => setSelectedAddress(addr.id)}
-                  className="w-4 h-4"
+                  className="w-5 h-5 lg:w-7 lg:h-7 appearance-none border-2 border-black rounded-full bg-white checked:bg-black checked:border-4 checked:border-white checked:ring-2 checked:ring-black cursor-pointer"
                 />
                 <div>
                   <div>
