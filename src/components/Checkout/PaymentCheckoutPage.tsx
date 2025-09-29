@@ -20,6 +20,10 @@ const PaymentCheckoutPage = ({ onComplete }: PaymentCheckoutPageProps) => {
   const { subTotalPrice, estimatedTax, estimatedShipping, totalPrice } = useShoppingCart();
   const { address, shippingMethod, SetPaymentMethod } = useOrderData();
 
+  const cardHolderRegex = /^[a-zA-Z\s]{2,50}$/; 
+  const expDateRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
+  const cvvRegex = /^\d{3,4}$/;
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const methods: Payment[] = [
     { id: 1, name: "Credit Card", cardHolder: cardHolder, cardNumber: cardNumber, expDate: expDate, cvv: cvv},
@@ -40,7 +44,9 @@ const PaymentCheckoutPage = ({ onComplete }: PaymentCheckoutPageProps) => {
 
   useEffect(() => {
     const isPaymentComplete = selectedMethod === 1 
-      ? cardHolder && cardNumber && expDate && cvv
+      ? cardHolderRegex.test(cardHolder) && 
+        expDateRegex.test(expDate) && 
+        cvv !== null && cvvRegex.test(cvv.toString())
       : selectedMethod > 1;
     
     if (isPaymentComplete) {
