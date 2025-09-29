@@ -6,6 +6,11 @@ export interface ShoppingCart {
   updated_at: Date
 }
 
+export interface ShoppingCartResponse {
+  shopping_cart_id: number
+  valor_total: number
+}
+
 export interface CartItem {
   id: number
   product: {
