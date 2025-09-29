@@ -1,7 +1,7 @@
 import { useAuth as useClerkAuth } from '@clerk/clerk-react'
 
 export const useAuth = () => {
-  const { getToken, isSignedIn, userId } = useClerkAuth()
+  const { getToken, isSignedIn, userId, isLoaded } = useClerkAuth()
 
   const getAuthToken = async () => {
     if (!isSignedIn) return null
@@ -11,6 +11,7 @@ export const useAuth = () => {
   return {
     getAuthToken,
     isSignedIn,
-    userId
+    userId,
+    isLoaded
   }
 }

@@ -1,6 +1,8 @@
 import { FiX, FiPlus, FiMinus } from 'react-icons/fi'
 import NotificationToast from '../components/productDetailsPage/mainInfo/NotificationToast'
 import { useShoppingCart } from '../hooks/useShoppingCart'
+import { useAuth } from '../hooks/useAuth'
+import { useEffect, useRef } from 'react'
 
 const ShoppingCartPage = () => {
     const {
@@ -11,11 +13,26 @@ const ShoppingCartPage = () => {
         handleQuantityPlus,
         handleQuantityMinus,
         toastMessage,
-        setToastMessage
+        setToastMessage,
+        addProducts
     } = useShoppingCart()
+
+    const { isSignedIn, userId } = useAuth()
+    const hasSynced = useRef(false)
     
     const estimatedTax = 50
     const estimatedShipping = 29
+
+    useEffect(() => {
+      if (isSignedIn && localProducts.length > 0 && userId && !hasSynced.current) {
+        const products = localProducts.map(product => ({
+          product_id: parseInt(product.id),
+          quantity: product.quantity
+        }))
+        addProducts(products)
+        hasSynced.current = true
+      }
+    }, [isSignedIn, localProducts, userId])
 
     return (
       <>
@@ -42,7 +59,12 @@ const ShoppingCartPage = () => {
                 </div>
               </div>
             ))}
-            {localProducts.length === 0 && <p>Your cart is empty.</p>}
+            {localProducts.length === 0 && (
+              <div className="flex flex-col items-center justify-center">
+                <p>Your cart is empty.</p>
+                <button className="mt-4 px-8 py-3 bg-black text-white rounded hover:bg-5d transition duration-300" onClick={() => window.location.href = '/products_page'}>Shop now</button>
+              </div>
+            )}
           </div>
           <div className="py-10 px-4 mb-5 lg:py-12 lg:px-12 lg:mb-0 border-1 border-zinc-300 rounded-xl w-full md:w-4/5">
             <h1 className="text-2xl font-bold mb-5">Order Summary</h1>
