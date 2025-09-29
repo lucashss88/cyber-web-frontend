@@ -9,6 +9,8 @@ import SignUpPage from './pages/SignUpPage';
 import ShoppingCartPage from './pages/ShoppingCartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import { ShoppingCartProvider } from './contexts/ShoppingCartContext';
+import { OrderDataProvider } from './contexts/OrderDataContext';
+import ProtectedRoute from './components/ProtectedRoute';
  
 function App() {
   return (
@@ -16,21 +18,25 @@ function App() {
       <div className="flex flex-col min-h-screen">
         <Header />
         <main className="flex-grow">
-            <Routes>
-              <Route path='/products_page' element={<ProductsPage />} />
-              <Route path='/products_page/:categoryName' element={<ProductsPage />} />
-              <Route path='/product/:productId' element={<ProductDetailsPage />} />
-              <Route path='/home' element={<HomePage />} />
-              <Route path='/login' element={<LoginPage />} />
-              <Route path='/signup' element={<SignUpPage />} />
-              <Route path='/shopping_cart' element={<ShoppingCartPage />} />
-              <Route path='/checkout' element={
-                <ShoppingCartProvider>
-                  <CheckoutPage />
-                </ShoppingCartProvider>
-              }/>
-              <Route path='*' element={<HomePage />} />
-            </Routes>
+            <ShoppingCartProvider>
+              <Routes>
+                <Route path='/products_page' element={<ProductsPage />} />
+                <Route path='/products_page/:categoryName' element={<ProductsPage />} />
+                <Route path='/product/:productId' element={<ProductDetailsPage />} />
+                <Route path='/home' element={<HomePage />} />
+                <Route path='/login' element={<LoginPage />} />
+                <Route path='/signup' element={<SignUpPage />} />
+                <Route path='/shopping_cart' element={<ShoppingCartPage />} />
+                <Route path='/checkout' element={
+                  <ProtectedRoute>
+                    <OrderDataProvider>
+                      <CheckoutPage />
+                    </OrderDataProvider>
+                  </ProtectedRoute>
+                }/>
+                <Route path='*' element={<HomePage />} />
+              </Routes>
+            </ShoppingCartProvider>
         </main>
         <Footer />
       </div>
