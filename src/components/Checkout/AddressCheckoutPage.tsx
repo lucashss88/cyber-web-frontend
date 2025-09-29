@@ -60,6 +60,10 @@ const AddressCheckoutPage = ({ onComplete }: AddressCheckoutPageProps) => {
     }
   }, [address])
 
+  useEffect(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   const handleDeleteAddress = (id: number) => {
     setAddresses(addresses.filter(addr => addr.id !== id));
   };

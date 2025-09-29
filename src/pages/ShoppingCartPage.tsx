@@ -34,6 +34,10 @@ const ShoppingCartPage = () => {
       }
     }, [isSignedIn, localProducts, userId])
 
+    useEffect(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, []);
+
     return (
       <>
         <div className="my-5 md:my-0 md:px-20 md:py-10 lg:pl-47 lg:pr-67 lg:py-30 p-4 md:p-0 md:flex md:flex-row flex flex-col gap-5 md:gap-4 lg:gap-10 md:justify-between md:m-auto">

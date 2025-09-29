@@ -55,6 +55,10 @@ const ShippingCheckoutPage = ({ onComplete }: ShippingCheckoutPageProps) => {
     }
   }, [shippingMethod])
 
+  useEffect(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   return (
     <div className="mb-12">
       <h1 className="text-2xl font-bold mb-10">Select Address</h1>

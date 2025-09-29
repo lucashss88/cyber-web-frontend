@@ -22,6 +22,10 @@ const CheckoutPage = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  useEffect(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
   
   const steps = [
     {

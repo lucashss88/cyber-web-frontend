@@ -27,6 +27,10 @@ const PaymentCheckoutPage = ({ onComplete }: PaymentCheckoutPageProps) => {
     }
   }, [])
 
+  useEffect(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   return (
     <div className="mb-12 pr-4">
       <div className="flex flex-col gap-2 mb-10 p-5 border-1 border-zinc-300 rounded-xl">
