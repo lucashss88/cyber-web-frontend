@@ -10,6 +10,7 @@ import ProductActions from './ProductActions';
 import ProductDescription from './ProductDescription';
 import ProductDeliveryInfo from './ProductDeliveryInfo';
 import NotificationToast from './NotificationToast';
+import type { ProductCart } from '../../../types/cart';
 
 interface ProductData {
   id: number;
@@ -24,15 +25,6 @@ interface ProductData {
   colors: { name: string; hex_code: string }[];
   storage_options: { size: string }[];
   smartphone_spec: { /* ... */ } | null;
-}
-
-interface ProductCart {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-  url_image: string;
-  code: string;
 }
 
 const ProductDetailsContainer = () => {

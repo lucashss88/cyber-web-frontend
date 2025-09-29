@@ -27,3 +27,12 @@ export interface Product {
   product_id: number
   quantity: number
 }
+
+export interface ProductCart {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  url_image: string;
+  code: string;
+}
