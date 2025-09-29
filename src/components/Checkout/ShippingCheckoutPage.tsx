@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
+import type { Shipping } from "../../types/shipping";
+import { useOrderData } from "../../hooks/useOrderData";
 
-interface Shipping {
-  id: number;
-  description: string;
-  duration?: string;
-  cost: string;
+interface ShippingCheckoutPageProps {
+  onComplete: (isComplete: boolean) => void;
 }
 
-const ShippingCheckoutPage = () => {
+const ShippingCheckoutPage = ({ onComplete }: ShippingCheckoutPageProps) => {
   const [selectedShipping, setSelectedShipping] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const {shippingMethod, SetShippingMethod} = useOrderData();
   
     useEffect(() => {
       const handleResize = () => {
@@ -40,6 +40,21 @@ const ShippingCheckoutPage = () => {
     }
   ]
 
+  useEffect(() => {
+    if (selectedShipping) {
+      const selected = shippingOptions.find((option) => option.id === selectedShipping);
+      if (selected) {
+        SetShippingMethod(selected);
+      }
+    }
+  }, [selectedShipping])
+
+  useEffect(() => {
+    if (shippingMethod) {
+      setSelectedShipping(shippingMethod.id);
+    }
+  }, [shippingMethod])
+
   return (
     <div className="mb-12">
       <h1 className="text-2xl font-bold mb-10">Select Address</h1>
@@ -47,7 +62,10 @@ const ShippingCheckoutPage = () => {
         {shippingOptions.map((option) => (
           <div key={option.id} className={` rounded-lg p-6 flex flex-col gap-4 cursor-pointer border-1  ${
             selectedShipping === option.id ? 'border-black' : 'border-gray-400 opacity-40'
-          }`} onClick={() => setSelectedShipping(option.id)}>
+          }`} onClick={() => {
+            setSelectedShipping(option.id);
+            onComplete(true);
+          }}>
             <div className="flex justify-between items-center">
               <div className="flex flex-col lg:flex-row items-start lg:items-center gap-2 lg:gap-5 w-full">
                 <input
