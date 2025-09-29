@@ -99,7 +99,13 @@ const ShoppingCartPage = () => {
                 <p className="text-lg font-medium mt-5">${totalPrice}</p>
               </div>
             </div>
-            <button className="mt-10 w-full bg-black text-white py-4 rounded hover:bg-5d transition duration-300" onClick={() => window.location.href = '/checkout'}>Checkout</button>
+            <button 
+              disabled={localProducts.length === 0} 
+              className={`${localProducts.length === 0 ? 'opacity-60 cursor-not-allowed' : ''} mt-10 w-full bg-black text-white py-4 rounded hover:bg-5d transition duration-300`}
+              onClick={() => window.location.href = '/checkout' }
+            >
+              Checkout
+            </button>
           </div>
         </div>
 
