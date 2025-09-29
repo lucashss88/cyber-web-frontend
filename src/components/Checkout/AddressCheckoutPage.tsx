@@ -6,11 +6,15 @@ import AddressForm from "./AddressForm";
 import type { Address } from "../../types/address";
 import { useOrderData } from "../../hooks/useOrderData";
 
-const AddressCheckoutPage = () => {
+interface AddressCheckoutPageProps {
+  onComplete: (isComplete: boolean) => void;
+}
+
+const AddressCheckoutPage = ({ onComplete }: AddressCheckoutPageProps) => {
   const [selectedAddress, setSelectedAddress] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingAddress, setEditingAddress] = useState<Address | undefined>(undefined);
-  const { SetAddress } = useOrderData();
+  const { SetAddress, address } = useOrderData();
   const [addresses, setAddresses] = useState<Address[]>([
     {
       id: 1,
@@ -46,10 +50,15 @@ const AddressCheckoutPage = () => {
       const address = addresses.find(addr => addr.id === selectedAddress);
       if (address) {
         SetAddress(address);
-        console.log("Selected address:", address);
       }
     }
   }, [selectedAddress])
+
+  useEffect(() => {
+    if (address) {
+      setSelectedAddress(address.id);
+    }
+  }, [address])
 
   const handleDeleteAddress = (id: number) => {
     setAddresses(addresses.filter(addr => addr.id !== id));
@@ -73,7 +82,10 @@ const AddressCheckoutPage = () => {
         {addresses.map((addr) => (
           <div key={addr.id} className={`bg-gray-100 rounded-lg p-6 flex flex-col gap-4 cursor-pointer border-2 ${
             selectedAddress === addr.id ? 'border-black' : 'border-transparent'
-          }`} onClick={() => setSelectedAddress(addr.id)}>
+          }`} onClick={() => {
+            setSelectedAddress(addr.id);
+            onComplete(true);
+          }}>
             <div className="flex justify-between items-center">
               <div className="flex items-start gap-3">
                 <input 

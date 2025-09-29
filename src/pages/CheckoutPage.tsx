@@ -8,8 +8,11 @@ import PaymentCheckoutPage from "../components/Checkout/PaymentCheckoutPage"
 
 const CheckoutPage = () => {
   const [stepIndex, setStepIndex] = useState(0);
-  const [actualStep, setActualStep] = useState(stepIndex + 1)
+  const [actualStep, setActualStep] = useState(stepIndex + 1);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isAddressComplete, setIsAddressComplete] = useState(false);
+  const [isShippingComplete, setIsShippingComplete] = useState(false);
+  const [isPaymentComplete, setIsPaymentComplete] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -24,19 +27,19 @@ const CheckoutPage = () => {
     {
       step: 'Step 1',
       title: 'Address',
-      content: <AddressCheckoutPage />,
+      content: <AddressCheckoutPage onComplete={setIsAddressComplete} />,
       icon: Location
     },
     {
       step: 'Step 2',
       title: 'Shipping',
-      content: <ShippingCheckoutPage />,
+      content: <ShippingCheckoutPage onComplete={setIsShippingComplete} />,
       icon: Shippment
     }, 
     {
       step: 'Step 3',
       title: 'Payment',
-      content: <PaymentCheckoutPage />,
+      content: <PaymentCheckoutPage onComplete={setIsPaymentComplete} />,
       icon: Payment
     }
   ]
@@ -95,7 +98,17 @@ const CheckoutPage = () => {
           {steps[stepIndex].content}
           <div className="flex items-center w-full justify-between md:flex md:justify-end md:gap-5">
             <button className="bg-white border-2 border-black-500 text-black px-13 py-4 rounded-lg w-45" onClick={() => handlePreviousStep()}>Back</button>
-            <button className="bg-black text-white px-13 py-4 rounded-lg w-45" onClick={() => handleNextStep()}>{stepIndex === 2 ? "Pay" : "Next"}</button>
+            <button 
+              className={`px-13 py-4 rounded-lg w-45 transition duration-300 ${
+                ((stepIndex === 0 && !isAddressComplete) || (stepIndex === 1 && !isShippingComplete) || (stepIndex === 2 && !isPaymentComplete))
+                  ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  : 'bg-black text-white hover:bg-gray-800'
+              }`}
+              onClick={() => handleNextStep()}
+              disabled={(stepIndex === 0 && !isAddressComplete) || (stepIndex === 1 && !isShippingComplete) || (stepIndex === 2 && !isPaymentComplete)}
+            >
+              {stepIndex === 2 ? "Pay" : "Next"}
+            </button>
           </div>
         </div>
       </div>

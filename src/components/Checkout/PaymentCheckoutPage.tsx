@@ -4,7 +4,11 @@ import type { LocalProduct } from "../../contexts/ShoppingCartContext";
 import { useShoppingCart } from "../../hooks/useShoppingCart";
 import { useOrderData } from "../../hooks/useOrderData";
 
-const PaymentCheckoutPage = () => {
+interface PaymentCheckoutPageProps {
+  onComplete: (isComplete: boolean) => void;
+}
+
+const PaymentCheckoutPage = ({ onComplete }: PaymentCheckoutPageProps) => {
   const methods = [
     { id: 1, name: "Credit Card" },
     { id: 2, name: "PayPal" },
@@ -14,7 +18,7 @@ const PaymentCheckoutPage = () => {
   const [selectedMethod, setSelectedMethod] = useState<number>(1);
   const [products, setProducts] = useState<LocalProduct[]>([]);
   const { subTotalPrice, estimatedTax, estimatedShipping, totalPrice } = useShoppingCart();
-  const { address } = useOrderData();
+  const { address, shippingMethod } = useOrderData();
 
   useEffect(() => {
     const storedProducts = localStorage.getItem("shoppingCart");
@@ -40,9 +44,13 @@ const PaymentCheckoutPage = () => {
             </div>
           ))}
           <div>
-            <div className=" flex flex-col mt-3 gap-4"> 
+            <div className=" flex flex-col mt-3 mb-6 gap-4"> 
               <h2 className="text-medium text-gray-600">Address</h2>
               <p className="text-md font-normal">{address?.streetAddress}, {address?.city}</p>
+            </div>
+            <div className=" flex flex-col mt-3 gap-1"> 
+              <h2 className="text-medium text-gray-600">Shipment method</h2>
+              <p className="text-md font-normal">{shippingMethod.cost}</p>
             </div>
             <div className="flex flex-col pt-4">
               <div className="mb-2">
@@ -72,7 +80,10 @@ const PaymentCheckoutPage = () => {
         <div className="flex flex-row justify-between">
           {methods.map((method) => (
           <div key={method.id}>
-             <h2 className={`text-md font-medium ${method.id === selectedMethod ? 'text-black border-b-2 border-black' : 'text-gray-500'}`} onClick={() => setSelectedMethod(method.id)}>{method.name}</h2>
+             <h2 className={`text-md font-medium ${method.id === selectedMethod ? 'text-black border-b-2 border-black' : 'text-gray-500'}`} onClick={() => {
+               setSelectedMethod(method.id);
+               onComplete(true);
+             }}>{method.name}</h2>
           </div>
         ))}
         </div>
