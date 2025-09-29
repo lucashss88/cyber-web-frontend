@@ -34,6 +34,10 @@ const ShoppingCartPage = () => {
       }
     }, [isSignedIn, localProducts, userId])
 
+    useEffect(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, []);
+
     return (
       <>
         <div className="my-5 md:my-0 md:px-20 md:py-10 lg:pl-47 lg:pr-67 lg:py-30 p-4 md:p-0 md:flex md:flex-row flex flex-col gap-5 md:gap-4 lg:gap-10 md:justify-between md:m-auto">
@@ -99,7 +103,13 @@ const ShoppingCartPage = () => {
                 <p className="text-lg font-medium mt-5">${totalPrice}</p>
               </div>
             </div>
-            <button className="mt-10 w-full bg-black text-white py-4 rounded hover:bg-5d transition duration-300" onClick={() => window.location.href = '/checkout'}>Checkout</button>
+            <button 
+              disabled={localProducts.length === 0} 
+              className={`${localProducts.length === 0 ? 'opacity-60 cursor-not-allowed' : ''} mt-10 w-full bg-black text-white py-4 rounded hover:bg-5d transition duration-300`}
+              onClick={() => window.location.href = '/checkout' }
+            >
+              Checkout
+            </button>
           </div>
         </div>
 

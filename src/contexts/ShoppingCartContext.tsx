@@ -108,7 +108,7 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
     setToastMessage('Quantidade atualizada!')
   }
   
-  const addProducts = useCallback(async (products: any[]) => {
+  const addProducts = useCallback(async (products: Product[]) => {
     setLoading(true)
     setError(null)
     try {

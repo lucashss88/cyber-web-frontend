@@ -5,65 +5,74 @@ import Add from "../../assets/images/checkout/Add New Line.svg";
 import AddressForm from "./AddressForm";
 import type { Address } from "../../types/address";
 import { useOrderData } from "../../hooks/useOrderData";
+import NotificationToast from "../productDetailsPage/mainInfo/NotificationToast";
+import { defaultAddresses } from "../../data/defaultAddresses";
 
-const AddressCheckoutPage = () => {
+interface AddressCheckoutPageProps {
+  onComplete: (isComplete: boolean) => void;
+}
+
+const AddressCheckoutPage = ({ onComplete }: AddressCheckoutPageProps) => {
   const [selectedAddress, setSelectedAddress] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingAddress, setEditingAddress] = useState<Address | undefined>(undefined);
-  const { SetAddress } = useOrderData();
-  const [addresses, setAddresses] = useState<Address[]>([
-    {
-      id: 1,
-      country: "United States",
-      city: "New York",
-      streetAddress: "123 Main St",
-      postalCode: "10001",
-      number: "123",
-      tag: "work"
-    },
-    {
-      id: 2,
-      country: "Canada",
-      city: "Toronto",
-      streetAddress: "456 Queen St",
-      postalCode: "M5V 2A1",
-      number: "456",
-      tag: "home"
-    },
-    {
-      id: 3,
-      country: "United Kingdom",
-      city: "London",
-      streetAddress: "789 High St",
-      postalCode: "SW1A 1AA",
-      number: "789",
-      tag: "office"
-    },
-  ]);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const { SetAddress, address } = useOrderData();
+  const [addresses, setAddresses] = useState<Address[]>([]);
+
+  useEffect(() => {
+    const storedAddresses = localStorage.getItem('userAddresses');
+    if (storedAddresses) {
+      setAddresses(JSON.parse(storedAddresses));
+    } else {
+      setAddresses(defaultAddresses);
+      localStorage.setItem('userAddresses', JSON.stringify(defaultAddresses));
+    }
+  }, []);
 
   useEffect(() => {
     if (selectedAddress !== null) {
       const address = addresses.find(addr => addr.id === selectedAddress);
       if (address) {
         SetAddress(address);
-        console.log("Selected address:", address);
       }
     }
   }, [selectedAddress])
 
+  useEffect(() => {
+    if (address) {
+      setSelectedAddress(address.id);
+    }
+  }, [address])
+
+  useEffect(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   const handleDeleteAddress = (id: number) => {
-    setAddresses(addresses.filter(addr => addr.id !== id));
+    const updatedAddresses = addresses.filter(addr => addr.id !== id);
+    setAddresses(updatedAddresses);
+    localStorage.setItem('userAddresses', JSON.stringify(updatedAddresses));
+    if (selectedAddress === id) {
+      setSelectedAddress(null);
+    }
+    setToastMessage("Address deleted successfully");
   };
 
   const handleSaveAddress = (address: Address) => {
+    let updatedAddresses;
     if (editingAddress) {
-      setAddresses(addresses.map(addr => 
+      updatedAddresses = addresses.map(addr => 
         addr.id === editingAddress.id ? address : addr
-      ));
+      );
+      setToastMessage("Address updated successfully");
     } else {
       const newAddress = { ...address, id: Date.now() };
-      setAddresses([...addresses, newAddress]);
+      updatedAddresses = [...addresses, newAddress];
+      setToastMessage("Address added successfully");
     }
+    setAddresses(updatedAddresses);
+    localStorage.setItem('userAddresses', JSON.stringify(updatedAddresses));
   };
 
   return (
@@ -73,7 +82,10 @@ const AddressCheckoutPage = () => {
         {addresses.map((addr) => (
           <div key={addr.id} className={`bg-gray-100 rounded-lg p-6 flex flex-col gap-4 cursor-pointer border-2 ${
             selectedAddress === addr.id ? 'border-black' : 'border-transparent'
-          }`} onClick={() => setSelectedAddress(addr.id)}>
+          }`} onClick={() => {
+            setSelectedAddress(addr.id);
+            onComplete(true);
+          }}>
             <div className="flex justify-between items-center">
               <div className="flex items-start gap-3">
                 <input 
@@ -123,6 +135,13 @@ const AddressCheckoutPage = () => {
         address={editingAddress}
         onSave={handleSaveAddress}
       />
+
+      {toastMessage && (
+          <NotificationToast 
+            message={toastMessage} 
+            onClose={() => setToastMessage(null)} 
+          />
+      )}
     </div>
   );
 }
