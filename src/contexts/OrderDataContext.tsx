@@ -2,15 +2,16 @@ import { createContext, useState } from "react";
 import type { ReactNode } from "react";
 import type { Address } from "../types/address";
 import type { Shipping } from "../types/shipping";
+import type { Payment } from "../types/payment";
 
 interface OrderDataContextType {
     address: Address,
     total: number,
-    paymentMethod: string,
+    paymentMethod: Payment,
     shippingMethod: Shipping,
     SetAddress: (address: Address) => void,
     SetTotal: (total: number) => void,
-    SetPaymentMethod: (paymentMethod: string) => void,
+    SetPaymentMethod: (paymentMethod: Payment) => void,
     SetShippingMethod: (shippingMethod: Shipping) => void
 }
 
@@ -20,7 +21,7 @@ export const OrderDataContext = createContext<OrderDataContextType | undefined>(
 export function OrderDataProvider({ children }: { children: ReactNode }) {
     const [address, setAddress] = useState<Address>({} as Address);
     const [total, setTotal] = useState<number>(0);
-    const [paymentMethod, setPaymentMethod] = useState<string>('');
+    const [paymentMethod, setPaymentMethod] = useState<Payment>({} as Payment);
     const [shippingMethod, setShippingMethod] = useState<Shipping>({} as Shipping);
     const SetAddress = (address: Address) => {
         setAddress(address);
@@ -30,7 +31,7 @@ export function OrderDataProvider({ children }: { children: ReactNode }) {
         setTotal(total);
     }
 
-    const SetPaymentMethod = (paymentMethod: string) => {
+    const SetPaymentMethod = (paymentMethod: Payment) => {
         setPaymentMethod(paymentMethod);
     }
 
