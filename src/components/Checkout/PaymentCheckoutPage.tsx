@@ -3,22 +3,29 @@ import CreditCard from "../../assets/images/checkout/Credit Card.svg"
 import type { LocalProduct } from "../../contexts/ShoppingCartContext";
 import { useShoppingCart } from "../../hooks/useShoppingCart";
 import { useOrderData } from "../../hooks/useOrderData";
+import OrderSummary from "./OrderSummary";
+import type { Payment } from "../../types/payment";
 
 interface PaymentCheckoutPageProps {
   onComplete: (isComplete: boolean) => void;
 }
 
 const PaymentCheckoutPage = ({ onComplete }: PaymentCheckoutPageProps) => {
-  const methods = [
-    { id: 1, name: "Credit Card" },
-    { id: 2, name: "PayPal" },
-    { id: 3, name: "PayPal Credit" }
-  ];
-
   const [selectedMethod, setSelectedMethod] = useState<number>(1);
   const [products, setProducts] = useState<LocalProduct[]>([]);
+  const [cardHolder, setCardHolder] = useState<string>("");
+  const [cardNumber, setCardNumber] = useState<string>("");
+  const [expDate, setExpDate] = useState<string>("");
+  const [cvv, setCvv] = useState<number | null>(null);
   const { subTotalPrice, estimatedTax, estimatedShipping, totalPrice } = useShoppingCart();
-  const { address, shippingMethod } = useOrderData();
+  const { address, shippingMethod, SetPaymentMethod } = useOrderData();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const methods: Payment[] = [
+    { id: 1, name: "Credit Card", cardHolder: cardHolder, cardNumber: cardNumber, expDate: expDate, cvv: cvv},
+    { id: 2, name: "PayPal", cardHolder: null, cardNumber: null, expDate: null, cvv: null },
+    { id: 3, name: "PayPal Credit", cardHolder: null, cardNumber: null, expDate: null, cvv: null }
+  ];
 
   useEffect(() => {
     const storedProducts = localStorage.getItem("shoppingCart");
@@ -30,6 +37,27 @@ const PaymentCheckoutPage = ({ onComplete }: PaymentCheckoutPageProps) => {
   useEffect(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
+
+  useEffect(() => {
+    const isPaymentComplete = selectedMethod === 1 
+      ? cardHolder && cardNumber && expDate && cvv
+      : selectedMethod > 1;
+    
+    if (isPaymentComplete) {
+      const paymentData: Payment = {
+        id: selectedMethod,
+        name: methods.find(m => m.id === selectedMethod)?.name || '',
+        cardHolder: selectedMethod === 1 ? cardHolder : null,
+        cardNumber: selectedMethod === 1 ? cardNumber : null,
+        expDate: selectedMethod === 1 ? expDate : null,
+        cvv: selectedMethod === 1 ? cvv : null
+      };
+      SetPaymentMethod(paymentData);
+      onComplete(true);
+    } else {
+      onComplete(false);
+    }
+  }, [selectedMethod, cardHolder, cardNumber, expDate, cvv, onComplete, SetPaymentMethod, methods]);
 
   return (
     <div className="mb-12 pr-4">
@@ -47,36 +75,14 @@ const PaymentCheckoutPage = ({ onComplete }: PaymentCheckoutPageProps) => {
               </div>
             </div>
           ))}
-          <div>
-            <div className=" flex flex-col mt-3 mb-6 gap-4"> 
-              <h2 className="text-medium text-gray-600">Address</h2>
-              <p className="text-md font-normal">{address?.streetAddress}, {address?.city}</p>
-            </div>
-            <div className=" flex flex-col mt-3 gap-1"> 
-              <h2 className="text-medium text-gray-600">Shipment method</h2>
-              <p className="text-md font-normal">{shippingMethod.cost}</p>
-            </div>
-            <div className="flex flex-col pt-4">
-              <div className="mb-2">
-              <div className="flex justify-between w-full mb-2">
-                <p className="text-lg font-semibold mt-5">Subtotal</p>
-                <p className="text-lg font-medium mt-5">${subTotalPrice}</p>
-              </div>
-              <div className="flex justify-between w-full">
-                <p className="text-lg font-normal mt-5">Estimated Tax</p>
-                <p className="text-lg font-medium mt-5">${estimatedTax}</p>
-              </div>
-              <div className="flex justify-between w-full">
-                <p className="text-lg font-normal mt-5">Estimated shipping & Handling</p>
-                <p className="text-lg font-medium mt-5">${estimatedShipping}</p>
-              </div>
-              <div className="flex justify-between w-full">
-                <p className="text-lg font-semibold mt-5">Total</p>
-                <p className="text-lg font-medium mt-5">${totalPrice}</p>
-              </div>
-            </div>
-            </div>
-          </div>
+          <OrderSummary
+            address={address}
+            shippingMethod={shippingMethod}
+            subTotalPrice={subTotalPrice}
+            estimatedTax={estimatedTax}
+            estimatedShipping={estimatedShipping}
+            totalPrice={totalPrice}
+          />
         </div>
       </div>
       <h1 className="text-2xl font-bold mb-5">Payment</h1>
@@ -86,7 +92,6 @@ const PaymentCheckoutPage = ({ onComplete }: PaymentCheckoutPageProps) => {
           <div key={method.id}>
              <h2 className={`text-md font-medium ${method.id === selectedMethod ? 'text-black border-b-2 border-black' : 'text-gray-500'}`} onClick={() => {
                setSelectedMethod(method.id);
-               onComplete(true);
              }}>{method.name}</h2>
           </div>
         ))}
@@ -97,12 +102,14 @@ const PaymentCheckoutPage = ({ onComplete }: PaymentCheckoutPageProps) => {
             <input
               type="text"
               placeholder="Cardholder Name"
+              onChange={(e) => setCardHolder(e.target.value)}
               className="flex-1 p-4 border border-gray-300 rounded-lg placeholder:text-gray-400"
               required
             />
             <input
               type="text"
               placeholder="Card Number"
+              onChange={(e) => setCardNumber(e.target.value)}
               className="flex-1 p-4 border border-gray-300 rounded-lg placeholder:text-gray-400"
               required
             />
@@ -110,12 +117,14 @@ const PaymentCheckoutPage = ({ onComplete }: PaymentCheckoutPageProps) => {
               <input
                 type="text"
                 placeholder="Exp.Date"
+                onChange={(e) => setExpDate(e.target.value)}
                 className="flex-1 p-4 w-1/2 border border-gray-300 rounded-lg placeholder:text-gray-400"
                 required
               />
                 <input
                 type="text"
                 placeholder="CVV"
+                onChange={(e) => setCvv(Number(e.target.value))}
                 className="flex-1 w-1/2 p-4 border border-gray-300 rounded-lg placeholder:text-gray-400"
                 required
               />
