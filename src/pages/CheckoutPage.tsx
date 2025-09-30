@@ -5,6 +5,7 @@ import Shippment from "../assets/images/checkout/Shipping.svg"
 import AddressCheckoutPage from "../components/Checkout/AddressCheckoutPage"
 import ShippingCheckoutPage from "../components/Checkout/ShippingCheckoutPage"
 import PaymentCheckoutPage from "../components/Checkout/PaymentCheckoutPage"
+import NotificationToast from "../components/productDetailsPage/mainInfo/NotificationToast"
 
 const CheckoutPage = () => {
   const [stepIndex, setStepIndex] = useState(0);
@@ -13,6 +14,7 @@ const CheckoutPage = () => {
   const [isAddressComplete, setIsAddressComplete] = useState(false);
   const [isShippingComplete, setIsShippingComplete] = useState(false);
   const [isPaymentComplete, setIsPaymentComplete] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -50,6 +52,7 @@ const CheckoutPage = () => {
 
   const handleNextStep = () => {
     if (stepIndex === 2) {
+      setToastMessage("Order placed successfully! Redirecting to confirmation page...")
       setTimeout(() => {
         window.location.href = '/checkout/order_confirmation'
       }, 2000)
@@ -121,6 +124,12 @@ const CheckoutPage = () => {
           </div>
         </div>
       </div>
+      {toastMessage && (
+        <NotificationToast 
+          message={toastMessage} 
+          onClose={() => setToastMessage(null)} 
+        />
+      )}
     </div>
   );
 }
