@@ -14,7 +14,9 @@ const ShoppingCartPage = () => {
         handleQuantityMinus,
         toastMessage,
         setToastMessage,
-        addProducts
+        addProducts,
+        loading,
+        error
     } = useShoppingCart()
 
     const { isSignedIn, userId } = useAuth()
@@ -38,26 +40,34 @@ const ShoppingCartPage = () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }, []);
 
+    if (loading) {
+      return <div className="flex items-center justify-center h-screen">Loading...</div>
+    }
+
+    if (error) {
+      return <div className="flex items-center justify-center h-screen text-red-500">Error: {error}</div>
+    }
+
     return (
       <>
-        <div className="my-5 md:my-0 md:px-20 md:py-10 lg:pl-47 lg:pr-67 lg:py-30 p-4 md:p-0 md:flex md:flex-row flex flex-col gap-5 md:gap-4 lg:gap-10 md:justify-between md:m-auto">
+        <div className="my-5 md:my-0 md:px-10 md:py-10 lg:pl-20 lg:pr-30 lg:py-30 xl:pl-47 xl:pr-67 xl:py-30 p-4 md:p-0 md:flex md:flex-row flex flex-col gap-5 md:gap-4 lg:gap-10 xl:gap-10 md:justify-between md:m-auto">
           <div className="md:w-1/2 lg:w-5/5">
             <h1 className="text-2xl font-bold mb-10">Shopping Cart</h1>
             {localProducts.map((product, index) => (
               <div key={index} className="flex items-center justify-between mb-4 py-5 border-b-d4 border-b-1">
                 <div className="flex items-center">
-                  <img src={product.url_image} alt={product.name} className="w-20 h-20 object-contain mr-4" />
+                  <img src={product.url_image} alt={product.name} className="w-20 h-20 md:w-10 md:h-10 lg:w-20 lg:h-20 object-contain mr-4" />
                   <div className="flex flex-col md:flex-row w-full gap-1 md:justify-normal">
                     <div>
-                      <p className="text-lg font-semibold">{product.name}</p>
+                      <p className="text-lg font-semibold md:text-sm lg:text-lg">{product.name}</p>
                       <p className="text-gray-600">#{product.code}</p>
                     </div>
                     <div className="flex flex-row justify-between w-60 gap-3 md:items-center md:ml-5">
                       <button className="text-black hover:text-5d" onClick={() => handleQuantityMinus(product.id)}><FiMinus></FiMinus></button>
                       <p className="text-gray-600">{product.quantity}</p>
                       <button className=" text-black hover:text-5d" onClick={() => handleQuantityPlus(product.id)}><FiPlus></FiPlus></button>
-                      <p className="text-lg font-semibold">${product.price}</p>
-                      <button className=" text-dark-gray hover:text-5d text-2xl" onClick={() => handleRemoveFromCart(product.id)}><FiX></FiX></button>
+                      <p className="text-lg font-semibold md:text-sm lg:text-lg">${product.price}</p>
+                      <button className=" text-dark-gray hover:text-5d text-2xl md:text-md lg:text-2xl" onClick={() => handleRemoveFromCart(product.id)}><FiX></FiX></button>
                     </div>
                   </div>
                 </div>
@@ -70,7 +80,7 @@ const ShoppingCartPage = () => {
               </div>
             )}
           </div>
-          <div className="py-10 px-4 mb-5 lg:py-12 lg:px-12 lg:mb-0 border-1 border-zinc-300 rounded-xl w-full md:w-4/5">
+          <div className="py-10 px-4 mb-5 lg:py-12 lg:px-12 lg:mb-0 border-1 border-zinc-300 rounded-xl w-full md:w-2/5 lg:w-4/5">
             <h1 className="text-2xl font-bold mb-5">Order Summary</h1>
             <div className="flex flex-col gap-6 mb-2">
               <div>
@@ -81,7 +91,7 @@ const ShoppingCartPage = () => {
                 <p className="text-gray-400">Your bonus card Number</p>
                 <div className="relative">
                   <input className="px-4 py-4 pr-20 border-1 border-zinc-300 rounded-xl w-full" placeholder='Enter Card Number'></input>
-                  <button className="absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-1 mr-1 text-sm border border-black rounded">Apply</button>
+                  <button className="absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-1 md:px-2 md:py-1 lg:px-4 mr-1 text-sm border border-black rounded">Apply</button>
                 </div>
               </div>
             </div>
