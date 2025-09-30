@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom'; 
 import { FiMenu, FiX } from 'react-icons/fi';
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
+import { useShoppingCart } from '../../hooks/useShoppingCart';
 import logoCyber from '../../assets/images/header/logo.svg';
 import searchIcon from '../../assets/images/header/search-icon.png';
 import heartIcon from '../../assets/images/header/heart-icon.png';
@@ -10,6 +12,8 @@ import userIcon from '../../assets/images/header/user-icon.png';
 const Header = () => {
   const location = useLocation(); 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { localProducts } = useShoppingCart();
+  const hasItems = localProducts.length > 0;
 
  
   const closeMenu = () => setIsMenuOpen(false);
@@ -45,8 +49,22 @@ const Header = () => {
 
             <div className="flex items-center gap-4">
               <button className="hover:opacity-75"><img src={heartIcon} alt="Ícone de Favoritos" className="w-8 h-8" /></button>
-              <button className="hover:opacity-75"><img src={cartIcon} alt="Ícone do Carrinho" className="w-8 h-8" /></button>
-              <button className="hover:opacity-75"><img src={userIcon} alt="Ícone de Usuário" className="w-8 h-8" /></button>
+              <Link to="/shopping_cart">
+                <button className="hover:opacity-75 relative">
+                  <img src={cartIcon} alt="Ícone do Carrinho" className="w-8 h-8" />
+                  {hasItems && (
+                    <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
+                  )}
+                </button>
+              </Link>
+              <SignedOut>
+                <SignInButton mode="modal">
+                  <button className="hover:opacity-75"><img src={userIcon} alt="Ícone de Usuário" className="w-8 h-8" /></button>
+                </SignInButton>
+              </SignedOut>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
             </div>
           </div>
         </div>
@@ -65,6 +83,7 @@ const Header = () => {
             <ul className="flex flex-col items-start gap-4 pt-4">
               <li><Link to="/home" onClick={closeMenu} className={location.pathname === '/home' ? 'font-bold text-gray-900' : 'text-gray-700'}>Home</Link></li>
               <li><Link to="/products_page" onClick={closeMenu} className={location.pathname.startsWith('/products_page') ? 'font-bold text-gray-900' : 'text-gray-700'}>Shop</Link></li>
+              <li><Link to="/shopping_cart" onClick={closeMenu} className={location.pathname.startsWith('/shopping_cart') ? 'font-bold text-gray-900' : 'text-gray-700'}>Cart</Link></li>
               <li><a href="#" onClick={closeMenu} className="text-gray-700">Contact Us</a></li>
               <li><Link to="#" onClick={closeMenu} className="text-gray-700">Blog</Link></li>
             </ul>

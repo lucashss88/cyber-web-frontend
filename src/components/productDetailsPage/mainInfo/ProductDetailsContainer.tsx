@@ -10,6 +10,7 @@ import ProductActions from './ProductActions';
 import ProductDescription from './ProductDescription';
 import ProductDeliveryInfo from './ProductDeliveryInfo';
 import NotificationToast from './NotificationToast';
+import type { ProductCart } from '../../../types/cart';
 
 interface ProductData {
   id: number;
@@ -51,8 +52,8 @@ const ProductDetailsContainer = () => {
         }
         const data = await response.json();
         setProduct(data.data);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err) {
+        setError((err as Error).message);
       } finally {
         setIsLoading(false);
       }
@@ -95,6 +96,27 @@ const ProductDetailsContainer = () => {
     isSelectionComplete = !!selectedColor;
   }
 
+  function handleAddToCart(product: ProductData): void {
+    if (!product) return;
+    const productCart: ProductCart = {
+      id: product.id,
+      name: product.name,
+      price: parseFloat(product.price),
+      quantity: 1,
+      url_image: product.url_image,
+      code: product.id.toString(),
+    };
+    setToastMessage('Produto adicionado ao carrinho!');
+    const cart = localStorage.getItem('shoppingCart');
+    let cartProducts = [];
+    if (cart) {
+      const parsed = JSON.parse(cart);
+      cartProducts = Array.isArray(parsed) ? parsed : [parsed];
+    }
+    cartProducts.push(productCart);
+    localStorage.setItem('shoppingCart', JSON.stringify(cartProducts));
+  }
+
   return (
     <>
       <Breadcrumb crumbs={generateCrumbs()} />
@@ -120,7 +142,7 @@ const ProductDetailsContainer = () => {
           <div className="flex-grow" />
           <ProductActions
             isDisabled={!isSelectionComplete}
-            onAddToCart={() => setToastMessage('Added to Cart!')}
+            onAddToCart={() => handleAddToCart(product)}
             onAddToWishlist={() => setToastMessage('Added to Wishlist!')}
           />
           <ProductDeliveryInfo />
