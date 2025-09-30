@@ -95,7 +95,6 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
     setLocalProducts(updatedCart)
     localStorage.setItem('shoppingCart', JSON.stringify(updatedCart))
     setToastMessage('Quantidade atualizada!')
-    window.location.reload()
   }
 
   const handleQuantityMinus = (productId: string) => {
@@ -113,7 +112,6 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
     setLocalProducts(updatedCart)
     localStorage.setItem('shoppingCart', JSON.stringify(updatedCart))
     setToastMessage('Quantidade atualizada!')
-    window.location.reload()
   }
   
   const addProducts = useCallback(async (products: Product[]) => {

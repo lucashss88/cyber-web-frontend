@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { FiX } from "react-icons/fi";
 import type { Address } from "../../types/address";
+import { useForm } from "react-hook-form";
 
 interface AddressFormProps {
   isOpen: boolean;
@@ -9,19 +10,30 @@ interface AddressFormProps {
   address?: Address;
 }
 
+interface AddressFormData {
+  country: string;
+  city: string;
+  streetAddress: string;
+  postalCode: string;
+  number: string;
+  tag: string;
+}
+
 const AddressForm = ({ isOpen, onClose, onSave, address }: AddressFormProps) => {
-  const [formData, setFormData] = useState<Partial<Address>>({
-    country: address?.country || "",
-    city: address?.city || "",
-    streetAddress: address?.streetAddress || "",
-    postalCode: address?.postalCode || "",
-    number: address?.number || "",
-    tag: address?.tag || ""
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<AddressFormData>({
+    defaultValues: {
+      country: "",
+      city: "",
+      streetAddress: "",
+      postalCode: "",
+      number: "",
+      tag: ""
+    }
   });
 
   useEffect(() => {
     if (address) {
-      setFormData({
+      reset({
         country: address.country,
         city: address.city,
         streetAddress: address.streetAddress,
@@ -30,7 +42,7 @@ const AddressForm = ({ isOpen, onClose, onSave, address }: AddressFormProps) => 
         tag: address.tag
       });
     } else {
-      setFormData({
+      reset({
         country: "",
         city: "",
         streetAddress: "",
@@ -39,12 +51,11 @@ const AddressForm = ({ isOpen, onClose, onSave, address }: AddressFormProps) => 
         tag: ""
       });
     }
-  }, [address])
+  }, [address, reset]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = (data: AddressFormData) => {
     const newAddress: Address = {
-      ...formData as Address,
+      ...data,
       id: address?.id || Date.now()
     };
     onSave(newAddress);
@@ -54,7 +65,7 @@ const AddressForm = ({ isOpen, onClose, onSave, address }: AddressFormProps) => 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 backdrop-blur-lg bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">{address ? 'Edit Address' : 'Add New Address'}</h2>
@@ -63,60 +74,66 @@ const AddressForm = ({ isOpen, onClose, onSave, address }: AddressFormProps) => 
           </button>
         </div>
         
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="text"
-            placeholder="Country"
-            value={formData.country}
-            onChange={(e) => setFormData({...formData, country: e.target.value})}
-            className="w-full p-3 border border-gray-300 rounded-lg"
-            required
-          />
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div>
+            <input
+              type="text"
+              placeholder="Country"
+              {...register("country", { required: "Country is required" })}
+              className="w-full p-3 border border-gray-300 rounded-lg"
+            />
+            {errors.country && <span className="text-red-500 text-sm">{errors.country.message}</span>}
+          </div>
           
-          <input
-            type="text"
-            placeholder="City"
-            value={formData.city}
-            onChange={(e) => setFormData({...formData, city: e.target.value})}
-            className="w-full p-3 border border-gray-300 rounded-lg"
-            required
-          />
+          <div>
+            <input
+              type="text"
+              placeholder="City"
+              {...register("city", { required: "City is required" })}
+              className="w-full p-3 border border-gray-300 rounded-lg"
+            />
+            {errors.city && <span className="text-red-500 text-sm">{errors.city.message}</span>}
+          </div>
           
-          <input
-            type="text"
-            placeholder="Street Address"
-            value={formData.streetAddress}
-            onChange={(e) => setFormData({...formData, streetAddress: e.target.value})}
-            className="w-full p-3 border border-gray-300 rounded-lg"
-            required
-          />
+          <div>
+            <input
+              type="text"
+              placeholder="Street Address"
+              {...register("streetAddress", { required: "Street address is required" })}
+              className="w-full p-3 border border-gray-300 rounded-lg"
+            />
+            {errors.streetAddress && <span className="text-red-500 text-sm">{errors.streetAddress.message}</span>}
+          </div>
           
-          <input
-            type="text"
-            placeholder="Number"
-            value={formData.number}
-            onChange={(e) => setFormData({...formData, number: e.target.value})}
-            className="w-full p-3 border border-gray-300 rounded-lg"
-            required
-          />
+          <div>
+            <input
+              type="text"
+              placeholder="Number"
+              {...register("number", { required: "Number is required" })}
+              className="w-full p-3 border border-gray-300 rounded-lg"
+            />
+            {errors.number && <span className="text-red-500 text-sm">{errors.number.message}</span>}
+          </div>
           
-          <input
-            type="text"
-            placeholder="Postal Code"
-            value={formData.postalCode}
-            onChange={(e) => setFormData({...formData, postalCode: e.target.value})}
-            className="w-full p-3 border border-gray-300 rounded-lg"
-            required
-          />
+          <div>
+            <input
+              type="text"
+              placeholder="Postal Code"
+              {...register("postalCode", { required: "Postal code is required" })}
+              className="w-full p-3 border border-gray-300 rounded-lg"
+            />
+            {errors.postalCode && <span className="text-red-500 text-sm">{errors.postalCode.message}</span>}
+          </div>
           
-          <input
-            type="text"
-            placeholder="Tag (home, work, office)"
-            value={formData.tag}
-            onChange={(e) => setFormData({...formData, tag: e.target.value})}
-            className="w-full p-3 border border-gray-300 rounded-lg"
-            required
-          />
+          <div>
+            <input
+              type="text"
+              placeholder="Tag (home, work, office)"
+              {...register("tag", { required: "Tag is required" })}
+              className="w-full p-3 border border-gray-300 rounded-lg"
+            />
+            {errors.tag && <span className="text-red-500 text-sm">{errors.tag.message}</span>}
+          </div>
           
           <div className="flex gap-3 pt-4">
             <button

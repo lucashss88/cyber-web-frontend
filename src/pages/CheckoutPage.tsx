@@ -116,12 +116,12 @@ const CheckoutPage = () => {
             ))
           )}
         </div>
-        <div className="flex flex-col gap-2 py-13 md:pl-35 md:pr-55 md:mt-12">
+        <div className="flex flex-col gap-2 py-13 md:pl-20 md:pr-30 md:mt-12 xl:pl-40 lg:pr-55">
           {steps[stepIndex].content}
           <div className="flex items-center w-full justify-between md:flex md:justify-end md:gap-5">
-            <button className="bg-white border-2 border-black-500 text-black px-13 py-4 rounded-lg w-45" onClick={() => handlePreviousStep()}>Back</button>
+            <button className="bg-white border-2 border-black-500 text-black px-13 py-5 lg:py-4 rounded-lg w-45" onClick={() => handlePreviousStep()}>Back</button>
             <button 
-              className={`px-13 py-4 rounded-lg w-45 transition duration-300 ${
+              className={`px-13 py-5 lg:py-4 rounded-lg w-45 transition duration-300 ${
                 ((stepIndex === 0 && !isAddressComplete) || (stepIndex === 1 && !isShippingComplete) || (stepIndex === 2 && !isPaymentComplete))
                   ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   : 'bg-black text-white hover:bg-gray-800'
