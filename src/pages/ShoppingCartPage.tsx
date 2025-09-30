@@ -14,7 +14,9 @@ const ShoppingCartPage = () => {
         handleQuantityMinus,
         toastMessage,
         setToastMessage,
-        addProducts
+        addProducts,
+        loading,
+        error
     } = useShoppingCart()
 
     const { isSignedIn, userId } = useAuth()
@@ -37,6 +39,14 @@ const ShoppingCartPage = () => {
     useEffect(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }, []);
+
+    if (loading) {
+      return <div className="flex items-center justify-center h-screen">Loading...</div>
+    }
+
+    if (error) {
+      return <div className="flex items-center justify-center h-screen text-red-500">Error: {error}</div>
+    }
 
     return (
       <>
