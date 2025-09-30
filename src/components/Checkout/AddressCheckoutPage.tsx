@@ -35,6 +35,7 @@ const AddressCheckoutPage = ({ onComplete }: AddressCheckoutPageProps) => {
       const address = addresses.find(addr => addr.id === selectedAddress);
       if (address) {
         SetAddress(address);
+        localStorage.setItem('selectedAddress', JSON.stringify(address));
       }
     }
   }, [selectedAddress])

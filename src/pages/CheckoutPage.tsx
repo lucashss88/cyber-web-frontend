@@ -49,6 +49,11 @@ const CheckoutPage = () => {
   ]
 
   const handleNextStep = () => {
+    if (stepIndex === 2) {
+      setTimeout(() => {
+        window.location.href = '/checkout/order_confirmation'
+      }, 2000)
+    }
     if (stepIndex < steps.length - 1) {
       setStepIndex(stepIndex + 1);
       setActualStep(actualStep + 1)

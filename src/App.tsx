@@ -11,6 +11,7 @@ import CheckoutPage from './pages/CheckoutPage';
 import { ShoppingCartProvider } from './contexts/ShoppingCartContext';
 import { OrderDataProvider } from './contexts/OrderDataContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import OrderConfirmationPage from './components/Checkout/OrderConfirmationPage';
  
 function App() {
   return (
@@ -31,6 +32,13 @@ function App() {
                   <ProtectedRoute>
                     <OrderDataProvider>
                       <CheckoutPage />
+                    </OrderDataProvider>
+                  </ProtectedRoute>
+                }/>
+                <Route path='/checkout/order_confirmation' element={                 
+                  <ProtectedRoute>
+                    <OrderDataProvider>
+                      <OrderConfirmationPage />
                     </OrderDataProvider>
                   </ProtectedRoute>
                 }/>
