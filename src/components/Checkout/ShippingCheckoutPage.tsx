@@ -60,7 +60,7 @@ const ShippingCheckoutPage = ({ onComplete }: ShippingCheckoutPageProps) => {
   }, []);
 
   return (
-    <div className="mb-12">
+    <div className="mb-3">
       <h1 className="text-2xl font-bold mb-10">Select Address</h1>
       <div className="flex flex-col gap-6 mb-10">
         {shippingOptions.map((option) => (

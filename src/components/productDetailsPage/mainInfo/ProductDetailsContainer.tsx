@@ -115,7 +115,6 @@ const ProductDetailsContainer = () => {
     }
     cartProducts.push(productCart);
     localStorage.setItem('shoppingCart', JSON.stringify(cartProducts));
-    console.log('Produto adicionado ao carrinho:', productCart);
   }
 
   return (
