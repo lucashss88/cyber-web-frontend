@@ -3,7 +3,7 @@
 
 ## Description
 **CYBER WEB FRONTEND** is the user interface of the Cyber Web project.  
-It provides the client-side experience for browsing, filtering, and purchasing products, fully integrated with the [Cyber Web Backend](https://github.com/lucashss88/cyber-web-backend.git).
+It provides the client-side experience for browsing, filtering, and purchasing products, fully integrated with the [Cyber Web Backend](https://github.com/lucashss88/cyber-web-back).
 
 ---
 
@@ -60,7 +60,7 @@ VITE_API_URL=http://localhost:3001
 VITE_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
 ```
 
-> ⚠️ Make sure the [Cyber Web Backend](https://github.com/lucashss88/cyber-web-backend.git) is running locally or update the URL above with the deployed API.
+> ⚠️ Make sure the [Cyber Web Backend](https://github.com/lucashss88/cyber-web-back) is running locally or update the URL above with the deployed API.
 > 
 > 🔑 Get your Clerk keys from [Clerk Dashboard](https://dashboard.clerk.com/) for authentication features.
 
@@ -133,16 +133,12 @@ npm run preview
 
 ## Frontend & Backend
 
-* **Backend:** [Cyber Web Backend](https://github.com/lucashss88/cyber-web-backend.git)
-* **Frontend:** [Cyber Web Frontend](https://github.com/danielacvmelo/cyber-web-frontend.git)
+* **Backend:** [Cyber Web Backend](https://github.com/lucashss88/cyber-web-back)
+* **Frontend:** [Cyber Web Frontend](https://github.com/lucashss88/cyber-web-frontend)
 
 ---
 
 ## Authors
 
 * [@lucashss88](https://github.com/lucashss88)
-* [@danielacvmelo](https://github.com/danielacvmelo)
-* [@edgarneto12](https://github.com/edgarneto12)
-* [@VitorBeckenkamp](https://github.com/VitorBeckenkamp)
-* [@Sandro-A-Moraes](https://github.com/Sandro-A-Moraes)
 
