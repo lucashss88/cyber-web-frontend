@@ -18,12 +18,12 @@ interface ShoppingCartContextType {
   items: CartItem[]
   loading: boolean
   error: string | null
-  totalValue: number
   localProducts: LocalProduct[]
   subTotalPrice: number
   totalPrice: number
   estimatedTax: number
   estimatedShipping: number
+  shoppingCartId: number | null
   addProducts: (products: Product[]) => Promise<void>
   deleteProduct: (productId: number, shoppingCartId: number) => Promise<void>
   finalizeCart: (status: string) => Promise<void>
@@ -43,9 +43,9 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [totalValue, setTotalValue] = useState(0)
   const [localProducts, setLocalProducts] = useState<LocalProduct[]>([])
   const [toastMessage, setToastMessage] = useState<string | null>(null)
+  const [shoppingCartId, setShoppingCartId] = useState<number | null>(null)
   const { getAuthToken, userId } = useAuth()
   
   const estimatedTax = 50
@@ -53,9 +53,15 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const storedCart = localStorage.getItem('shoppingCart')
+    const storedCartId = localStorage.getItem('shoppingCartId')
+    
     if (storedCart) {
       const parsed = JSON.parse(storedCart)
       setLocalProducts(Array.isArray(parsed) ? parsed : [parsed])
+    }
+    
+    if (storedCartId) {
+      setShoppingCartId(parseInt(storedCartId))
     }
   }, [])
 
@@ -70,8 +76,8 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
   const handleRemoveFromCart = async (productId: string) => {
     const updatedCart = localProducts.filter(product => product.id !== productId)
     setLocalProducts(updatedCart)
-    if (cart?.shopping_cart_id) {
-      await deleteProduct(parseInt(productId), cart.shopping_cart_id)
+    if (shoppingCartId) {
+      await deleteProduct(parseInt(productId), shoppingCartId)
     } else {
       console.error('Carrinho não encontrado ao tentar remover o produto.')
     }
@@ -127,9 +133,11 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
       )
       
       const data = await response.json()
-      setTotalValue(data.valor_total)
+      localStorage.setItem("totalValue", (data.valor_total + estimatedShipping + estimatedTax).toString())
       setCart(data)
       setItems(data.items)
+      setShoppingCartId(data.shopping_cart_id)
+      localStorage.setItem('shoppingCartId', data.shopping_cart_id.toString())
       console.log("A função de adicionar foi chamada.", data)
     } catch (error){
       setError('Erro ao adicionar produtos ao carrinho: ' + error)
@@ -154,7 +162,7 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
       )
 
       const data = await response.json()
-      setTotalValue(data.valor_total)
+      localStorage.setItem("totalValue", (data.valor_total + estimatedShipping + estimatedTax).toString())
       setCart(data)
       setItems(data.items)
       console.log("A função de deletar foi chamada.", data)
@@ -165,20 +173,34 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
     }
   }, [getAuthToken, userId])
 
-  const finalizeCart = async (status: string, shoppingCartId: number = cart!.shopping_cart_id) => {
+  const finalizeCart = async (status: string) => {
+    if (!shoppingCartId) {
+      setError('Carrinho não encontrado')
+      return
+    }
+    
     setLoading(true)
     setError(null)
     try {
       const token = await getAuthToken()
       if (!token) throw new Error('Token não encontrado')
-      await makeAuthenticatedRequest(`http://localhost:3001/api/shopping_carts/${shoppingCartId}`, token, 'PATCH', status)
+      await makeAuthenticatedRequest(`http://localhost:3001/api/shopping_carts/${shoppingCartId}`, token, 'PATCH', JSON.stringify({ status: status }))
+      
+      localStorage.removeItem('shoppingCart')
+      localStorage.removeItem('shoppingCartId')
+      setToastMessage("Order placed successfully! Redirecting to confirmation page...")
+      
+      setTimeout(() => {
+        window.location.href = '/checkout/order_confirmation'
+      }, 2000)
     } catch (error){
       setError('Erro ao finalizar o carrinho: ' + error)
+      console.log(error)
     } finally {
       setLoading(false)
       setCart(null)
       setItems([])
-      setTotalValue(0)
+      setShoppingCartId(null)
     }
   }
 
@@ -192,12 +214,12 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
       items,
       loading,
       error,
-      totalValue,
       localProducts,
       subTotalPrice,
       totalPrice,
       estimatedTax,
       estimatedShipping,
+      shoppingCartId,
       addProducts,
       deleteProduct,
       finalizeCart,

@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useCallback } from "react";
 import type { ReactNode } from "react";
 import type { Address } from "../types/address";
 import type { Shipping } from "../types/shipping";
@@ -23,21 +23,21 @@ export function OrderDataProvider({ children }: { children: ReactNode }) {
     const [total, setTotal] = useState<number>(0);
     const [paymentMethod, setPaymentMethod] = useState<Payment>({} as Payment);
     const [shippingMethod, setShippingMethod] = useState<Shipping>({} as Shipping);
-    const SetAddress = (address: Address) => {
+    const SetAddress = useCallback((address: Address) => {
         setAddress(address);
-    }
+    }, []);
 
-    const SetTotal = (total: number) => {
+    const SetTotal = useCallback((total: number) => {
         setTotal(total);
-    }
+    }, []);
 
-    const SetPaymentMethod = (paymentMethod: Payment) => {
+    const SetPaymentMethod = useCallback((paymentMethod: Payment) => {
         setPaymentMethod(paymentMethod);
-    }
+    }, []);
 
-    const SetShippingMethod = (shippingMethod: Shipping) => {
+    const SetShippingMethod = useCallback((shippingMethod: Shipping) => {
         setShippingMethod(shippingMethod);
-    }
+    }, []);
 
     return (
         <OrderDataContext.Provider value={{      

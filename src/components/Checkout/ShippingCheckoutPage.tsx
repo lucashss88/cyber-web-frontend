@@ -77,7 +77,6 @@ const ShippingCheckoutPage = ({ onComplete }: ShippingCheckoutPageProps) => {
                   name="shipping"
                   className="lg:w-5.5 w-5 h-5 appearance-none border-2 border-black rounded-full bg-white checked:bg-black  checked:border-4 checked:border-white checked:ring-2 checked:ring-black cursor-pointer"
                   checked={selectedShipping === option.id}
-                  defaultChecked={option.id === 1}
                   onChange={() => setSelectedShipping(option.id)}
                 />
                 {isMobile ? (
