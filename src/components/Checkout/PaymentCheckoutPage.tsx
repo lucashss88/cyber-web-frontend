@@ -1,10 +1,20 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import CreditCard from "../../assets/images/checkout/Credit Card.svg"
 import type { LocalProduct } from "../../contexts/ShoppingCartContext";
 import { useShoppingCart } from "../../hooks/useShoppingCart";
 import { useOrderData } from "../../hooks/useOrderData";
 import OrderSummary from "./OrderSummary";
 import type { Payment } from "../../types/payment";
+
+const cardHolderRegex = /^[a-zA-Z\s]{2,50}$/; 
+const expDateRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
+const cvvRegex = /^\d{3,4}$/;
+
+const paymentMethods = [
+  { id: 1, name: "Credit Card" },
+  { id: 2, name: "PayPal" },
+  { id: 3, name: "PayPal Credit" }
+];
 
 interface PaymentCheckoutPageProps {
   onComplete: (isComplete: boolean) => void;
@@ -20,17 +30,6 @@ const PaymentCheckoutPage = ({ onComplete }: PaymentCheckoutPageProps) => {
   const { subTotalPrice, estimatedTax, estimatedShipping, totalPrice } = useShoppingCart();
   const { address, shippingMethod, SetPaymentMethod } = useOrderData();
 
-  const cardHolderRegex = /^[a-zA-Z\s]{2,50}$/; 
-  const expDateRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
-  const cvvRegex = /^\d{3,4}$/;
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const methods: Payment[] = [
-    { id: 1, name: "Credit Card", cardHolder: cardHolder, cardNumber: cardNumber, expDate: expDate, cvv: cvv},
-    { id: 2, name: "PayPal", cardHolder: null, cardNumber: null, expDate: null, cvv: null },
-    { id: 3, name: "PayPal Credit", cardHolder: null, cardNumber: null, expDate: null, cvv: null }
-  ];
-
   useEffect(() => {
     const storedProducts = localStorage.getItem("shoppingCart");
     if (storedProducts) {
@@ -42,7 +41,7 @@ const PaymentCheckoutPage = ({ onComplete }: PaymentCheckoutPageProps) => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
-  useEffect(() => {
+  const handlePaymentValidation = useCallback(() => {
     const isPaymentComplete = selectedMethod === 1 
       ? cardHolderRegex.test(cardHolder) && 
         expDateRegex.test(expDate) && 
@@ -52,7 +51,7 @@ const PaymentCheckoutPage = ({ onComplete }: PaymentCheckoutPageProps) => {
     if (isPaymentComplete) {
       const paymentData: Payment = {
         id: selectedMethod,
-        name: methods.find(m => m.id === selectedMethod)?.name || '',
+        name: paymentMethods.find(m => m.id === selectedMethod)?.name || '',
         cardHolder: selectedMethod === 1 ? cardHolder : null,
         cardNumber: selectedMethod === 1 ? cardNumber : null,
         expDate: selectedMethod === 1 ? expDate : null,
@@ -63,7 +62,11 @@ const PaymentCheckoutPage = ({ onComplete }: PaymentCheckoutPageProps) => {
     } else {
       onComplete(false);
     }
-  }, [selectedMethod, cardHolder, cardNumber, expDate, cvv, onComplete, SetPaymentMethod, methods]);
+  }, [selectedMethod, cardHolder, cardNumber, expDate, cvv, onComplete, SetPaymentMethod]);
+
+  useEffect(() => {
+    handlePaymentValidation();
+  }, [handlePaymentValidation]);
 
   return (
     <div className="mb-12 pr-4">
@@ -94,7 +97,7 @@ const PaymentCheckoutPage = ({ onComplete }: PaymentCheckoutPageProps) => {
       <h1 className="text-2xl font-bold mb-5">Payment</h1>
       <div className="flex flex-col gap-6 mb-10">
         <div className="flex flex-row justify-between">
-          {methods.map((method) => (
+          {paymentMethods.map((method) => (
           <div key={method.id}>
              <h2 className={`text-md font-medium ${method.id === selectedMethod ? 'text-black border-b-2 border-black' : 'text-gray-500'}`} onClick={() => {
                setSelectedMethod(method.id);
