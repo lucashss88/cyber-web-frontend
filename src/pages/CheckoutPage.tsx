@@ -5,6 +5,8 @@ import Shippment from "../assets/images/checkout/Shipping.svg"
 import AddressCheckoutPage from "../components/Checkout/AddressCheckoutPage"
 import ShippingCheckoutPage from "../components/Checkout/ShippingCheckoutPage"
 import PaymentCheckoutPage from "../components/Checkout/PaymentCheckoutPage"
+import NotificationToast from "../components/productDetailsPage/mainInfo/NotificationToast"
+import { useShoppingCart } from "../hooks/useShoppingCart"
 
 const CheckoutPage = () => {
   const [stepIndex, setStepIndex] = useState(0);
@@ -13,6 +15,8 @@ const CheckoutPage = () => {
   const [isAddressComplete, setIsAddressComplete] = useState(false);
   const [isShippingComplete, setIsShippingComplete] = useState(false);
   const [isPaymentComplete, setIsPaymentComplete] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const { finalizeCart, shoppingCartId } = useShoppingCart()
 
   useEffect(() => {
     const handleResize = () => {
@@ -26,6 +30,8 @@ const CheckoutPage = () => {
   useEffect(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
+
+
   
   const steps = [
     {
@@ -48,11 +54,18 @@ const CheckoutPage = () => {
     }
   ]
 
-  const handleNextStep = () => {
+  const handleNextStep = async () => {
     if (stepIndex === 2) {
-      setTimeout(() => {
-        window.location.href = '/checkout/order_confirmation'
-      }, 2000)
+      if (!shoppingCartId) {
+        setToastMessage("Erro: Carrinho não encontrado")
+        return
+      }
+      try {
+        setToastMessage("Processing payment...")
+        await finalizeCart("finalizado")
+      } catch(error) {
+        setToastMessage("Error processing payment: " + error)
+      }
     }
     if (stepIndex < steps.length - 1) {
       setStepIndex(stepIndex + 1);
@@ -121,6 +134,12 @@ const CheckoutPage = () => {
           </div>
         </div>
       </div>
+      {toastMessage && (
+        <NotificationToast 
+          message={toastMessage} 
+          onClose={() => setToastMessage(null)} 
+        />
+      )}
     </div>
   );
 }

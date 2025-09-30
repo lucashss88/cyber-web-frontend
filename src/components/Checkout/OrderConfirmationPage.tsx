@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { useShoppingCart } from '../../hooks/useShoppingCart';
 import { useState, useEffect } from 'react';
 import type { Address } from '../../types/address';
 
@@ -7,13 +6,17 @@ const OrderConfirmationPage = () => {
   const navigate = useNavigate();
   const orderNumber = Math.random().toString(36).substr(2, 9).toUpperCase();
   const orderDate = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })
-  const { totalPrice } = useShoppingCart()
+  const [totalPrice, setTotalPrice] = useState<number>(0)
   const [address, setAddress] = useState<Address | null>(null)
 
   useEffect(() => {
     const savedAddress = localStorage.getItem('selectedAddress')
     if (savedAddress) {
       setAddress(JSON.parse(savedAddress))
+    }
+    const savedTotalValue = localStorage.getItem('totalValue')
+    if (savedTotalValue) {
+      setTotalPrice(parseFloat(savedTotalValue))
     }
   }, [])
 
