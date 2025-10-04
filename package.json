@@ -4,11 +4,17 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --mode local",
+    "prod": "vite --mode prod",
     "build": "tsc -b && vite build",
+    "build:prod": "vite build --mode prod",
     "lint": "eslint .",
     "preview": "vite preview",
-    "tailwind:init": "tailwindcss init -p"
+    "tailwind:init": "tailwindcss init -p",
+    "docker:build": "docker build -t cyber-frontend .",
+    "docker:run": "docker run -p 80:80 cyber-frontend",
+    "docker:deploy": "docker-compose up -d --build",
+    "docker:stop": "docker-compose down"
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.48.1",
@@ -24,6 +30,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
+    "@types/node": "^20.0.0",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react": "^4.3.0",

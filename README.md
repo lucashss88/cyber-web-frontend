@@ -131,6 +131,78 @@ npm run preview
 
 ---
 
+## AWS Deploy
+
+### Environment Setup
+
+The project supports multiple environments:
+
+- **Local Development**: `npm run dev` (uses `.env.local`)
+- **Production**: `npm run prod` (uses `.env.prod`)
+
+### Environment Files
+
+**`.env`** (Para instrutores testarem):
+```env
+VITE_API_URL=http://localhost:3001
+VITE_CLERK_PUBLISHABLE_KEY=pk_test_ZXh0cmEtcmF2ZW4tNzEuY2xlcmsuYWNjb3VudHMuZGV2JA
+VITE_ENVIRONMENT=local
+```
+
+**`.env.local`** (Development - opcional):
+```env
+VITE_API_URL=http://localhost:3001
+VITE_CLERK_PUBLISHABLE_KEY=your_local_clerk_key
+VITE_ENVIRONMENT=local
+```
+
+**`.env.prod`** (Production - para deploy AWS):
+```env
+VITE_API_URL=http://YOUR_EC2_IP:3001
+VITE_CLERK_PUBLISHABLE_KEY=your_prod_clerk_key
+VITE_ENVIRONMENT=production
+VITE_S3_BUCKET_URL=https://your-bucket-name.s3.amazonaws.com
+```
+
+### Deploy to EC2
+
+1. **Upload files to EC2**:
+   ```bash
+   scp -r . ubuntu@YOUR_EC2_IP:/home/ubuntu/cyber-web-frontend
+   ```
+
+2. **Connect to EC2 and run deploy script**:
+   ```bash
+   ssh ubuntu@YOUR_EC2_IP
+   cd /home/ubuntu/cyber-web-frontend
+   chmod +x deploy.sh
+   ./deploy.sh
+   ```
+
+3. **Configure Security Groups**:
+   - Port 80 (HTTP)
+   - Port 443 (HTTPS)
+   - Port 22 (SSH)
+   - Port 3001 (Backend API)
+
+### PM2 Management
+
+```bash
+# Check status
+pm2 status
+
+# View logs
+pm2 logs cyber-frontend
+
+# Restart application
+pm2 restart cyber-frontend
+
+# Stop application
+pm2 stop cyber-frontend
+```
+
+---
+
 ## Frontend & Backend
 
 * **Backend:** [Cyber Web Backend](https://github.com/lucashss88/cyber-web-backend.git)
