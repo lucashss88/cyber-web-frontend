@@ -29,7 +29,7 @@ export default function BrowseByCategory() {
     useEffect(() => {
         async function fetchCategories() {
             try {
-                const response = await fetch('http://localhost:3001/api/categories');
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/categories`);
                 const json = await response.json();
                 const categoryNames: string[] = json.data;
 

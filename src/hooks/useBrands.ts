@@ -10,8 +10,8 @@ export function useBrands(categoryName?: string) {
         async function fetchBrands() {
             try {
                 const endpoint = categoryName
-                  ? `http://localhost:3001/api/brands/${encodeURIComponent(categoryName)}`
-                  : `http://localhost:3001/api/brands`;
+                  ? `${url}/brands/${encodeURIComponent(categoryName)}`
+                  : `${url}/brands`;
 
                 const response = await fetch(endpoint);
 
