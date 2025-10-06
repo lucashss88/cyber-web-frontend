@@ -11,10 +11,10 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "tailwind:init": "tailwindcss init -p",
-    "docker:build": "docker build -t cyber-frontend .",
-    "docker:run": "docker run -p 80:80 cyber-frontend",
-    "docker:deploy": "docker-compose up -d --build",
-    "docker:stop": "docker-compose down"
+    "docker:local": "docker-compose up -d --build",
+    "docker:prod": "docker-compose -f docker-compose.prod.yml up -d --build",
+    "docker:stop": "docker-compose down",
+    "docker:stop-prod": "docker-compose -f docker-compose.prod.yml down"
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.48.1",

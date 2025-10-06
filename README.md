@@ -1,15 +1,16 @@
-
 # 🖥️ CYBER WEB FRONTEND
 
 ## Description
+
 **CYBER WEB FRONTEND** is the user interface of the Cyber Web project.  
 It provides the client-side experience for browsing, filtering, and purchasing products, fully integrated with the [Cyber Web Backend](https://github.com/lucashss88/cyber-web-backend.git).
 
 ---
 
 ## Main Features
-- Product listing with pagination and sorting  
-- Filters by price, brand, category, and tags  
+
+- Product listing with pagination and sorting
+- Filters by price, brand, category, and tags
 - **Shopping Cart System** with localStorage persistence and quantity management
 - **Complete Checkout Flow** with multi-step process (Address, Shipping, Payment)
 - **Address Management** with CRUD operations and default addresses
@@ -17,68 +18,103 @@ It provides the client-side experience for browsing, filtering, and purchasing p
 - **Order Confirmation** with order details and tracking information
 - **User Authentication** with Clerk integration and protected routes
 - **Cart Notifications** with visual indicators in header
-- Responsive and modern design with Tailwind CSS  
-- Integration with the Cyber Web API  
-- Interactive product cards and shopping actions  
+- Responsive and modern design with Tailwind CSS
+- Integration with the Cyber Web API
+- Interactive product cards and shopping actions
 
 ---
 
 ## Tech Stack
-- **React (Vite)** – Fast frontend framework  
-- **TypeScript** – Static typing and safety  
-- **Tailwind CSS** – Utility-first CSS framework  
+
+- **React (Vite)** – Fast frontend framework
+- **TypeScript** – Static typing and safety
+- **Tailwind CSS** – Utility-first CSS framework
 - **Clerk** – Authentication and user management
 - **React Router** – Client-side routing
 - **Context API** – State management for cart and order data
-- **PostCSS & Autoprefixer** – CSS processing (pre-configured)  
+- **PostCSS & Autoprefixer** – CSS processing (pre-configured)
 
 ---
 
 ## Getting Started
 
-Follow the steps below to run the project locally:
+### Development (Local)
 
-### 1. Clone the repository
+#### Option 1: Node.js Development
+
+1. **Clone and install:**
+
 ```bash
 git clone https://github.com/danielacvmelo/cyber-web-frontend.git
 cd cyber-web-frontend
-````
-
-### 2. Install dependencies
-
-```bash
 npm install
 ```
 
-### 3. Configure environment variables
+2. **Configure environment:**
+   Ensure `.env` file exists with:
 
-Create a `.env` file in the root of the project and add the required environment variables:
-
-Example:
 ```env
 VITE_API_URL=http://localhost:3001
-VITE_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+VITE_CLERK_PUBLISHABLE_KEY=pk_test_cmVsZXZhbnQtdG9hZC04OS5jbGVyay5hY2NvdW50cy5kZXYk
+VITE_ENVIRONMENT=local
 ```
 
-> ⚠️ Make sure the [Cyber Web Backend](https://github.com/lucashss88/cyber-web-backend.git) is running locally or update the URL above with the deployed API.
-> 
-> 🔑 Get your Clerk keys from [Clerk Dashboard](https://dashboard.clerk.com/) for authentication features.
-
-### 4. Start the development server
+3. **Start development server:**
 
 ```bash
 npm run dev
 ```
 
-The app will be available at:
+App available at: `http://localhost:5173`
 
+#### Option 2: Docker Development
+
+1. **Start with Docker:**
+
+```bash
+npm run docker:local
 ```
-http://localhost:5173
+
+App available at: `http://localhost:5173`
+
+2. **Stop Docker:**
+
+```bash
+npm run docker:stop
 ```
+
+> ⚠️ **Backend Required:** Make sure [Cyber Web Backend](https://github.com/lucashss88/cyber-web-backend.git) is running on port 3001
 
 ---
 
-## Build and Preview
+## Production
+
+### Docker Production (Standalone)
+
+1. **Start production container:**
+
+```bash
+npm run docker:prod
+```
+
+App available at (port 80)
+
+2. **Stop production container:**
+
+```bash
+npm run docker:stop-prod
+```
+
+### Full Stack Production (Backend + Frontend)
+
+Run from backend repository:
+
+```bash
+cd cyber-web-backend
+npm run docker:full-prod
+```
+
+### Build and Preview (Node.js)
 
 Generate an optimized production build:
 
@@ -97,23 +133,27 @@ npm run preview
 ## E-commerce Features
 
 ### Shopping Cart
+
 - Add/remove products with quantity management
 - Persistent cart data using localStorage
 - Real-time price calculations with taxes and shipping
 - Visual cart indicator in header
 
 ### Checkout Process
+
 1. **Address Step**: Select or add delivery addresses
 2. **Shipping Step**: Choose shipping method and delivery options
 3. **Payment Step**: Enter payment details with validation
 4. **Order Confirmation**: Review order details and track order
 
 ### Authentication
+
 - Secure user authentication with Clerk
 - Protected checkout routes
 - Automatic cart synchronization for authenticated users
 
 ### Address Management
+
 - CRUD operations for user addresses
 - Default addresses with backup system
 - Address validation and formatting
@@ -122,11 +162,11 @@ npm run preview
 
 ## Development Notes
 
-* **Tailwind CSS Extension (VS Code):**
+- **Tailwind CSS Extension (VS Code):**
   Optional, but recommended. It provides class name autocompletion and syntax highlighting.
-* **PostCSS:**
+- **PostCSS:**
   Already included and configured in the project. No extra installation needed by the user.
-* **Authentication:**
+- **Authentication:**
   Clerk is configured for user management. Make sure to set up your Clerk project and add the publishable key to your environment variables.
 
 ---
@@ -142,21 +182,24 @@ The project supports multiple environments:
 
 ### Environment Files
 
-**`.env`** (Para instrutores testarem):
+**`.env`**:
+
 ```env
 VITE_API_URL=http://localhost:3001
 VITE_CLERK_PUBLISHABLE_KEY=pk_test_ZXh0cmEtcmF2ZW4tNzEuY2xlcmsuYWNjb3VudHMuZGV2JA
 VITE_ENVIRONMENT=local
 ```
 
-**`.env.local`** (Development - opcional):
+**`.env.local`** (Development):
+
 ```env
 VITE_API_URL=http://localhost:3001
 VITE_CLERK_PUBLISHABLE_KEY=your_local_clerk_key
 VITE_ENVIRONMENT=local
 ```
 
-**`.env.prod`** (Production - para deploy AWS):
+**`.env.prod`** (Production):
+
 ```env
 VITE_API_URL=http://YOUR_EC2_IP:3001
 VITE_CLERK_PUBLISHABLE_KEY=your_prod_clerk_key
@@ -164,19 +207,32 @@ VITE_ENVIRONMENT=production
 VITE_S3_BUCKET_URL=https://your-bucket-name.s3.amazonaws.com
 ```
 
+### Available Scripts
+
+| Script                     | Description                  | Port |
+| -------------------------- | ---------------------------- | ---- |
+| `npm run dev`              | Development server (Node.js) | 5173 |
+| `npm run docker:local`     | Development server (Docker)  | 5173 |
+| `npm run docker:prod`      | Production server (Docker)   | 80   |
+| `npm run docker:stop`      | Stop local Docker            | -    |
+| `npm run docker:stop-prod` | Stop production Docker       | -    |
+| `npm run build`            | Build for production         | -    |
+| `npm run preview`          | Preview production build     | 4173 |
+
 ### Deploy to EC2
 
 1. **Upload files to EC2**:
+
    ```bash
    scp -r . ubuntu@YOUR_EC2_IP:/home/ubuntu/cyber-web-frontend
    ```
 
-2. **Connect to EC2 and run deploy script**:
+2. **Connect to EC2 and run production**:
+
    ```bash
    ssh ubuntu@YOUR_EC2_IP
    cd /home/ubuntu/cyber-web-frontend
-   chmod +x deploy.sh
-   ./deploy.sh
+   npm run docker:prod
    ```
 
 3. **Configure Security Groups**:
@@ -205,16 +261,15 @@ pm2 stop cyber-frontend
 
 ## Frontend & Backend
 
-* **Backend:** [Cyber Web Backend](https://github.com/lucashss88/cyber-web-backend.git)
-* **Frontend:** [Cyber Web Frontend](https://github.com/danielacvmelo/cyber-web-frontend.git)
+- **Backend:** [Cyber Web Backend](https://github.com/lucashss88/cyber-web-backend.git)
+- **Frontend:** [Cyber Web Frontend](https://github.com/danielacvmelo/cyber-web-frontend.git)
 
 ---
 
 ## Authors
 
-* [@lucashss88](https://github.com/lucashss88)
-* [@danielacvmelo](https://github.com/danielacvmelo)
-* [@edgarneto12](https://github.com/edgarneto12)
-* [@VitorBeckenkamp](https://github.com/VitorBeckenkamp)
-* [@Sandro-A-Moraes](https://github.com/Sandro-A-Moraes)
-
+- [@lucashss88](https://github.com/lucashss88)
+- [@danielacvmelo](https://github.com/danielacvmelo)
+- [@edgarneto12](https://github.com/edgarneto12)
+- [@VitorBeckenkamp](https://github.com/VitorBeckenkamp)
+- [@Sandro-A-Moraes](https://github.com/Sandro-A-Moraes)
