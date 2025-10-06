@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
       host: '0.0.0.0',
       port: 5173,
       proxy: mode === 'local' ? {
-        '/api': 'http://localhost:3001'
+        '/api': env.VITE_API_URL || 'http://localhost:3001'
       } : undefined
     },
     build: {
