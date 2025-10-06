@@ -6,3 +6,10 @@ services:
     environment:
       - NODE_ENV=production
     restart: unless-stopped
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true
+    name: cyber-web-back_app-network
