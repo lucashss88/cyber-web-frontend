@@ -12,4 +12,4 @@ services:
 networks:
   app-network:
     external: true
-    name: cyber-web-back_app-network
+    name: cyber-web-back_default
