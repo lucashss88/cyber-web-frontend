@@ -17,6 +17,8 @@ ENV VITE_CLERK_PUBLISHABLE_KEY=$VITE_CLERK_PUBLISHABLE_KEY
 ENV VITE_ENVIRONMENT=$VITE_ENVIRONMENT
 ENV VITE_S3_BUCKET_URL=$VITE_S3_BUCKET_URL
 
+RUN npm run build:prod
+
 EXPOSE 5173
 
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0"]

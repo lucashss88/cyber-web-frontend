@@ -72,7 +72,7 @@ App available at: `http://localhost:5173`
 1. **Start with Docker:**
 
 ```bash
-npm run docker:local
+npm run docker:dev
 ```
 
 App available at: `http://localhost:5173`
@@ -97,7 +97,7 @@ npm run docker:stop
 npm run docker:prod
 ```
 
-App available at (port 80)
+App available at: `http://localhost:5173`
 
 2. **Stop production container:**
 
@@ -203,9 +203,9 @@ VITE_S3_BUCKET_URL=https://cyber-web--lhss-products-images.s3.us-east-2.amazonaw
 | Script                     | Description                  | Port |
 | -------------------------- | ---------------------------- | ---- |
 | `npm run dev`              | Development server (Node.js) | 5173 |
-| `npm run docker:local`     | Development server (Docker)  | 5173 |
-| `npm run docker:prod`      | Production server (Docker)   | 80   |
-| `npm run docker:stop`      | Stop local Docker            | -    |
+| `npm run docker:dev`       | Development server (Docker)  | 5173 |
+| `npm run docker:prod`      | Production server (Docker)   | 5173 |
+| `npm run docker:stop`      | Stop development Docker      | -    |
 | `npm run docker:stop-prod` | Stop production Docker       | -    |
 | `npm run build`            | Build for production         | -    |
 | `npm run preview`          | Preview production build     | 4173 |
@@ -227,7 +227,7 @@ VITE_S3_BUCKET_URL=https://cyber-web--lhss-products-images.s3.us-east-2.amazonaw
    ```
 
 ### URLs de Acesso:
-- **Frontend**: http://3.150.125.39 (porta 80)
+- **Frontend**: http://3.150.125.39:5173
 - **Backend**: http://3.150.125.39:3001
 - **API**: http://3.150.125.39:3001/api
 
