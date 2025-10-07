@@ -27,7 +27,7 @@ const RelatedProducts = () => {
         setIsLoading(true);
 
         
-        const productResponse = await fetch(`http://localhost:3001/api/products/${productId}`);
+        const productResponse = await fetch(`${import.meta.env.VITE_API_URL}/products/${productId}`);
         if (!productResponse.ok) {
           throw new Error('Falha ao buscar o produto principal para obter a marca.');
         }
@@ -37,7 +37,7 @@ const RelatedProducts = () => {
         
         if (brand) {
          
-          const relatedResponse = await fetch(`http://localhost:3001/api/products/related/${brand}`);
+          const relatedResponse = await fetch(`${import.meta.env.VITE_API_URL}/products/related/${brand}`);
           if (!relatedResponse.ok) {
             throw new Error('Falha ao buscar os produtos relacionados.');
           }

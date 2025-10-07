@@ -73,16 +73,17 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
     return subTotalPrice + estimatedTax + estimatedShipping
   }, [subTotalPrice])
 
-  const handleRemoveFromCart = async (productId: string) => {
+  const handleRemoveFromCart = (productId: string) => {
     const updatedCart = localProducts.filter(product => product.id !== productId)
     setLocalProducts(updatedCart)
-    if (shoppingCartId) {
-      await deleteProduct(parseInt(productId), shoppingCartId)
-    } else {
-      console.error('Carrinho não encontrado ao tentar remover o produto.')
-    }
     localStorage.setItem('shoppingCart', JSON.stringify(updatedCart))
     setToastMessage('Produto removido do carrinho!')
+    
+    if (userId && shoppingCartId) {
+      deleteProduct(parseInt(productId), shoppingCartId).catch(error => {
+        console.error('Erro ao remover produto do carrinho no servidor:', error)
+      })
+    }
   }
 
   const handleQuantityPlus = (productId: string) => {
@@ -124,7 +125,7 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
       if (!userId) throw new Error('Usuário não autenticado')
       
       const response = await makeAuthenticatedRequest(
-        'http://localhost:3001/api/shopping_carts', 
+        `${import.meta.env.VITE_API_URL}/shopping_carts`, 
         token, 
         'POST', 
         JSON.stringify({ products, userId: userId })
@@ -154,7 +155,7 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
       if (!userId) throw new Error('Usuário não autenticado')
 
       const response = await makeAuthenticatedRequest(
-        `http://localhost:3001/api/shopping_carts/${shoppingCartId}/${productId}`,
+        `${import.meta.env.VITE_API_URL}/shopping_carts/${shoppingCartId}/${productId}`,
         token,
         'DELETE',
       )
@@ -182,7 +183,7 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
     try {
       const token = await getAuthToken()
       if (!token) throw new Error('Token não encontrado')
-      await makeAuthenticatedRequest(`http://localhost:3001/api/shopping_carts/${shoppingCartId}`, token, 'PATCH', JSON.stringify({ status: status }))
+      await makeAuthenticatedRequest(`${import.meta.env.VITE_API_URL}/shopping_carts/${shoppingCartId}`, token, 'PATCH', JSON.stringify({ status: status }))
       
       localStorage.removeItem('shoppingCart')
       localStorage.removeItem('shoppingCartId')

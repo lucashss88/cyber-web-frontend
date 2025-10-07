@@ -4,14 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --mode local",
+    "dev": "vite --mode development",
     "prod": "vite --mode prod",
     "build": "tsc -b && vite build",
     "build:prod": "vite build --mode prod",
     "lint": "eslint .",
     "preview": "vite preview",
     "tailwind:init": "tailwindcss init -p",
-    "docker:local": "docker-compose up -d --build",
+    "docker:dev": "docker-compose up -d --build",
     "docker:prod": "docker-compose -f docker-compose.prod.yml up -d --build",
     "docker:stop": "docker-compose down",
     "docker:stop-prod": "docker-compose -f docker-compose.prod.yml down"

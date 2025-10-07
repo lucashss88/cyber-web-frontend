@@ -10,8 +10,8 @@ export function useBrands(categoryName?: string) {
         async function fetchBrands() {
             try {
                 const endpoint = categoryName
-                  ? `${url}/brands/${encodeURIComponent(categoryName)}`
-                  : `${url}/brands`;
+                  ? `${import.meta.env.VITE_API_URL}/brands/${encodeURIComponent(categoryName)}`
+                  : `${import.meta.env.VITE_API_URL}/brands`;
 
                 const response = await fetch(endpoint);
 

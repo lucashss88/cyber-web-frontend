@@ -72,7 +72,7 @@ App available at: `http://localhost:5173`
 1. **Start with Docker:**
 
 ```bash
-npm run docker:local
+npm run docker:dev
 ```
 
 App available at: `http://localhost:5173`
@@ -97,21 +97,12 @@ npm run docker:stop
 npm run docker:prod
 ```
 
-App available at (port 80)
+App available at: `http://localhost:5173`
 
 2. **Stop production container:**
 
 ```bash
 npm run docker:stop-prod
-```
-
-### Full Stack Production (Backend + Frontend)
-
-Run from backend repository:
-
-```bash
-cd cyber-web-backend
-npm run docker:full-prod
 ```
 
 ### Build and Preview (Node.js)
@@ -201,10 +192,10 @@ VITE_ENVIRONMENT=local
 **`.env.prod`** (Production):
 
 ```env
-VITE_API_URL=http://YOUR_EC2_IP:3001
-VITE_CLERK_PUBLISHABLE_KEY=your_prod_clerk_key
+VITE_API_URL=http://3.150.125.39:3001
+VITE_CLERK_PUBLISHABLE_KEY=pk_test_ZXh0cmEtcmF2ZW4tNzEuY2xlcmsuYWNjb3VudHMuZGV2JA
 VITE_ENVIRONMENT=production
-VITE_S3_BUCKET_URL=https://your-bucket-name.s3.amazonaws.com
+VITE_S3_BUCKET_URL=https://cyber-web--lhss-products-images.s3.us-east-2.amazonaws.com
 ```
 
 ### Available Scripts
@@ -212,9 +203,9 @@ VITE_S3_BUCKET_URL=https://your-bucket-name.s3.amazonaws.com
 | Script                     | Description                  | Port |
 | -------------------------- | ---------------------------- | ---- |
 | `npm run dev`              | Development server (Node.js) | 5173 |
-| `npm run docker:local`     | Development server (Docker)  | 5173 |
-| `npm run docker:prod`      | Production server (Docker)   | 80   |
-| `npm run docker:stop`      | Stop local Docker            | -    |
+| `npm run docker:dev`       | Development server (Docker)  | 5173 |
+| `npm run docker:prod`      | Production server (Docker)   | 5173 |
+| `npm run docker:stop`      | Stop development Docker      | -    |
 | `npm run docker:stop-prod` | Stop production Docker       | -    |
 | `npm run build`            | Build for production         | -    |
 | `npm run preview`          | Preview production build     | 4173 |
@@ -224,38 +215,27 @@ VITE_S3_BUCKET_URL=https://your-bucket-name.s3.amazonaws.com
 1. **Upload files to EC2**:
 
    ```bash
-   scp -r . ubuntu@YOUR_EC2_IP:/home/ubuntu/cyber-web-frontend
+   scp -r . ubuntu@3.150.125.39:/home/ubuntu/cyber-web-frontend
    ```
 
 2. **Connect to EC2 and run production**:
 
    ```bash
-   ssh ubuntu@YOUR_EC2_IP
+   ssh ubuntu@3.150.125.39
    cd /home/ubuntu/cyber-web-frontend
    npm run docker:prod
    ```
+
+### URLs de Acesso:
+- **Frontend**: http://3.150.125.39:5173
+- **Backend**: http://3.150.125.39:3001
+- **API**: http://3.150.125.39:3001/api
 
 3. **Configure Security Groups**:
    - Port 80 (HTTP)
    - Port 443 (HTTPS)
    - Port 22 (SSH)
    - Port 3001 (Backend API)
-
-### PM2 Management
-
-```bash
-# Check status
-pm2 status
-
-# View logs
-pm2 logs cyber-frontend
-
-# Restart application
-pm2 restart cyber-frontend
-
-# Stop application
-pm2 stop cyber-frontend
-```
 
 ---
 
