@@ -38,7 +38,7 @@ const ReviewsSection = ({ productId }: { productId: number }) => {
     const fetchReviews = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch(`http://localhost:3001/api/products/reviews/${productId}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/products/reviews/${productId}`);
         if (!response.ok) {
           throw new Error('Falha ao buscar as avaliações.');
         }

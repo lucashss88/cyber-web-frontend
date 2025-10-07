@@ -45,7 +45,7 @@ const ProductDetailsContainer = () => {
     const fetchProductDetails = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch(`http://localhost:3001/api/products/${productId}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/products/${productId}`);
         if (!response.ok) {
           const errorText = await response.text();
           throw new Error(`Falha ao buscar os dados do produto: ${errorText}`);
