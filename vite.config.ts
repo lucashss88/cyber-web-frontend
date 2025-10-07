@@ -10,7 +10,6 @@ export default defineConfig(({ mode }) => {
     server: {
       host: '0.0.0.0',
       port: 5173,
-      // Proxy removido - usando URLs diretas nos .env
     },
     build: {
       outDir: 'dist',
