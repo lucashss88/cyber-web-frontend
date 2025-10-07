@@ -49,7 +49,7 @@ export function useProducts(
          params.append('brands', selectedBrands.join(','));
        }
 
-       const response = await fetch(`${url}/api/products?${params.toString()}`);
+       const response = await fetch(`${url}/products?${params.toString()}`);
 
        if (!response.ok) {
          throw new Error(`O servidor respondeu com o status: ${response.status}`);
