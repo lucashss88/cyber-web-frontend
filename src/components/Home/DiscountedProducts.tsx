@@ -28,7 +28,7 @@ export default function DiscountedProducts() {
         const fetchProduct = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`http://localhost:3001/api/products/tag/discount_up_to_50`);
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/products/tag/discount_up_to_50`);
                 const json = await response.json();
 
                 const mappedProducts: ProductCardProps[] = (json.data || []).map((item: ApiProduct) => ({

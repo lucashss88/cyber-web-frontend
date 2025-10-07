@@ -36,7 +36,7 @@ export default function ProductOverview() {
         const fetchProduct = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`http://localhost:3001/api/products/tag/${activeTag}`);
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/products/tag/${activeTag}`);
                 const json = await response.json();
 
                 const mappedProducts: ProductCardProps[] = (json.data || []).map((item: ApiProduct) => ({

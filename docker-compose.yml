@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: http://localhost:3001/api
+        VITE_CLERK_PUBLISHABLE_KEY: pk_test_cmVsZXZhbnQtdG9hZC04OS5jbGVyay5hY2NvdW50cy5kZXYk
+        VITE_ENVIRONMENT: development
+        VITE_S3_BUCKET_URL: https://cyber-web--lhss-products-images.s3.us-east-2.amazonaws.com
+    ports:
+      - "5173:5173"
+    restart: unless-stopped
