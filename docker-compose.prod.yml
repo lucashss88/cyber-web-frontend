@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile.prod
       args:
         VITE_API_URL: http://3.150.125.39:3001/api
-        VITE_CLERK_PUBLISHABLE_KEY: pk_live_Y2xlcmsuZWMyLTMtMTUwLTEyNS0zOS51cy1lYXN0LTIuY29tcHV0ZS5hbWF6b25hd3MuY29tJA
+        VITE_CLERK_PUBLISHABLE_KEY: pk_test_cmVsZXZhbnQtdG9hZC04OS5jbGVyay5hY2NvdW50cy5kZXYk
         VITE_ENVIRONMENT: production
         VITE_S3_BUCKET_URL: https://cyber-web--lhss-products-images.s3.us-east-2.amazonaws.com
     ports:
