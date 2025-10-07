@@ -51,13 +51,7 @@ npm install
 ```
 
 2. **Configure environment:**
-   Ensure `.env` file exists with:
-
-```env
-VITE_API_URL=http://localhost:3001
-VITE_CLERK_PUBLISHABLE_KEY=pk_test_cmVsZXZhbnQtdG9hZC04OS5jbGVyay5hY2NvdW50cy5kZXYk
-VITE_ENVIRONMENT=local
-```
+   Ensure `.env` file exists with required environment variables for local development.
 
 3. **Start development server:**
 
@@ -83,7 +77,7 @@ App available at: `http://localhost:5173`
 npm run docker:stop
 ```
 
-> ⚠️ **Backend Required:** Make sure [Cyber Web Backend](https://github.com/lucashss88/cyber-web-backend.git) is running on port 3001
+> ⚠️ **Backend Required:** Make sure [Cyber Web Backend](https://github.com/lucashss88/cyber-web-back) is running on port 3001
 
 ---
 
@@ -159,6 +153,8 @@ npm run preview
   Already included and configured in the project. No extra installation needed by the user.
 - **Authentication:**
   Clerk is configured for user management. Make sure to set up your Clerk project and add the publishable key to your environment variables.
+- **CORS Configuration:**
+  Production uses Vite proxy (`/api` → backend) to resolve CORS issues. Development can use direct URLs.
 
 ---
 
@@ -171,32 +167,24 @@ The project supports multiple environments:
 - **Local Development**: `npm run dev` (uses `.env.local`)
 - **Production**: `npm run prod` (uses `.env.prod`)
 
-### Environment Files
+### Environment Configuration
 
-**`.env`**:
+The project requires different environment variables for each environment:
 
-```env
-VITE_API_URL=http://localhost:3001
-VITE_CLERK_PUBLISHABLE_KEY=pk_test_ZXh0cmEtcmF2ZW4tNzEuY2xlcmsuYWNjb3VudHMuZGV2JA
-VITE_ENVIRONMENT=local
-```
+**Development (`.env` / `.env.local`):**
 
-**`.env.local`** (Development):
+- `VITE_API_URL`: Backend API URL (typically localhost:3001)
+- `VITE_CLERK_PUBLISHABLE_KEY`: Clerk authentication key for development
+- `VITE_ENVIRONMENT`: Environment identifier
 
-```env
-VITE_API_URL=http://localhost:3001
-VITE_CLERK_PUBLISHABLE_KEY=your_local_clerk_key
-VITE_ENVIRONMENT=local
-```
+**Production (`.env.prod`):**
 
-**`.env.prod`** (Production):
+- `VITE_API_URL`: Uses `/api` with Vite proxy to avoid CORS issues
+- `VITE_CLERK_PUBLISHABLE_KEY`: Clerk authentication key for production
+- `VITE_ENVIRONMENT`: Set to 'production'
+- `VITE_S3_BUCKET_URL`: AWS S3 bucket URL for product images
 
-```env
-VITE_API_URL=http://3.150.125.39:3001
-VITE_CLERK_PUBLISHABLE_KEY=pk_test_ZXh0cmEtcmF2ZW4tNzEuY2xlcmsuYWNjb3VudHMuZGV2JA
-VITE_ENVIRONMENT=production
-VITE_S3_BUCKET_URL=https://cyber-web--lhss-products-images.s3.us-east-2.amazonaws.com
-```
+> **Note:** Environment files are included in the repository with proper configurations.
 
 ### Available Scripts
 
@@ -223,17 +211,53 @@ VITE_S3_BUCKET_URL=https://cyber-web--lhss-products-images.s3.us-east-2.amazonaw
    ```bash
    ssh ubuntu@3.150.125.39
    cd /home/ubuntu/cyber-web-frontend
-   npm run docker:prod
+   sudo docker-compose -f docker-compose.prod.yml up -d --build --no-cache
+   ```
+
+3. **Stop production**:
+
+   ```bash
+   sudo docker-compose -f docker-compose.prod.yml down
    ```
 
 ### URLs de Acesso:
+
 - **Frontend**: http://3.150.125.39:5173
 - **Backend**: http://3.150.125.39:3001
 - **API**: http://3.150.125.39:3001/api
 
-3. **Configure Security Groups**:
-   - Port 80 (HTTP)
-   - Port 443 (HTTPS)
+### Docker Commands (EC2)
+
+**Production:**
+
+```bash
+# Start production
+sudo docker-compose -f docker-compose.prod.yml up -d --build --no-cache
+
+# Stop production
+sudo docker-compose -f docker-compose.prod.yml down
+
+# View logs
+sudo docker-compose -f docker-compose.prod.yml logs -f
+
+# Complete rebuild
+sudo docker-compose -f docker-compose.prod.yml down
+sudo docker system prune -f
+sudo docker-compose -f docker-compose.prod.yml up -d --build --no-cache
+```
+
+**Development:**
+
+```bash
+# Start development
+sudo docker-compose up -d --build --no-cache
+
+# Stop development
+sudo docker-compose down
+```
+
+4. **Configure Security Groups**:
+   - Port 5173 (Frontend)
    - Port 22 (SSH)
    - Port 3001 (Backend API)
 
@@ -241,15 +265,11 @@ VITE_S3_BUCKET_URL=https://cyber-web--lhss-products-images.s3.us-east-2.amazonaw
 
 ## Frontend & Backend
 
-- **Backend:** [Cyber Web Backend](https://github.com/lucashss88/cyber-web-backend.git)
-- **Frontend:** [Cyber Web Frontend](https://github.com/danielacvmelo/cyber-web-frontend.git)
+- **Backend:** [Cyber Web Backend](https://github.com/lucashss88/cyber-web-back.git)
+- **Frontend:** [Cyber Web Frontend](https://github.com/lucashss88/cyber-web-frontend.git)
 
 ---
 
 ## Authors
 
 - [@lucashss88](https://github.com/lucashss88)
-- [@danielacvmelo](https://github.com/danielacvmelo)
-- [@edgarneto12](https://github.com/edgarneto12)
-- [@VitorBeckenkamp](https://github.com/VitorBeckenkamp)
-- [@Sandro-A-Moraes](https://github.com/Sandro-A-Moraes)
