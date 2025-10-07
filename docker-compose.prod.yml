@@ -5,17 +5,10 @@ services:
     build:
       context: .
       args:
-        VITE_API_URL: /api
+        VITE_API_URL: http://3.150.125.39:3001/api
         VITE_CLERK_PUBLISHABLE_KEY: pk_test_ZXh0cmEtcmF2ZW4tNzEuY2xlcmsuYWNjb3VudHMuZGV2JA
         VITE_ENVIRONMENT: production
         VITE_S3_BUCKET_URL: https://cyber-web--lhss-products-images.s3.us-east-2.amazonaws.com
     ports:
       - "80:80"
     restart: unless-stopped
-    networks:
-      - app-network
-
-networks:
-  app-network:
-    external: true
-    name: cyber-web-back_default
