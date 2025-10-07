@@ -10,13 +10,11 @@ export default defineConfig(({ mode }) => {
     server: {
       host: '0.0.0.0',
       port: 5173,
-      proxy: mode === 'local' ? {
-        '/api': 'http://localhost:3001'
-      } : undefined
+      // Proxy removido - usando URLs diretas nos .env
     },
     build: {
       outDir: 'dist',
-      sourcemap: mode === 'local'
+      sourcemap: mode === 'development'
     },
     define: {
       __APP_ENV__: JSON.stringify(env.VITE_ENVIRONMENT)
