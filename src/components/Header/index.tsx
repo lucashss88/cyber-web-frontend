@@ -84,8 +84,14 @@ const Header = () => {
               <li><Link to="/home" onClick={closeMenu} className={location.pathname === '/home' ? 'font-bold text-gray-900' : 'text-gray-700'}>Home</Link></li>
               <li><Link to="/products_page" onClick={closeMenu} className={location.pathname.startsWith('/products_page') ? 'font-bold text-gray-900' : 'text-gray-700'}>Shop</Link></li>
               <li><Link to="/shopping_cart" onClick={closeMenu} className={location.pathname.startsWith('/shopping_cart') ? 'font-bold text-gray-900' : 'text-gray-700'}>Cart</Link></li>
-              <li><a href="#" onClick={closeMenu} className="text-gray-700">Contact Us</a></li>
-              <li><Link to="#" onClick={closeMenu} className="text-gray-700">Blog</Link></li>
+              <SignedOut>
+                <SignInButton mode="modal">
+                  <li><button className="hover:opacity-75">Login</button></li>
+                </SignInButton>
+              </SignedOut>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
             </ul>
           </nav>
         </div>
