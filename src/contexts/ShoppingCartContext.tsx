@@ -63,6 +63,19 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
     if (storedCartId) {
       setShoppingCartId(parseInt(storedCartId))
     }
+
+    const handleStorageChange = () => {
+      const updatedCart = localStorage.getItem('shoppingCart')
+      if (updatedCart) {
+        const parsed = JSON.parse(updatedCart)
+        setLocalProducts(Array.isArray(parsed) ? parsed : [parsed])
+      } else {
+        setLocalProducts([])
+      }
+    }
+
+    window.addEventListener('storage', handleStorageChange)
+    return () => window.removeEventListener('storage', handleStorageChange)
   }, [])
 
   const subTotalPrice = useMemo(() => {
@@ -78,6 +91,7 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
     setLocalProducts(updatedCart)
     localStorage.setItem('shoppingCart', JSON.stringify(updatedCart))
     setToastMessage('Produto removido do carrinho!')
+    window.dispatchEvent(new Event('storage'))
     
     if (userId && shoppingCartId) {
       deleteProduct(parseInt(productId), shoppingCartId).catch(error => {
@@ -96,6 +110,7 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
     setLocalProducts(updatedCart)
     localStorage.setItem('shoppingCart', JSON.stringify(updatedCart))
     setToastMessage('Quantidade atualizada!')
+    window.dispatchEvent(new Event('storage'))
   }
 
   const handleQuantityMinus = (productId: string) => {
@@ -113,6 +128,7 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
     setLocalProducts(updatedCart)
     localStorage.setItem('shoppingCart', JSON.stringify(updatedCart))
     setToastMessage('Quantidade atualizada!')
+    window.dispatchEvent(new Event('storage'))
   }
   
   const addProducts = useCallback(async (products: Product[]) => {

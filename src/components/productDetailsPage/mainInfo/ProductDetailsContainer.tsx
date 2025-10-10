@@ -10,7 +10,7 @@ import ProductActions from './ProductActions';
 import ProductDescription from './ProductDescription';
 import ProductDeliveryInfo from './ProductDeliveryInfo';
 import NotificationToast from './NotificationToast';
-import type { ProductCart } from '../../../types/cart';
+import { useShoppingCart } from '../../../hooks/useShoppingCart';
 
 interface ProductData {
   id: number;
@@ -29,6 +29,7 @@ interface ProductData {
 
 const ProductDetailsContainer = () => {
   const { productId } = useParams<{ productId: string }>();
+  const { localProducts, setToastMessage: setContextToastMessage } = useShoppingCart();
 
   const [product, setProduct] = useState<ProductData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -98,23 +99,32 @@ const ProductDetailsContainer = () => {
 
   function handleAddToCart(product: ProductData): void {
     if (!product) return;
-    const productCart: ProductCart = {
-      id: product.id,
-      name: product.name,
-      price: parseFloat(product.price),
-      quantity: 1,
-      url_image: product.url_image,
-      code: product.id.toString(),
-    };
-    setToastMessage('Produto adicionado ao carrinho!');
-    const cart = localStorage.getItem('shoppingCart');
-    let cartProducts = [];
-    if (cart) {
-      const parsed = JSON.parse(cart);
-      cartProducts = Array.isArray(parsed) ? parsed : [parsed];
+    
+    const existingProduct = localProducts.find(p => p.id === product.id.toString());
+    
+    let updatedCart;
+    if (existingProduct) {
+      updatedCart = localProducts.map(p => 
+        p.id === product.id.toString() 
+          ? { ...p, quantity: p.quantity + 1 }
+          : p
+      );
+    } else {
+      updatedCart = [...localProducts, {
+        id: product.id.toString(),
+        name: product.name,
+        price: parseFloat(product.price),
+        quantity: 1,
+        url_image: product.url_image,
+        code: product.id.toString(),
+      }];
     }
-    cartProducts.push(productCart);
-    localStorage.setItem('shoppingCart', JSON.stringify(cartProducts));
+    
+    localStorage.setItem('shoppingCart', JSON.stringify(updatedCart));
+    setToastMessage('Produto adicionado ao carrinho!');
+    setContextToastMessage('Produto adicionado ao carrinho!');
+    
+    window.dispatchEvent(new Event('storage'));
   }
 
   return (
