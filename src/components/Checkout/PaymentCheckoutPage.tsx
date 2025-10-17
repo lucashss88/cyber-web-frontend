@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react"
 import { useForm } from "react-hook-form"
-import CreditCard from "../../assets/images/checkout/Credit Card.svg"
+import CreditCard from "../../assets/images/checkout/Credit Card (2).svg"
 import type { LocalProduct } from "../../contexts/ShoppingCartContext";
 import { useShoppingCart } from "../../hooks/useShoppingCart";
 import { useOrderData } from "../../hooks/useOrderData";
@@ -26,6 +26,8 @@ interface PaymentCheckoutPageProps {
 
 const PaymentCheckoutPage = ({ onComplete }: PaymentCheckoutPageProps) => {
   const [selectedMethod, setSelectedMethod] = useState<number>(1);
+  const [cardNumberStatic, setCardNumberStatic] = useState("");
+  const [cardHolderStatic, setCardHolderStatic] = useState("");
   const [products, setProducts] = useState<LocalProduct[]>([]);
   const { subTotalPrice, estimatedTax, estimatedShipping, totalPrice } = useShoppingCart();
   const { address, shippingMethod, SetPaymentMethod } = useOrderData();
@@ -55,6 +57,15 @@ const PaymentCheckoutPage = ({ onComplete }: PaymentCheckoutPageProps) => {
   useEffect(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
+
+  useEffect(() => {
+    setCardHolderStatic(cardHolder?.toUpperCase() || '');
+  }, [cardHolder]);
+
+  useEffect(() => {
+    const formatted = cardNumber?.replace(/\D/g, '').replace(/(\d{4})(?=\d)/g, '$1 ') || '';
+    setCardNumberStatic(formatted);
+  }, [cardNumber]);
 
   const handlePaymentValidation = useCallback(() => {
     const isPaymentComplete = selectedMethod === 1 ? isValid : selectedMethod > 1;
@@ -117,7 +128,11 @@ const PaymentCheckoutPage = ({ onComplete }: PaymentCheckoutPageProps) => {
         ))}
         </div>
         <div className="flex flex-col gap-2">
-          <img src={CreditCard} className="my-10"></img>
+          <div className="relative">
+            <span className="absolute top-[45%] left-[5%] w-[80%] h-[15%] bg-black text-white text-2xl text-center">{cardNumberStatic}</span>
+            <span className="absolute top-[71%] left-[30%] w-[50%] h-[10%] bg-black text-white text-sm text-center">{cardHolderStatic}</span>
+            <img src={CreditCard} className="my-10 w-full" />
+          </div>           
           <div className="flex flex-col gap-4 mb-12">
             <div className="flex flex-col">
               <input
@@ -132,8 +147,14 @@ const PaymentCheckoutPage = ({ onComplete }: PaymentCheckoutPageProps) => {
                   minLength: {
                     value: 2,
                     message: "Name must be at least 2 characters"
-                  }
+                  },
+                  maxLength: {
+                    value: 20,
+                    message: "Name must be at most 20 characters"
+                  },
+
                 })}
+                maxLength={20}
                 className="p-4 border border-gray-300 rounded-lg placeholder:text-gray-400"
               />
               {errors.cardHolder && <span className="text-red-500 text-xs">{errors.cardHolder.message}</span>}
@@ -148,10 +169,11 @@ const PaymentCheckoutPage = ({ onComplete }: PaymentCheckoutPageProps) => {
                   pattern: {
                     value: /^\d{16}$/,
                     message: "Card number must be exactly 16 digits"
-                  }
+                  },
+
                 })}
                 className="p-4 border border-gray-300 rounded-lg placeholder:text-gray-400"
-                maxLength={16}
+                maxLength={19}
               />
               {errors.cardNumber && <span className="text-red-500 text-xs">{errors.cardNumber.message}</span>}
             </div>
