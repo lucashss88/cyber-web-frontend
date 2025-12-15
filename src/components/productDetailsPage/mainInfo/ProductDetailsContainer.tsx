@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Breadcrumb from '../../Breadcrumb';
@@ -24,7 +24,7 @@ interface ProductData {
   category: { name: string };
   colors: { name: string; hex_code: string }[];
   storage_options: { size: string }[];
-  smartphone_spec: { /* ... */ } | null;
+  smartphone_spec: { screen_size?: string; cpu?: string; total_cores?: string; main_camera?: string; front_camera?: string; battery?: string; } | null;
 }
 
 const ProductDetailsContainer = () => {
@@ -147,7 +147,7 @@ const ProductDetailsContainer = () => {
             onColorSelect={setSelectedColor}
             onMemorySelect={setSelectedMemory}
           />
-          {product.smartphone_spec && <ProductSpecs specs={product.smartphone_spec} />}
+          {product.smartphone_spec && <ProductSpecs specs={product.smartphone_spec || {}} />}
           <ProductDescription description={product.description} />
           <div className="flex-grow" />
           <ProductActions
