@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import ReviewCard from './ReviewCard';
 import ReviewsSummary from './ReviewsSummary';
 import { FaChevronDown } from 'react-icons/fa';
