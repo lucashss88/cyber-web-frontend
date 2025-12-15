@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import FilterLine from '../components/ProductsPage/FilterLine'
 import ProductsList from '../components/ProductsPage/ProductsList'
 import Breadcrumb from '../components/Breadcrumb'

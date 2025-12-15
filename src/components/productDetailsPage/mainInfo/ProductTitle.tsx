@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 
 type Props = {
   name: string;
@@ -7,7 +7,7 @@ type Props = {
   discountedPrice: number;
 }
 
-export default function ProductTitle({ name, price, originalPrice, discountedPrice }: Props) {
+export default function ProductTitle({ name, originalPrice, discountedPrice }: Props) {
   return (
     <div className="mb-4 mt-4 sm:mt-20">
  

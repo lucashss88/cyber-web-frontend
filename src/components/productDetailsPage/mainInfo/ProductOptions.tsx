@@ -1,5 +1,4 @@
-
-import React from "react";
+// import React from "react";
 
 type Props = {
   colors: { name: string, hex_code: string }[];

@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 
 import screenIcon from '../../../assets/images/productDetailsPage/mainInfo/screen-icon.svg'
 import cpuIcon from '../../../assets/images/productDetailsPage/mainInfo/cpu-icon.svg';
@@ -9,24 +9,24 @@ import batteryIcon from '../../../assets/images/productDetailsPage/mainInfo/batt
 
 type Props = {
   specs: {
-    screen_size: string;
-    cpu: string;
-    total_cores: string;
-    main_camera: string;
-    front_camera: string;
-    battery: string;
+    screen_size?: string;
+    cpu?: string;
+    total_cores?: string;
+    main_camera?: string;
+    front_camera?: string;
+    battery?: string;
   }
 }
 
 export default function ProductSpecs({ specs }: Props) {
  
   const specList = [
-    { label: "Screen size", value: specs.screen_size, iconSrc: screenIcon },
-    { label: "CPU", value: specs.cpu, iconSrc: cpuIcon },
-    { label: "Number of Cores", value: specs.total_cores, iconSrc: coresIcon },
-    { label: "Main camera", value: specs.main_camera, iconSrc: mainCameraIcon },
-    { label: "Front-camera", value: specs.front_camera, iconSrc: frontCameraIcon },
-    { label: "Battery capacity", value: specs.battery, iconSrc: batteryIcon },
+    { label: "Screen size", value: specs.screen_size || 'N/A', iconSrc: screenIcon },
+    { label: "CPU", value: specs.cpu || 'N/A', iconSrc: cpuIcon },
+    { label: "Number of Cores", value: specs.total_cores || 'N/A', iconSrc: coresIcon },
+    { label: "Main camera", value: specs.main_camera || 'N/A', iconSrc: mainCameraIcon },
+    { label: "Front-camera", value: specs.front_camera || 'N/A', iconSrc: frontCameraIcon },
+    { label: "Battery capacity", value: specs.battery || 'N/A', iconSrc: batteryIcon },
   ];
 
   return (

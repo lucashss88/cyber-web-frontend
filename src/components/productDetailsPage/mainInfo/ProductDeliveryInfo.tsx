@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 
 import deliveryIcon from '../../../assets/images/productDetailsPage/mainInfo/delivery-icon.svg';
 import stockIcon from '../../../assets/images/productDetailsPage/mainInfo/stock-icon.svg';
